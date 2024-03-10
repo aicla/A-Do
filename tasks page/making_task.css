@@ -1,0 +1,175 @@
+body{
+    background-color: #F6F4EB;
+}
+
+.box {
+    margin-top: 35px;
+    width: 72%;
+    height: 60px;
+    margin-left: 200px;
+    background-color: #4682A9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.inner-box {
+    position: relative;
+}
+
+.title, .notes {
+    color: white;
+    margin-left: 7px;
+    font-family: Arial;
+}
+
+.split-box {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.split-box .box {
+    width: 48%;
+    height: 30px;
+    background-color: #4682A9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-right: -100px;
+}
+
+.split-box .inner-box {
+    position: relative;
+    margin-top: 5px;
+}
+
+.split-box .time-box {
+    width: 50%;
+    height: 30px;
+    background-color: #4682A9;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-left: 200px;
+    margin-right: 130px;
+}
+
+.date, .time, .ass {
+    color: white;
+    margin-left: 7px;
+    font-family: Arial;
+}
+
+.v-symbol {
+    position: absolute;
+    right: 20px; 
+    border-left: 10px solid transparent; 
+    border-right: 10px solid transparent; 
+    border-top: 20px solid #ffffff; 
+    cursor: pointer; 
+}
+
+.clickable-text {
+    color: white;
+    font-family: Arial;
+    font-size: smaller;
+    text-decoration: none; 
+    display: inline-block; 
+    margin-top: 25px; 
+    margin-left: 225px;
+}
+
+.clickable-text:hover {
+    text-decoration: underline; 
+}
+
+.box.notes-box {
+    width: 72%; 
+    height: 170px; 
+}
+
+.cancel-text {
+    color: #749BC2;
+    text-decoration: none; 
+    font-family: Arial;
+    display: inline-block;
+    margin-right: 20px; 
+    position: absolute;
+    margin-top: 25px;
+    margin-left: 250px;
+}
+
+.button-container {
+    display: inline-block; 
+    vertical-align: middle; 
+}
+
+.button {
+    padding: 6px 60px; 
+    background-color: #4682A9;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 25px;
+    margin-left: 970px;
+    transition: opacity 0.3s ease;
+    font-family: Arial;
+}
+
+.button:hover {
+    opacity: 0.7;
+}
+
+.button:active {
+    background-color: #579fcf;
+}
+
+.title-input, .notes-input {
+    color: white;
+    margin-left: 7px;
+    font-family: Arial;
+    background: transparent;
+    border: none; 
+    outline: none;
+    width: 100%;
+    font-size: 25px;
+    margin-left: 25px;
+}
+
+.title-input::placeholder, .notes-input::placeholder {
+    color: transparent; 
+}
+
+.date-input {
+    width: 50%;
+    height: 30px;
+    padding: 5px;
+    font-family: Arial;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4682A9;
+    color: #fff;
+    box-sizing: border-box;
+    margin-top: -23px; 
+    float: right;
+    outline: none;
+}
+
+.time-input {
+    width: 50%;
+    height: 30px;
+    padding: 5px;
+    font-family: Arial;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #4682A9;
+    color: #fff;
+    box-sizing: border-box;
+    margin-top: -23px; 
+    float: right;
+    outline: none;
+}
