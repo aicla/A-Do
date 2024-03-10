@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assigned.css">
+    <title>Assigned to Me</title>
+</head>
+<body>
+
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="menu" id="menu">
+        <ul>
+            <li><a href="task.html">Tasks</a></li>
+            <li><a href="important.html">Important</a></li>
+            <li><a href="assigned.html">Assigned to Me</a></li>
+            <li><a href="#">Teams</a></li>
+            <li><a href="#">Calendar</a></li>
+        </ul>
+    </nav>
+
+    <h1>Assigned to Me</h1>
+
+    <div class="box">
+        <div class="status">STATUS</div>
+
+    <div class="dropdown-box">
+        <div class="inner-box"> 
+            <div class="selected-option">TO DO</div>
+            <div class="v-symbol" onclick="toggleOptions('v-options')"></div>
+    </div>
+
+    <div class="v-options">
+        <a href="#" class="v-option" onclick="selectOption('TO DO')">TO DO</a>
+        <a href="#" class="v-option" onclick="selectOption('IN PROGRESS')">IN PROGRESS</a>
+        <a href="#" class="v-option" onclick="selectOption('FINISHED')">FINISHED</a>
+    </div>
+</div>
+
+    
+<script src="assigned.js"></script>
+</body>
+</html>
