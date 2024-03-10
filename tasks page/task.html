@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="task.css">
+    <title>Task View</title>
+</head>
+<body>
+
+    <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <nav class="menu" id="menu">
+        <ul>
+            <li><a href="task.html">Tasks</a></li>
+            <li><a href="#">Important</a></li>
+            <li><a href="#">Assigned to Me</a></li>
+            <li><a href="#">Teams</a></li>
+            <li><a href="#">Calendar</a></li>
+        </ul>
+    </nav>
+
+    <h1>Tasks<a href="making_task.html"><span class="add-task">+</span></a></h1>
+
+    <div class="box">
+        <div class="inner-box">
+            <div class="to-do">TO-DO</div>
+            <div class="other-box">
+                <div class="v-symbol" onclick="toggleOptions('v-options')"></div>
+                </div>
+                <div class="v-options">
+                    <a href="#" class="v-option">IN PROGRESS</a>
+                    <a href="#" class="v-option">FINISHED</a>
+                </div>
+            </div>
+        </div>
+
+    <div class="box">
+        <div class="inner-box">
+            <div class="in-progress">IN PROGRESS</div>
+            <div class="other-box">
+                <div class="v-symbol" onclick="toggleOptions('v-opt2')"></div>
+                </div>
+                <div class="v-opt2">
+                    <a href="#" class="v-option">FINISHED</a>
+                </div>
+            </div>
+        </div>
+
+    <div class="box">
+        <div class="inner-box">
+            <div class="finished">FINISHED</div>
+            <div class="other-box">
+                <div class="v-symbol" onclick="toggleOptions('v-opt3')"></div>
+                </div>
+                <div class="v-opt3">
+                    <a href="#" class="v-option">ARCHIVE</a>
+                </div>
+            </div>
+        </div>
+
+<script src="task.js"></script>
+
+</body>
+</html>
