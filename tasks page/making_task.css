@@ -19,7 +19,7 @@ body{
 .title, .notes {
     color: white;
     margin-left: 7px;
-    font-family: Arial;
+    font-family: 'Montserrat';
 }
 
 .split-box {
@@ -57,7 +57,7 @@ body{
 .date, .time, .ass {
     color: white;
     margin-left: 7px;
-    font-family: Arial;
+    font-family: 'Montserrat';
 }
 
 .v-symbol {
@@ -71,7 +71,7 @@ body{
 
 .clickable-text {
     color: white;
-    font-family: Arial;
+    font-family: 'Montserrat';
     font-size: smaller;
     text-decoration: none; 
     display: inline-block; 
@@ -91,7 +91,7 @@ body{
 .cancel-text {
     color: #749BC2;
     text-decoration: none; 
-    font-family: Arial;
+    font-family: 'Montserrat';
     display: inline-block;
     margin-right: 20px; 
     position: absolute;
@@ -115,7 +115,7 @@ body{
     margin-top: 25px;
     margin-left: 970px;
     transition: opacity 0.3s ease;
-    font-family: Arial;
+    font-family: 'Montserrat';
 }
 
 .button:hover {
@@ -129,7 +129,7 @@ body{
 .title-input, .notes-input {
     color: white;
     margin-left: 7px;
-    font-family: Arial;
+    font-family: 'Montserrat';
     background: transparent;
     border: none; 
     outline: none;
