@@ -1,0 +1,269 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background-color: #F6F4EB;
+    min-height: 100vh;
+    padding: 0 10px;
+}
+
+.hamburger-menu {
+    width: 40px;
+    height: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 10px;
+}
+
+.bar {
+    width: 100%;
+    height: 3px;
+    background-color: #4682A9;
+    margin: 5px 0;
+    transition: 0.4s;
+}
+
+.menu {
+    display: none;
+    position: absolute;
+    top: 35px; 
+    left: 0;
+    background-color: #F6F4EB;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    padding: 20px;
+    text-align: left;
+    border-radius: 20px;
+    font-family: 'Montserrat';
+}
+
+.menu ul li:hover {
+    background-color: #91C8E4; 
+}
+
+.menu ul li a {
+    color: #4682A9;
+    text-decoration: none;
+}
+
+.show {
+    display: block;
+}
+
+h1 {
+    color: #4682A9;
+    margin-left: 195px;
+	font-size: 50px;
+    font-family: 'Montserrat';
+}
+
+h1::after {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 14%;
+    height: 2px;
+    background-color: #4682A9;
+}
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 5px;
+}
+
+.task {
+    border-radius: 10px;
+	border: 3px solid #749BC2;
+  	padding: 20px;
+  	width: 30%;
+  	height: 400px;
+	background: white;
+    
+}
+
+.yourtask{
+	position: flex;
+	align-items: center;
+	justify-content: center;
+	color: black;
+	border-radius: 10px;
+	width: 150px;
+	height: 50px;
+	background: #E4E4E4;
+}
+.yourtask h2{
+	font-size: 20px;
+	font-weight: 400;
+	margin-top: 10px;
+	top: 50%;
+	text-align: center;
+}
+
+.task .dot {
+	height: 25px;
+    width: 25px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 20px;
+    position: relative;
+}
+.subjects {
+	display: flex;
+	margin-top: 40px;
+	margin-left: 20px;
+}
+.subjects h3 {
+	font-size: 15px;
+	margin-left: 10px;
+	font-weight: 300;
+	color: #989898;
+}
+.subjects p {
+	font-size: 20px;
+	margin-left: 10px;
+	width: 400px;
+}
+
+.add {
+	margin-top: -20%;
+	margin-left: 80%;
+}
+
+.calendar-container {
+    width: 45%;
+    border-radius: 10px;
+    margin-right: 20px;
+	margin-left: 150px;
+}
+.calendar-current-date {
+	margin-left: 10px;
+}
+.calendar-container header {
+    display: flex;
+    align-items: center;
+    padding: 25px 30px 10px;
+    justify-content: space-between;
+}
+
+header .calendar-navigation {
+    display: flex;
+}
+
+header .calendar-navigation span {
+    height: 38px;
+    width: 38px;
+    margin: 0 1px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 50%;
+    user-select: none;
+    color: #aeabab;
+    font-size: 1.9rem;
+}
+
+.calendar-navigation span:last-child {
+    margin-right: -10px;
+}
+
+header .calendar-navigation span:hover {
+    background: #f2f2f2;
+}
+
+header .calendar-current-date {
+    font-weight: 500;
+    font-size: 40px;
+}
+
+.calendar-body {
+    padding: 40px 20px;
+}
+
+.calendar-body ul {
+    list-style: none;
+    flex-wrap: wrap;
+    display: flex;
+    text-align: center;
+}
+
+.calendar-body .calendar-dates {
+    margin-bottom: 40px;
+}
+
+.calendar-body li {
+    width: calc(100% / 7);
+    font-size: 25px;
+    color: #414141;
+}
+
+.calendar-body .calendar-weekdays li {
+    cursor: default;
+    font-weight: 500;
+}
+
+.calendar-body .calendar-dates li {
+    margin-top: 30px;
+    position: relative;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.calendar-dates li.inactive {
+    color: #aaa;
+}
+
+.calendar-dates li.active {
+    color: #fff;
+}
+
+.calendar-dates li::before {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.calendar-dates li.active::before {
+    background: #6332c5;
+}
+
+.calendar-dates li:not(.active):hover::before {
+    background: #e4e1e1;
+}
+
+.tasks-container {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    display: none;
+    margin-top: 20px;
+}
+
+.add-task-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+
