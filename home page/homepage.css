@@ -1,0 +1,209 @@
+body{
+    background-color: #F6F4EB;
+    font-family: 'Montserrat';
+}
+
+.menu {
+    top: 35px; 
+    background-color: #F6F4EB;
+    padding: 10px 115px 10px 20px;
+}
+
+.menu ul {
+    list-style: none;
+}
+
+.menu ul li {
+    padding: 20px;
+    text-align: left;
+    font-family: 'Montserrat';
+    font-weight: 600;
+}
+
+.icon:hover {
+    background-color: #91c8e46c;
+    border-radius: 20px;
+}
+
+.menu ul li a {
+    color: #4682A9;
+    text-decoration: none;
+}
+
+.icon{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.icon span{
+    color: #4682A9;
+    padding: 17px 20px 0;
+}
+
+.show {
+    display: block;
+}
+
+.box {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tasks{
+    width: 20%;
+    border-radius: 20px;
+    background-color: #4682A9;
+    margin: 40px 20px;
+    padding-bottom: 30px;
+}
+
+.tasks h2{
+    margin: 25px 30px 15px;
+    font-size: 15px;
+    color: #F6F4EB;
+    font-weight: 600;
+}
+
+.tasks h3{
+    font-size: 13px;
+    font-weight: 600;
+    color: #2c5d7d;
+    background: #91C8E4;
+    width: 65%;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.box_2 {
+    margin-left: 60px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.due_header{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.due span{
+    color: #4682A9;
+    padding-top: 13px;
+}
+
+.due h1{
+    font-size: 20px;
+    font-weight: 600;
+    color: #4682A9;
+    margin-left: 20px;
+}
+
+.due h2{
+    font-size: 10px;
+    color: #749BC2;
+    margin-top: -5px;
+}
+
+.due h2::after{
+    content: " ";
+    display: block;
+    margin-top: 5px;
+    width: 250px;
+    height: 2px;
+    background-color: #4682A9;
+}
+
+.due h3{
+    font-size: 13px;
+    font-weight: 600;
+    color: #F6F4EB;
+    background: #4682A9;
+    width: 80%;
+    padding: 5px;
+    border-radius: 20px;
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.agenda{
+    margin-left: 115px;
+    margin-top: -40px;
+    margin-right: 30px;
+}
+
+.agenda h2{
+    font-size: 30px;
+    color: #4682A9;
+}
+
+.date h5{
+    font-size: 22px;
+    font-weight: 600;
+    color: #4682A9;
+    margin-top: 0;
+}
+
+.date h4{
+    font-size: 12px;
+    margin: 10px;
+    color: #749BC2;
+    font-weight: 600;
+}
+
+.agenda h3{
+    font-weight: 800;
+    color: #4682A9;
+}
+
+.date{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: -30px;
+}
+
+.task_link{
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: -10px;
+    color: #4682A9;
+}
+
+.task_link h4{
+    margin-top: 2px;
+    font-weight: 800;
+}
+
+.assignment{
+    width: 40%;
+    border-radius: 20px;
+    background-color: #4682A9;
+    margin: -10px 20px 40px;
+    padding-bottom: 30px;
+}
+
+.assignment h2{
+    margin: 25px 30px 15px;
+    font-size: 15px;
+    color: #F6F4EB;
+    font-weight: 600;
+}
+
+.assignment_content{
+    margin-left: 45px;
+}
+
+.assignment_content h3{
+    color: #c0e3f5;
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: -10px;
+}
+
+.assignment_content h4{
+    color: #F6F4EB;
+    font-size: 13px;
+    font-weight: 500;
+}
