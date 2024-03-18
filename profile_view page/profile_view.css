@@ -1,0 +1,89 @@
+body{
+    background-color: #F6F4EB;
+    font-family: 'Montserrat';
+}
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-top: 50px;
+    margin-left: 50px;
+    color: #4682A9;
+}
+
+.profile-header .material-symbols-outlined{
+    font-size: 200px; /* Adjust the size as needed */
+    margin-right: 20px; /* Add some spacing between the icon and text */
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+}
+
+.profile-info, #h1 {
+    font-size: 25px;
+}
+
+h1, h4 {
+    margin: 0; /* Remove default margins for the headings */
+}
+
+.Tasks, #h1 {
+    color: #4682A9;
+    font-size: 20px;
+    margin-left: 100px;
+    padding: 10px;
+}
+
+.Tasks h1::after{
+    content: " ";
+    position: absolute;
+    display: block;
+    left: 5%;
+    width: 90%;
+    height: 2px;
+    background-color: #4682A9;
+    margin-top: 10px;
+}
+
+.Tasks p {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.Tasks-progress {
+    display: flex;
+    align-items: center;
+}
+
+.Tasks-progress .material-symbols-outlined {
+    font-size: 50px; /* Adjust the size as needed */
+    margin-right: 20px; /* Add some spacing between the icon and text */
+}
+
+.Tasks-progress p {
+    font-size: 24px;
+    align-items: center;
+    font-weight: 300;
+    margin: 0;
+}
+
+#Remaining-Tasks p {
+    font-weight: 300;
+    font-size: 24px;
+}
+
+.Tasks-progress-2 {
+    display: flex;
+    align-items: center;
+}
+.Tasks-progress-2 .material-symbols-outlined {
+    font-size: 50px; /* Adjust the size as needed */
+    margin-right: 20px; /* Add some spacing between the icon and text */
+}
+.Tasks-progress-2 p {
+    font-size: 24px;
+    font-weight: 300;
+    align-items: center;
+    margin: 0;
+}
