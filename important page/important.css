@@ -40,7 +40,7 @@ body{
     padding: 20px;
     text-align: left;
     border-radius: 20px;
-    font-family: 'Montserrat';
+    font-family: Arial;
 }
 
 .menu ul li:hover {
@@ -59,7 +59,7 @@ body{
 h1{
     color: #4682A9;
     margin-left: 195px;
-    font-family: 'Montserrat';
+    font-family: Arial;
 }
 
 h1::after{
@@ -72,15 +72,67 @@ h1::after{
     background-color: #4682A9;
 }
 
+.text-placeholder {
+    position: absolute;
+    color: #fff;
+    font-family: Arial;
+}
+
+.text-placeholder input.text-input {
+    color: white;
+    font-family: Arial;
+    background: transparent;
+    border: none; 
+    outline: none;
+    font-size: 15px;
+    width: calc(100% - 25px);
+}
+
+.text-placeholder input.text-input::placeholder {
+    color: rgb(76, 76, 76); 
+}
+
+.top-left {
+    left: 110px;
+    top: 60px;
+}
+
+.top-right {
+    top: 60px;
+    right: 300px;
+}
+
+.bottom-left {
+    bottom: 60px;
+    left: 110px;
+}
+
+.bottom-right {
+    bottom: 60px;
+    right: 300px;
+}
+
+.picture-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 25px;
+    transform: translateY(-50%);
+    width: 60px; 
+    height: 60px; 
+    background-color: #fff;
+    border-radius: 50%;
+}
+
 .box {
     position: relative;
     margin-top: 50px;
     width: 72%;
-    height: 80px;
+    height: 80px; 
     margin-left: 195px;
     background-color: #4682A9;
     padding: 10px;
     border-radius: 5px;
+    padding-left: 80px; 
 }
 
 .box::after {
@@ -96,7 +148,7 @@ h1::after{
 .trash-icon {
     position: absolute;
     top: 75%;
-    right: 30px;
+    right: 40px;
     transform: translateY(-50%);
     cursor: pointer;
 }
