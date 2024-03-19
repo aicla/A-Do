@@ -1,4 +1,4 @@
-body{
+body {
     background-color: #F6F4EB;
 }
 
@@ -16,10 +16,11 @@ body{
     position: relative;
 }
 
-.title, .notes {
+.title,
+.notes {
     color: white;
     margin-left: 7px;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Arial;
 }
 
 .split-box {
@@ -54,58 +55,60 @@ body{
     margin-right: 130px;
 }
 
-.date, .time, .ass {
+.date,
+.time,
+.ass {
     color: white;
     margin-left: 7px;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Arial;
 }
 
 .v-symbol {
     position: absolute;
-    right: 20px; 
-    border-left: 10px solid transparent; 
-    border-right: 10px solid transparent; 
-    border-top: 20px solid #ffffff; 
-    cursor: pointer; 
+    right: 20px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 20px solid #ffffff;
+    cursor: pointer;
 }
 
 .clickable-text {
     color: white;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Arial;
     font-size: smaller;
-    text-decoration: none; 
-    display: inline-block; 
-    margin-top: 25px; 
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 25px;
     margin-left: 225px;
 }
 
 .clickable-text:hover {
-    text-decoration: underline; 
+    text-decoration: underline;
 }
 
 .box.notes-box {
-    width: 72%; 
-    height: 170px; 
+    width: 72%;
+    height: 170px;
 }
 
 .cancel-text {
     color: #749BC2;
-    text-decoration: none; 
-    font-family: 'Montserrat';
+    text-decoration: none;
+    font-family: 'Montserrat', Arial;
     display: inline-block;
-    margin-right: 20px; 
+    margin-right: 20px;
     position: absolute;
     margin-top: 25px;
     margin-left: 250px;
 }
 
 .button-container {
-    display: inline-block; 
-    vertical-align: middle; 
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .button {
-    padding: 6px 60px; 
+    padding: 6px 60px;
     background-color: #4682A9;
     color: white;
     text-decoration: none;
@@ -115,7 +118,7 @@ body{
     margin-top: 25px;
     margin-left: 970px;
     transition: opacity 0.3s ease;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Arial;
 }
 
 .button:hover {
@@ -126,20 +129,22 @@ body{
     background-color: #579fcf;
 }
 
-.title-input, .notes-input {
+.title-input,
+.notes-input {
     color: white;
     margin-left: 7px;
-    font-family: 'Montserrat';
+    font-family: 'Montserrat', Arial;
     background: transparent;
-    border: none; 
+    border: none;
     outline: none;
     width: 100%;
     font-size: 25px;
     margin-left: 25px;
 }
 
-.title-input::placeholder, .notes-input::placeholder {
-    color: transparent; 
+.title-input::placeholder,
+.notes-input::placeholder {
+    color: transparent;
 }
 
 .date-input {
@@ -153,7 +158,7 @@ body{
     background-color: #4682A9;
     color: #fff;
     box-sizing: border-box;
-    margin-top: -23px; 
+    margin-top: -23px;
     float: right;
     outline: none;
 }
@@ -169,7 +174,19 @@ body{
     background-color: #4682A9;
     color: #fff;
     box-sizing: border-box;
-    margin-top: -23px; 
+    margin-top: -23px;
     float: right;
     outline: none;
+}
+
+.star {
+    color: #4682A9;
+    font-size: 50px;
+    overflow: auto;
+    cursor: pointer;
+    text-decoration: none;
+    position: absolute;
+    right: 138px;
+    top: -20px;
+    z-index: 9999;
 }
