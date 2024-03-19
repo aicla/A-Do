@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="important.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="assigned.css">
     <title>Assigned to Me</title>
 </head>
@@ -31,20 +33,36 @@
     <div class="box">
         <div class="status">STATUS</div>
 
-    <div class="dropdown-box">
-        <div class="inner-box"> 
-            <div class="selected-option">TO DO</div>
-            <div class="v-symbol" onclick="toggleOptions('v-options')"></div>
-    </div>
+        <div class="dropdown-box">
+            <div class="inner-box"> 
+                <div class="selected-option">TO DO</div>
+                <div class="v-symbol" onclick="toggleOptions('v-options')"></div>
+            </div>
 
-    <div class="v-options">
-        <a href="#" class="v-option" onclick="selectOption('TO DO')">TO DO</a>
-        <a href="#" class="v-option" onclick="selectOption('IN PROGRESS')">IN PROGRESS</a>
-        <a href="#" class="v-option" onclick="selectOption('FINISHED')">FINISHED</a>
-    </div>
-</div>
+            <div class="v-options">
+                <a href="#" class="v-option" onclick="selectOption('TO DO')">TO DO</a>
+                <a href="#" class="v-option" onclick="selectOption('IN PROGRESS')">IN PROGRESS</a>
+                <a href="#" class="v-option" onclick="selectOption('FINISHED')">FINISHED</a>
+            </div>
+        </div>
 
+        <div class="text-placeholder top-left">
+            <input type="text" class="text-input" placeholder="Group Number">
+        </div>
+
+        <div class="text-placeholder top-right">
+            <input type="text" class="text-input" placeholder="Due">
+        </div>
+
+        <div class="text-placeholder bottom-left">
+            <input type="text" class="text-input" placeholder="Subject">
+        </div>
+
+        <div class="text-placeholder bottom-right">
+            <input type="text" class="text-input" placeholder="Activity Title">
+        </div>
+    </div>
     
-<script src="assigned.js"></script>
+    <script src="assigned.js"></script>
 </body>
 </html>
