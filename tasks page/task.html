@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="<link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="task.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>Task View</title>
 </head>
 <body>
@@ -19,10 +19,10 @@
     <nav class="menu" id="menu">
         <ul>
             <li><a href="task.html">Tasks</a></li>
-            <li><a href="../important page/important.html">Important</a></li>
-            <li><a href="../assigned to me page/assigned.html">Assigned to Me</a></li>
-            <li><a href="../teams page/teams.html">Teams</a></li>
-            <li><a href="../calendar page/calendar.html">Calendar</a></li>
+            <li><a href="important.html">Important</a></li>
+            <li><a href="assigned.html">Assigned to Me</a></li>
+            <li><a href="#">Teams</a></li>
+            <li><a href="#">Calendar</a></li>
         </ul>
     </nav>
 
@@ -32,40 +32,43 @@
         <div class="inner-box">
             <div class="to-do">TO-DO</div>
             <div class="other-box">
+                <a href="important.html" class="star">&#9733;</a>
                 <div class="v-symbol" onclick="toggleOptions('v-options')"></div>
-                </div>
                 <div class="v-options">
                     <a href="#" class="v-option">IN PROGRESS</a>
                     <a href="#" class="v-option">FINISHED</a>
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="box">
         <div class="inner-box">
             <div class="in-progress">IN PROGRESS</div>
             <div class="other-box">
+                <a href="important.html" class="star">&#9733;</a>
                 <div class="v-symbol" onclick="toggleOptions('v-opt2')"></div>
-                </div>
                 <div class="v-opt2">
                     <a href="#" class="v-option">FINISHED</a>
                 </div>
             </div>
         </div>
+    </div>
 
     <div class="box">
         <div class="inner-box">
             <div class="finished">FINISHED</div>
             <div class="other-box">
+                <a href="important.html" class="star">&#9733;</a>
                 <div class="v-symbol" onclick="toggleOptions('v-opt3')"></div>
-                </div>
                 <div class="v-opt3">
                     <a href="#" class="v-option">ARCHIVE</a>
                 </div>
             </div>
         </div>
+    </div>
 
-<script src="task.js"></script>
+    <script src="task.js"></script>
 
 </body>
 </html>
