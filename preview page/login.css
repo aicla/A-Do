@@ -15,15 +15,18 @@ body {
     justify-content: center; 
     align-items: center; 
 }
-  
+
 .navbar-title {
     margin: 0;
 }
 
+.front {
+    margin-top: 15%;
+}
+
 .title {
     font-size: 100px;
-    margin-top: 170px; 
-    margin-left: 520px;
+    text-align: center;
 }
 
 .desc {
