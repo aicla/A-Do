@@ -7,60 +7,72 @@
 body {
     background-color: #F6F4EB;
     min-height: 100vh;
-    padding: 0 10px;
+    padding: 0;
 }
 
-.hamburger-menu {
-    width: 40px;
-    height: 30px;
-    cursor: pointer;
-    margin-top: 20px;
-    margin-left: 10px;
-}
-
-.bar {
-    width: 100%;
-    height: 3px;
+.header {
+    overflow: hidden;
     background-color: #4682A9;
-    margin: 5px 0;
-    transition: 0.4s;
-}
+    font-family: 'Montserrat';
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
 
 .menu {
     display: none;
     position: absolute;
-    top: 35px; 
     left: 0;
     background-color: #F6F4EB;
     padding: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    border-radius: 20px;
 }
 
-.menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.menu ul li {
-    padding: 20px;
-    text-align: left;
-    border-radius: 20px;
-    font-family: 'Montserrat';
-}
-
-.menu ul li:hover {
-    background-color: #91C8E4; 
-}
-
-.menu ul li a {
-    color: #4682A9;
+.header a {
+    float: left;
+    color: #F6F4EB;
+    text-align: center;
+    padding: 12px 30px;
     text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
 }
 
-.show {
-    display: block;
+.header a:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+}
+  
+.header a.active {
+    background-color: #91C8E4;
+    color: #306f99;
+}
+
+.header span {
+    float: left;
+    color: #B9E7FF;
+    text-align: center;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.header span:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+    cursor: pointer;
+}
+  
+.header span.active {
+    background-color: #91C8E4;
+    color: #4682A9;
+}
+  
+.header-left {
+    float:left;
+}
+
+.header-right {
+    float:right;
 }
 
 h1 {

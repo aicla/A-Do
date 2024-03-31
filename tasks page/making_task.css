@@ -1,5 +1,93 @@
-body {
+body{
     background-color: #F6F4EB;
+    font-family: 'Montserrat';
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    overflow: hidden;
+    background-color: #4682A9;
+    font-family: 'Montserrat';
+    font-weight: 600;
+  }
+
+.menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: #F6F4EB;
+    padding: 10px;
+}
+
+.header a {
+    float: left;
+    color: #F6F4EB;
+    text-align: center;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.header a:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+}
+  
+.header a.active {
+    background-color: #91C8E4;
+    color: #306f99;
+}
+
+.header span {
+    float: left;
+    color: #B9E7FF;
+    text-align: center;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.header span:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+    cursor: pointer;
+}
+  
+.header span.active {
+    background-color: #91C8E4;
+    color: #4682A9;
+}
+  
+.header-left {
+    float:left;
+}
+
+.header-right {
+    float:right;
+}
+
+.top_buttons{
+    padding: 20px 20px 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.top_buttons a {
+    color: #4682A9;
+    text-decoration: none;
+}
+
+.back_button{
+    margin-left: 8%;
+}
+
+.important_button{
+    margin-right: 8%;
+    cursor: pointer;
 }
 
 .box {
@@ -51,7 +139,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     margin-top: 5px;
-    margin-left: 200px;
+    margin-left: 150px;
     margin-right: 130px;
 }
 
