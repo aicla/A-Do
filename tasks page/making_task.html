@@ -13,7 +13,7 @@
     <div class="header">
         <div class="header-left">
             <a href="../home page/homepage.html">Home</a>
-            <a href="../tasks page/task.html">Task</a>
+            <a class="active" href="../tasks page/task.html">Task</a>
             <a href="../important page/important.html">Important</a>
             <a href="../assigned to me page/assigned.html">Assigned to me</a>
             <a href="../teams page/teams.html">Teams</a>
@@ -67,8 +67,7 @@
                 <input type="date" class="date-input">
             </div>
         </div>
-
-        <div class="box time-box">
+        <div class="time_box">
             <div class="inner-box">
                 <div class="time">TIME REMINDER</div>
                 <input type="time" class="time-input">
@@ -79,16 +78,28 @@
     <div class="box">
         <div class="inner-box">
             <div class="ass">ASSIGNED TO:</div>
-            <div class="v-symbol"></div>
-            <a href="#" class="clickable-text">TO-DO</a>
-            <a href="#" class="clickable-text">IN PROGRESS</a>
+            <div class="teams">
+                <div class="select">
+                    <span class="selected">Software Engineering</span>
+                    <div class="caret"></div>
+                </div>
+                <ul class="dropdown">
+                    <li class="chosen">Software Engineering</li>
+                    <li>Basic Accounting</li>
+                    <li>Human Computer Interaction</li>
+                </ul>
+            </div>
+            <div class="progress">
+                <a href="#" class="clickable-text">TO-DO</a>
+                <a href="#" class="clickable-text">IN PROGRESS</a>
+            </div>
         </div>
     </div>
 
-    <div class="box notes-box">
+    <div class="notes_box">
         <div class="inner-box">
             <div class="notes">NOTES</div>
-            <input type="text" class="notes-input" placeholder="Type here...">
+            <textarea name="text" class="notes-input" rows="6" placeholder="Type here..."></textarea>
         </div>
     </div> 
 
@@ -97,11 +108,7 @@
         <button class="button">SAVE</button>
     </div>
 
-    <script>
-        document.getElementById("kid_star_button").addEventListener("click", function() {
-            document.getElementById("kid_star_icon").classList.add("filled");
-        });
-    </script>
+    <script src="task.js"></script>
 
 </body>
 </html>
