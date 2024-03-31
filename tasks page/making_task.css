@@ -107,7 +107,7 @@ body {
     vertical-align: middle;
 }
 
-.button {
+#saveButton {
     padding: 6px 60px;
     background-color: #4682A9;
     color: white;
@@ -189,4 +189,15 @@ body {
     right: 138px;
     top: -20px;
     z-index: 9999;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
 }

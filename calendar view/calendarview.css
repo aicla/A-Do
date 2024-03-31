@@ -107,6 +107,7 @@ h1::after {
 	height: 50px;
 	background: #E4E4E4;
 }
+
 .yourtask h2{
 	font-size: 20px;
 	font-weight: 400;
@@ -124,6 +125,7 @@ h1::after {
     margin-left: 20px;
     position: relative;
 }
+
 .subjects {
 	display: flex;
 	margin-top: 40px;

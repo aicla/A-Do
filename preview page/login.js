@@ -1,10 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -14,14 +10,15 @@ const firebaseConfig = {
   projectId: "a-do-ff29e",
   storageBucket: "a-do-ff29e.appspot.com",
   messagingSenderId: "488739423620",
-  appId: "1:488739423620:web:9bdc3605a45a3714b249d1",
+  appId: "1:488739423620:web:9bdc3605a45a3714b249d1"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+const db = getDatabase();
 
-//google sign in
+// Google sign in
 const googleSignInBtn = document.getElementById("googleSign");
 
 googleSignInBtn.addEventListener("click", () => {
@@ -30,13 +27,26 @@ googleSignInBtn.addEventListener("click", () => {
     .then((result) => {
       // User successfully signed in.
       const user = result.user;
+      const userEmail = user.email;
+      const userId = user.uid; // Add this line to get the user ID
+      const reference = ref(db, 'users/' + userId);
+      set(reference, {
+        username: user.displayName,
+        email: userEmail
+      });
+
+      // Call loadTasks() with the user's UID
+
+      //console.log("Username: ", user.displayName);
+      //console.log("Email: ", userEmail);
+      //console.log("UserID: ", userId);
       window.location.href = "../home page/homepage.html";
     })
     .catch((error) => {
       // Error occurred during sign-in.
-      console.error("Error");
+      console.error(error);
     });
-  signOut(auth)
+    signOut(auth)
     .then(() => {
       // Sign-out successful.
     })
@@ -44,3 +54,6 @@ googleSignInBtn.addEventListener("click", () => {
       // An error happened.
     });
 });
+
+
+
