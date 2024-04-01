@@ -12,8 +12,6 @@ document.addEventListener("DOMContentLoaded", function () {
     img.alt = "Profile Picture";
 
     // eto na max w and h, kasi lalabo
-    img.style.maxWidth = "100%";
-    img.style.maxHeight = "100%";
     img.style.width = "120px";
     img.style.height = "120px";
     img.style.borderRadius = "50%";
