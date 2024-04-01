@@ -30,6 +30,14 @@ googleSignInBtn.addEventListener("click", () => {
     .then((result) => {
       // User successfully signed in.
       const user = result.user;
+      const uid = user.uid;
+      const photoURL = user.photoURL;
+      const displayName = user.displayName;
+
+      localStorage.setItem("uid", uid);
+      localStorage.setItem("photoURL", photoURL);
+      localStorage.setItem("displayName", displayName);
+
       window.location.href = "../home page/homepage.html";
     })
     .catch((error) => {

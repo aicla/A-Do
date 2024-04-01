@@ -1,78 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="task.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="task.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
     <title>Task View</title>
-</head>
-<body>
+    <script type="module" src="task.js"></script>
+    <script>
+      //Profile Picture
+      document.addEventListener("DOMContentLoaded", function () {
+        const photoURL = localStorage.getItem("photoURL");
 
+        const profileIcon = document.getElementById("pfp");
+        if (profileIcon) {
+          // Create an image element
+          const img = document.createElement("img");
+          img.src = photoURL;
+          img.alt = "Profile Picture";
+
+          img.style.width = "40px";
+          img.style.height = "40px";
+          profileIcon.appendChild(img);
+
+          profileIcon.addEventListener("click", function () {
+            window.location.href = "../profile_view page/profile_view.html";
+          });
+        } else {
+          console.error("Profile icon element not found");
+        }
+      });
+    </script>
+  </head>
+  <body>
     <div class="header">
-        <div class="header-left">
-            <a href="../home page/homepage.html">Home</a>
-            <a class="active" href="../tasks page/task.html">Task</a>
-            <a href="../important page/important.html">Important</a>
-            <a href="../assigned to me page/assigned.html">Assigned to me</a>
-            <a href="../teams page/teams.html">Teams</a>
-            <a href="../calendar view/calendar.html">Calendar</a>
-        </div>
-        <div class="header-right">
-            <span class="material-symbols-outlined">
-                mail
-            </span>
-            <span class="material-symbols-outlined">
-                account_circle
-            </span>
-        </div>
+      <div class="header-left">
+        <a href="../home page/homepage.html">Home</a>
+        <a class="active" href="../tasks page/task.html">Task</a>
+        <a href="../important page/important.html">Important</a>
+        <a href="../assigned to me page/assigned.html">Assigned to me</a>
+        <a href="../teams page/teams.html">Teams</a>
+        <a href="../calendar view/calendar.html">Calendar</a>
+      </div>
+      <div class="header-right">
+        <span class="material-symbols-outlined"> mail </span>
+        <span id="pfp" class="material-symbols-outlined"> </span>
+      </div>
     </div>
 
-    <h1>Tasks<a href="making_task.html"><span class="add-task">+</span></a></h1>
+    <h1>
+      Tasks<a href="making_task.html"><span class="add-task">+</span></a>
+    </h1>
 
     <div class="box">
-        <div class="inner-box">
-            <div class="to-do">TO-DO</div>
-            <div class="other-box">
-                <a href="../important page/important.html" class="star">&#9733;</a>
-                <div class="v-symbol" onclick="toggleOptions('v-options')"></div>
-                <div class="v-options">
-                    <a href="#" class="v-option">IN PROGRESS</a>
-                    <a href="#" class="v-option">FINISHED</a>
-                </div>
-            </div>
+      <div class="inner-box">
+        <div class="to-do">TO-DO</div>
+        <div class="other-box">
+          <a href="../important page/important.html" class="star">&#9733;</a>
+          <div class="v-symbol" onclick="toggleOptions('v-options')"></div>
+          <div class="v-options">
+            <a href="#" class="v-option">IN PROGRESS</a>
+            <a href="#" class="v-option">FINISHED</a>
+          </div>
         </div>
-    </div>
-
-    <div class="box">
-        <div class="inner-box">
-            <div class="in-progress">IN PROGRESS</div>
-            <div class="other-box">
-                <a href="../important page/important.html" class="star">&#9733;</a>
-                <div class="v-symbol" onclick="toggleOptions('v-opt2')"></div>
-                <div class="v-opt2">
-                    <a href="#" class="v-option">FINISHED</a>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
     <div class="box">
-        <div class="inner-box">
-            <div class="finished">FINISHED</div>
-            <div class="other-box">
-                <a href="../important page/important.html" class="star">&#9733;</a>
-                <div class="v-symbol" onclick="toggleOptions('v-opt3')"></div>
-                <div class="v-opt3">
-                    <a href="#" class="v-option">ARCHIVE</a>
-                </div>
-            </div>
+      <div class="inner-box">
+        <div class="in-progress">IN PROGRESS</div>
+        <div class="other-box">
+          <a href="../important page/important.html" class="star">&#9733;</a>
+          <div class="v-symbol" onclick="toggleOptions('v-opt2')"></div>
+          <div class="v-opt2">
+            <a href="#" class="v-option">FINISHED</a>
+          </div>
         </div>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="inner-box">
+        <div class="finished">FINISHED</div>
+        <div class="other-box">
+          <a href="../important page/important.html" class="star">&#9733;</a>
+          <div class="v-symbol" onclick="toggleOptions('v-opt3')"></div>
+          <div class="v-opt3">
+            <a href="#" class="v-option">ARCHIVE</a>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="task.js"></script>
-
-</body>
+  </body>
 </html>
