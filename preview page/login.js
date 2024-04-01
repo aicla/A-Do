@@ -5,6 +5,11 @@ import {
   signInWithPopup,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  set,
+} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,9 +24,10 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+const db = getDatabase();
 
-//google sign in
+// Google sign in
 const googleSignInBtn = document.getElementById("googleSign");
 
 googleSignInBtn.addEventListener("click", () => {
@@ -42,7 +48,7 @@ googleSignInBtn.addEventListener("click", () => {
     })
     .catch((error) => {
       // Error occurred during sign-in.
-      console.error("Error");
+      console.error(error);
     });
   signOut(auth)
     .then(() => {
