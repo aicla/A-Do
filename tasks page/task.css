@@ -89,6 +89,45 @@ h1::after {
     background-color: #4682A9;
 }
 
+.dropdown{
+    list-style: none;
+    padding: 5px 10px;
+    background: #306f99;
+    border: 1px #363a43;
+    box-shadow: 0 0.5em 1em rgba(0,0,0,0.3);
+    border-radius: 10px;
+    color: #F6F4EB;
+    position: absolute;
+    top: 360px;
+    width: 30%;
+    transform: translateX(133%);
+    
+    opacity: 0;
+    display: none;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.dropdown li{
+    padding: 10px;
+    margin: 10px 0 10px 10px;
+    border-radius: 0.5em;
+    cursor: pointer;
+}
+
+.dropdown li:hover{
+    background: #749BC2;
+}
+
+.chosen{
+    background: #124160;
+}
+
+.menu-open{
+    display: block;
+    opacity: 1;
+}
+
 .box {
     margin-top: 50px;
     width: 72%;
