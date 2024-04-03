@@ -34,9 +34,15 @@ googleSignInBtn.addEventListener("click", () => {
       const photoURL = user.photoURL;
       const displayName = user.displayName;
 
+    
       localStorage.setItem("uid", uid);
       localStorage.setItem("photoURL", photoURL);
       localStorage.setItem("displayName", displayName);
+
+      // Display user data
+      console.log("UID:", uid);
+      console.log("Photo URL:", photoURL);
+      console.log("Display Name:", displayName);
 
       window.location.href = "../home page/homepage.html";
     })

@@ -27,8 +27,9 @@
           img.src = photoURL;
           img.alt = "Profile Picture";
 
-          img.style.width = "40px";
-          img.style.height = "40px";
+          img.style.width = "24px";
+          img.style.height = "24px";
+          img.style.borderRadius = "50px";
           profileIcon.appendChild(img);
 
           profileIcon.addEventListener("click", function () {
@@ -74,7 +75,6 @@
         </span>
       </a>
     </div>
-
     <div class="box">
       <div class="inner-box">
         <div class="title">TITLE</div>
@@ -112,9 +112,11 @@
           </ul>
         </div>
         <div class="progress">
-          <a href="#" class="assigned-to-input">TO-DO</a>
-          <a href="#" class="assigned-to-input">IN PROGRESS</a>
-        </div>
+          <!-- HTML -->
+            <input type="hidden" class="assigned-to-input" name="assignedTo">
+            <a href="#" class="clickable-text" data-value="TO-DO">TO-DO</a>
+            <a href="#" class="clickable-text" data-value="IN PROGRESS">IN PROGRESS</a>
+        </div>       
       </div>
     </div>
 
