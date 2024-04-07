@@ -1,7 +1,113 @@
+body{
+    background-color: #F6F4EB;
+    font-family: 'Montserrat';
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    overflow: hidden;
+    background-color: #4682A9;
+    font-family: 'Montserrat';
+    font-weight: 600;
+  }
+
+.menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: #F6F4EB;
+    padding: 10px;
+}
+
+.header a {
+    float: left;
+    color: #F6F4EB;
+    text-align: center;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+}
+
+.header a:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+}
+  
+.header #message {
+    background-color: #91C8E4;
+    color: #306f99;
+}
+  
+.header-left {
+    float:left;
+}
+
+.header span {
+    float: left;
+    color: #B9E7FF;
+    text-align: center;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-size: 25px;
+    line-height: 25px;
+}
+
+.header span:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+    cursor: pointer;
+}
+  
+.header span.active {
+    background-color: #91C8E4;
+    color: #4682A9;
+}
+  
+.header-left {
+    float:left;
+}
+
+.header-right {
+    float:right;
+}
+
+.box{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vl {
+    border-left: 6px solid #4682A9;
+    height: 500px;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+  }
+
+.message_preview h1{
+    font-size: 0.7rem;
+}
+
+.message_preview h2{
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.message_preview p{
+    font-size: 0.7rem;
+    font-weight: 400;
+}
+
 #chat-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 70%;
 }
 
 #users-list {
