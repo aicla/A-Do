@@ -14,6 +14,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
     <link rel="stylesheet" href="making_task.css" />
+    <script type="module" src="./making_task.js"></script>
     <title>Making New Task</title>
     <script>
       //Profile Picture
@@ -38,6 +39,15 @@
         } else {
           console.error("Profile icon element not found");
         }
+
+        const messageIcon = document.getElementById("message");
+        if (messageIcon) {
+          messageIcon.addEventListener("click", function () {
+            window.location.href = "../messaging/messaging.html";
+          });
+        } else {
+          console.error("Message icon element not found");
+        }
       });
     </script>
   </head>
@@ -52,11 +62,9 @@
         <a href="../calendar view/calendar.html">Calendar</a>
       </div>
       <div class="header-right">
-        <span class="material-symbols-outlined"> mail </span>
+        <span id="message" class="material-symbols-outlined"> mail </span>
         <span id="pfp" class="material-symbols-outlined"></span>
-        <span class="material-symbols-outlined">
-          logout
-          </span>
+        <span id="logout" class="material-symbols-outlined"> logout </span>
       </div>
     </div>
 

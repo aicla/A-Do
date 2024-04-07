@@ -12,6 +12,7 @@
     <title>Calendar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="calendarview.css" />
+    <script type="module" src="/calendar view/script.js"></script>
     <!--link for css pi-->
     <link
       rel="stylesheet"
@@ -45,6 +46,15 @@
         } else {
           console.error("Profile icon element not found");
         }
+
+        const messageIcon = document.getElementById("message");
+        if (messageIcon) {
+          messageIcon.addEventListener("click", function () {
+            window.location.href = "../messaging/messaging.html";
+          });
+        } else {
+          console.error("Message icon element not found");
+        }
       });
     </script>
     <!--symbol more vert-->
@@ -62,11 +72,9 @@
         <a class="active" href="../calendar view/calendar.html">Calendar</a>
       </div>
       <div class="header-right">
-        <span class="material-symbols-outlined"> mail </span>
+        <span id="message" class="material-symbols-outlined"> mail </span>
         <span id="pfp" class="material-symbols-outlined"> </span>
-        <span class="material-symbols-outlined">
-          logout
-          </span>
+        <span id="logout" class="material-symbols-outlined"> logout </span>
       </div>
     </div>
 

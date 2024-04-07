@@ -40,6 +40,15 @@
         } else {
           console.error("Profile icon element not found");
         }
+
+        const messageIcon = document.getElementById("message");
+        if (messageIcon) {
+          messageIcon.addEventListener("click", function () {
+            window.location.href = "../messaging/messaging.html";
+          });
+        } else {
+          console.error("Message icon element not found");
+        }
       });
     </script>
   </head>

@@ -26,6 +26,18 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
+const logoutButton = document.getElementById("logout");
+logoutButton.addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      console.log("Sign out");
+      window.location.href = "../preview page/login.html";
+    })
+    .catch((error) => {
+      console.error("Sign-out error:", error);
+    });
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   // Handle authentication state changes
   auth.onAuthStateChanged((user) => {
