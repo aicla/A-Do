@@ -8,6 +8,7 @@ import {
 import {
   getDatabase,
   ref,
+  get,
   push,
   set,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
@@ -46,7 +47,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const user = auth.currentUser;
       if (user) {
         // User is logged in, proceed to save task
-        saveTask(user.uid);
+        const isImportant = document.getElementById("kid_star_icon").classList.contains("filled");
+        saveTask(user.uid, isImportant);
       } else {
         // User is not logged in, handle accordingly
         console.error("User is not logged in.");
@@ -77,14 +79,14 @@ document.addEventListener("DOMContentLoaded", function () {
   
 });
 
-
 // Function to load tasks
 function loadTasks(userId) {
-  // Implement loading tasks logic here
+
 }
 
+
 // Function to save task
-function saveTask(userId) {
+function saveTask(userId, isImportant) {
   // Retrieve input values
   const title = document.querySelector(".title-input").value;
   const date = document.querySelector(".date-input").value;
@@ -121,6 +123,17 @@ function saveTask(userId) {
     .then(() => {
       showToast("Task saved successfully!", false); // Green toast for success
       // Redirect or perform any other action after saving the task
+      if (isImportant) {
+        // Save the task as an important task
+        const importantTasksRef = ref(db, "users/" + userId + "/important_tasks/"); // Get reference to the important_tasks node
+        push(importantTasksRef, task)
+          .then(() => {
+            console.log("Task saved as important task successfully!");
+          })
+          .catch((error) => {
+            console.error("Error saving task as important task:", error);
+          });
+      }
     })
     .catch((error) => {
       showToast("Error saving task: " + error, true); // Red toast for error
