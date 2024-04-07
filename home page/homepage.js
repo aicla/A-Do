@@ -19,7 +19,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Logout functionality
 const logoutButton = document.getElementById("logout");
 logoutButton.addEventListener("click", () => {
   signOut(auth)
@@ -30,4 +29,12 @@ logoutButton.addEventListener("click", () => {
     .catch((error) => {
       console.error("Sign-out error:", error);
     });
+});
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    console.log("User is signed out");
+  } else {
+    console.log("User is signed in");
+  }
 });
