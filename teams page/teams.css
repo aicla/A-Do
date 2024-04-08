@@ -94,6 +94,10 @@ h1::after{
     margin-right: 200px;
 }
 
+.add:hover {
+    cursor: pointer;
+}
+
 .box {
     display: flex;
     flex-wrap: wrap;
