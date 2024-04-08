@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Fetch uid, photoURL, and displayName from localStorage
   const uid = localStorage.getItem("uid");
   const photoURL = localStorage.getItem("photoURL");
   const displayName = localStorage.getItem("displayName");
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
     console.error("Profile picture element not found");
   }
 
-  // Set username and uid
   const username = document.getElementById("username");
   if (username) {
     username.textContent = displayName;
