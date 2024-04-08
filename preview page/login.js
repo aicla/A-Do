@@ -47,14 +47,6 @@ googleSignInBtn.addEventListener("click", () => {
       window.location.href = "../home page/homepage.html";
     })
     .catch((error) => {
-      // Error occurred during sign-in.
       console.error(error);
-    });
-  signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-    })
-    .catch((error) => {
-      // An error happened.
     });
 });
