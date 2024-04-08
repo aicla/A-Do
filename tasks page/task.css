@@ -99,18 +99,28 @@ h1::after {
     border-radius: 5px;
 }
 
-.inner-box {
-    position: relative;
+.name-bar{
+    margin-top: 12px;
+    color: #124160;
+    font-family: 'Montserrat';
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.inside-box{
+    display: flex;
 }
 
 .to-do, .in-progress, .finished {
     color: white;
     font-weight: bold;
     margin-left: 7px;
-    font-family: 'Montserrat', Arial;
+    font-family: 'Montserrat';
 }
 
 .other-box {
+    display: flex;
+    justify-content:space-between;
     position: relative;
     margin-top: 10px;
     margin-left: 20px;
@@ -119,60 +129,6 @@ h1::after {
     background-color: #91C8E4;
     border-radius: 5px;
     overflow: hidden;
-}
-
-.v-symbol {
-    position: absolute;
-    top: calc(100% - 30px); 
-    right: 20px; 
-    border-left: 10px solid transparent; 
-    border-right: 10px solid transparent; 
-    border-top: 20px solid #4682A9; 
-    cursor: pointer;
-}
-
-.v-options,
-.v-opt2,
-.v-opt3 {
-    position: absolute;
-    top: calc(100% + 5px); 
-    right: 25px;
-    width: max-content; 
-    background-color: #749BC2;
-    border-radius: 5px;
-    display: none;
-    border: 1px solid #91C8E4;
-}
-
-.v-options.active,
-.v-opt2.active,
-.v-opt3.active {
-    display: block;
-}
-
-.v-option {
-    margin: 0; 
-    padding: 5px 100px; 
-    color: white;
-    text-decoration: none;
-    display: block; 
-    font-family: 'Montserrat', Arial;
-}
-
-.v-option:hover {
-    background-color: #91C8E4; 
-    border-radius: 5px;
-}
-
-.v-options::before,
-.v-opt2::before,
-.v-opt3::before {
-    content: '';
-    position: absolute;
-    right: 100%;
-    height: 100%;
-    background-color: #91C8E4;
-    z-index: 1;
 }
 
 .add-task {
@@ -191,14 +147,72 @@ h1::after {
     cursor: pointer;
 }
 
-.star {
-    color: white;
-    font-size: 35px; 
-    margin-left: 10px;
-    position: relative;
-    top: -5px; /* Adjust top position as needed */
-    resize: both;
-    overflow: auto;
+.teams * {
+    box-sizing: border-box;
+}
+.important_button .material-symbols-outlined{
     cursor: pointer;
-    text-decoration: none; 
+    color: #124160;
+    text-decoration: none;
+    padding: 10px 10px;
+}
+.select{
+    color: #F6F4EB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.caret{
+    margin-top: 8px;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid #124160;
+    transition: 0.3s;
+}
+
+.caret-rotate{
+    transform:rotate(180deg);
+}
+
+.dropdown{
+    width: 12%;
+    position: absolute;
+    background-color: #306f99;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 0.5rem;
+    display: none;
+    opacity: 0;
+    transform: translateX(450%);
+    z-index: 1;
+}
+
+.menu-open{
+    display: block;
+    opacity: 1;
+}
+
+.dropdown li{
+    color: white;
+    font-size: 0.8rem;
+    list-style: none;
+    padding: 10px 0 10px 20px;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+.dropdown li:hover{
+    background: #749BC2;
+}
+
+.chosen{
+    background: #124160;
+}
+
+.menu-open{
+    display: block;
+    opacity: 1;
 }
