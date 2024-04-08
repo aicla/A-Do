@@ -40,6 +40,20 @@
           console.error("Profile icon element not found");
         }
       });
+
+      //Create Team
+      document.addEventListener("DOMContentLoaded", function () {
+    const addIcon = document.querySelector(".add");
+  
+    if (addIcon) {
+      addIcon.addEventListener("click", function () {
+        window.location.href = "../teams page/add.html"; // Redirect to add.html upon click
+      });
+    } else {
+      console.error("Add icon element not found");
+    }
+  });
+
     </script>
   </head>
   <body>

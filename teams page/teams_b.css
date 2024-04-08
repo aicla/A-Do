@@ -112,7 +112,13 @@ h1::after{
     display: inline-block;
     font-size: 16px;
     font-weight: 500;
+    cursor: pointer;
 }
+
+.members:hover {
+    background-color: #306f99;
+    color: white;
+  }
 
 .box {
     margin-top: 30px;
