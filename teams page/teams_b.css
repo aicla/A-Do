@@ -69,6 +69,21 @@ body{
     float:right;
 }
 
+.team_name{
+    display: flex;
+    justify-content: space-between;
+}
+
+.back_button{
+    margin-right: 12%;
+    margin-top: 4%;
+}
+
+.back_button .material-symbols-outlined{
+    color: #4682A9;
+    font-weight: 500;
+} 
+
 h1{
     margin-top: 50px;
     color: #4682A9;
