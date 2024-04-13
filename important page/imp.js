@@ -107,7 +107,21 @@ function displayImportantTasks(tasks) {
     // Populate task data into the HTML elements
     taskElement.innerHTML = `
     <!-- Your task content here -->
-    <div class="picture-placeholder"></div>
+    <div class="star-button">
+              <a class="important_button" id="kid_star_button_1">
+              <span class="material-symbols-outlined" id="kid_star_icon_1"
+                ><style>
+                  #kid_star_button {
+                    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+                  }
+                  .filled {
+                    font-variation-settings: "FILL" 1;
+                  }
+                  </style>
+                  kid_star
+                </span>
+              </a>
+            </div>
     <div class="text-placeholder top-left">
       <input type="text" class="text-input" value="${task.groupNumber}" />
     </div>
@@ -124,6 +138,12 @@ function displayImportantTasks(tasks) {
       <input type="text" class="text-input" value="${task.title}" />
     </div>
     `;
+
+    // Set input fields as readOnly
+    const inputFields = taskElement.querySelectorAll('input[type="text"]');
+    inputFields.forEach((input) => {
+      input.readOnly = true;
+    });
 
     // Attach taskId to the taskElement for reference when deleting
     taskElement.dataset.taskId = task.id;

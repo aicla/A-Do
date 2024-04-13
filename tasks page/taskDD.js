@@ -29,50 +29,15 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function createTaskElement(chosen) {
-    const taskElement = document.createElement("div");
-    taskElement.classList.add("box");
-
-    const nameBar = document.createElement("div");
-    nameBar.classList.add("name-bar");
-    nameBar.innerHTML = `<span class="title-input">${chosen}</span>`;
-
-    taskElement.appendChild(nameBar);
-
-    return taskElement;
-}
-
-function displayTask(chosen, sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        // Create the main task element
-        const taskElement = createTaskElement(chosen);
-
-        // Create additional elements and append them to the task element
-        const taskStatus = document.createElement("div");
-        taskStatus.textContent = chosen;
-
-        const nameBar = document.createElement("div");
-        nameBar.classList.add("name-bar");
-        nameBar.innerHTML = `<span class="title-input">${chosen}</span>`;
-
-        taskElement.appendChild(taskStatus);
-        taskElement.appendChild(nameBar);
-
-        // Append the new task element to the section
-        section.appendChild(taskElement);
-    } else {
-        console.error(`Section ${sectionId} not found.`);
-    }
-}
-
 function loadTasks(userId) {
+    console.log("Loading tasks for user:", userId);
     // Retrieve tasks from Firebase database
     const userTasksRef = ref(db, "users/" + userId + "/tasks/");
     get(userTasksRef)
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const tasks = snapshot.val();
+                console.log("Tasks data:", tasks); // Log the tasks data
                 // Sort tasks by assignedTo value
                 const sortedTasks = Object.values(tasks).sort((a, b) => {
                     // Trim assignedTo values to remove leading and trailing spaces
@@ -114,4 +79,57 @@ function loadTasks(userId) {
         .catch((error) => {
             console.error("Error loading tasks:", error);
         });
+}
+
+function displayTask(chosen, sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        if (chosen) {
+            // Create a new inner-box for each task
+            const taskElement = document.createElement("div");
+            taskElement.classList.add("inner-box");
+
+            // Create the star-button element
+            const starButton = document.createElement("div");
+            starButton.classList.add("star-button");
+            starButton.innerHTML = `
+                <a class="important_button" id="kid_star_button_1">
+                    <span class="material-symbols-outlined" id="kid_star_icon_1"></span>
+                </a>
+            `;
+
+            // Create the name-bar element and add the chosen text to it
+            const nameBar = document.createElement("div");
+            nameBar.classList.add("name-bar");
+            nameBar.innerHTML = `<span class="title-input">${chosen}</span>`;
+
+            // Create the caret element
+            const caret = document.createElement("div");
+            caret.classList.add("caret");
+
+            // Create the dropdown element
+            const dropdown = document.createElement("ul");
+            dropdown.classList.add("dropdown");
+            dropdown.innerHTML = `
+                <li class="chosen">TO-DO</li>
+                <li>IN-PROGRESS</li>
+                <li>FINISHED</li>
+                <li>ARCHIVE</li>
+            `;
+
+            // Append all elements to the taskElement
+            taskElement.appendChild(starButton);
+            taskElement.appendChild(nameBar);
+            taskElement.appendChild(caret);
+            taskElement.appendChild(dropdown);
+
+            // Append the new task element to the section
+            section.appendChild(taskElement);
+            console.log("Task element appended to section:", taskElement);
+        } else {
+            console.error("Chosen value is empty or null.");
+        }
+    } else {
+        console.error(`Section ${sectionId} not found.`);
+    }
 }

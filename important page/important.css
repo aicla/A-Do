@@ -10,7 +10,7 @@ body{
     background-color: #4682A9;
     font-family: 'Montserrat';
     font-weight: 600;
-  }
+}
 
 .menu {
     display: none;
@@ -93,7 +93,8 @@ h1::after{
 
 .text-placeholder input.text-input {
     color: white;
-    font-family: Arial;
+    font-family: 'Montserrat';
+    font-weight: 600;
     background: transparent;
     border: none; 
     outline: none;
@@ -125,15 +126,10 @@ h1::after{
     right: 300px;
 }
 
-.picture-placeholder {
-    position: absolute;
-    top: 50%;
-    left: 25px;
-    transform: translateY(-50%);
-    width: 60px; 
-    height: 60px; 
-    background-color: #fff;
-    border-radius: 50%;
+/*riri na raw magaayos*/
+.star-button .materials-symbols-outlined {
+    font-size: 200px;
+    height: 10%;
 }
 
 .box {
