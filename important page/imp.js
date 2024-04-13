@@ -128,8 +128,8 @@ function displayImportantTasks(tasks) {
     // Attach taskId to the taskElement for reference when deleting
     taskElement.dataset.taskId = task.id;
 
-    // Append the task element to the container
-    importantTasksContainer.appendChild(taskElement);
+    // Prepend the task element to the container
+    importantTasksContainer.prepend(taskElement);
 
     // Attach deleteItem() function to the delete button
     const deleteButton = taskElement.querySelector(".trash-icon");
