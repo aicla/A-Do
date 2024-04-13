@@ -76,16 +76,28 @@ body{
 .box{
     display: flex;
     flex-wrap: wrap;
+    position: relative;
+    max-width: 100%;
 }
 
 .vl {
-    border-left: 6px solid #4682A9;
-    height: 500px;
+    border-left: 3px solid #4682A9;
+    height: 100%;
     position: absolute;
-    left: 50%;
+    left: 30%;
     margin-left: -3px;
     top: 0;
+    z-index: -1;
   }
+
+.chat-list{
+    flex: 30%;
+}
+.message_preview{
+    position: relative;
+    background-color: gray;
+    width: 100%;
+}
 
 .message_preview h1{
     font-size: 0.7rem;
@@ -104,6 +116,7 @@ body{
 #chat-container {
     display: flex;
     flex-direction: column;
+    flex: 70%;
     position: fixed;
     bottom: 0;
     right: 0;
