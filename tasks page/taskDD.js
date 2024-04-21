@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -74,12 +74,21 @@ function loadTasks(userId) {
                 });
             } else {
                 console.log("No tasks found for this user.");
+                // Remove the first inner-box if no tasks exist
+                const todoSection = document.getElementById("todo-section");
+                if (todoSection) {
+                    const firstInnerBox = todoSection.closest('.inner-box');
+                    if (firstInnerBox) {
+                        firstInnerBox.remove();
+                    }
+                }
             }
         })
         .catch((error) => {
             console.error("Error loading tasks:", error);
         });
 }
+
 
 function displayTask(chosen, sectionId) {
     const section = document.getElementById(sectionId);
@@ -94,7 +103,17 @@ function displayTask(chosen, sectionId) {
             starButton.classList.add("star-button");
             starButton.innerHTML = `
                 <a class="important_button" id="kid_star_button_1">
-                    <span class="material-symbols-outlined" id="kid_star_icon_1"></span>
+                <span class="material-symbols-outlined" id="kid_star_icon_1"
+                    ><style>
+                    #kid_star_button {
+                    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+                    }
+                    .filled {
+                    font-variation-settings: "FILL" 1;
+                    }
+                    </style>
+                    kid_star
+                </span>
                 </a>
             `;
 
@@ -123,9 +142,28 @@ function displayTask(chosen, sectionId) {
             taskElement.appendChild(caret);
             taskElement.appendChild(dropdown);
 
-            // Append the new task element to the section
-            section.appendChild(taskElement);
-            console.log("Task element appended to section:", taskElement);
+            // Find the parent box element of the section
+            const parentBox = section.closest('.box');
+            if (parentBox) {
+                // Append the taskElement to the parentBox
+                parentBox.appendChild(taskElement);
+                console.log("Task element appended to parent box:", taskElement);
+
+                // Attach event listener to the caret of the new task element
+                caret.addEventListener("click", () => {
+                    caret.classList.toggle('caret-rotate');
+                    dropdown.classList.toggle("menu-open");
+                });
+                
+                 // Attach event listener to the star button of the new task element
+                 starButton.querySelector('.important_button').addEventListener('click', function() {
+                    const icon = starButton.querySelector('.material-symbols-outlined');
+                    icon.classList.toggle('filled');
+                });
+                    
+            } else {
+                console.error("Parent box element not found.");
+            }
         } else {
             console.error("Chosen value is empty or null.");
         }
