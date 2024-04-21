@@ -43,6 +43,7 @@ googleSignInBtn.addEventListener("click", () => {
       localStorage.setItem("uid", uid);
       localStorage.setItem("photoURL", photoURL);
       localStorage.setItem("displayName", displayName);
+      // localStorage.setItem("email", email);
 
       window.location.href = "../home page/homepage.html";
     })

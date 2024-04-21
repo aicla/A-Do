@@ -41,10 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
   auth.onAuthStateChanged((user) => {
     console.log("Current user:", user);
     if (user) {
-      // User is logged in, proceed to load tasks or perform other actions
       loadTasks(user.uid);
     } else {
-      // User is not logged in, handle accordingly (redirect to login page, etc.)
       console.log("User is not logged in.");
     }
   });

@@ -18,6 +18,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 const db = getDatabase(app);
 const storage = getStorage(app);
 
@@ -45,4 +46,16 @@ onChildAdded(ref(db, "messages"), (snapshot) => {
   const messageElement = document.createElement("div");
   messageElement.innerText = message.text;
   messagesList.appendChild(messageElement);
+});
+
+const logoutButton = document.getElementById("logout");
+logoutButton.addEventListener("click", () => {
+  signOut(auth)
+    .then(() => {
+      console.log("Sign out");
+      window.location.href = "../preview page/login.html";
+    })
+    .catch((error) => {
+      console.error("Sign-out error:", error);
+    });
 });
