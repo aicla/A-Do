@@ -3,13 +3,13 @@ import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/
 import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
-    authDomain: "a-do-ff29e.firebaseapp.com",
-    databaseURL: "https://a-do-ff29e-default-rtdb.firebaseio.com",
-    projectId: "a-do-ff29e",
-    storageBucket: "a-do-ff29e.appspot.com",
-    messagingSenderId: "488739423620",
-    appId: "1:488739423620:web:9bdc3605a45a3714b249d1",
+  apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
+  authDomain: "a-do-ff29e.firebaseapp.com",
+  databaseURL: "https://a-do-ff29e-default-rtdb.firebaseio.com",
+  projectId: "a-do-ff29e",
+  storageBucket: "a-do-ff29e.appspot.com",
+  messagingSenderId: "488739423620",
+  appId: "1:488739423620:web:9bdc3605a45a3714b249d1",
 };
 
 // Initialize Firebase app
@@ -56,16 +56,16 @@ function loadTasks(userId) {
                     // Determine the section to add the task based on its assignedTo value
                     switch (task.assignedTo.toLowerCase()) {
                         case 'to-do':
-                            displayTask(task.chosen, "todo-section");
+                            displayTask(task, "todo-section");
                             break;
                         case 'in-progress':
-                            displayTask(task.chosen, "in-progress-section");
+                            displayTask(task, "in-progress-section");
                             break;
                         case 'finished':
-                            displayTask(task.chosen, "finished-section");
+                            displayTask(task, "finished-section");
                             break;
                         case 'archive':
-                            displayTask(task.chosen, "archive-section");
+                            displayTask(task, "archive-section");
                             break;
                         default:
                             console.error(`Invalid task status: ${task.assignedTo}`);
@@ -90,22 +90,23 @@ function loadTasks(userId) {
 }
 
 
-function displayTask(chosen, sectionId) {
+function displayTask(task, sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
-        if (chosen) {
+        if (task && task.chosen) {
             // Create a new inner-box for each task
             const taskElement = document.createElement("div");
             taskElement.classList.add("inner-box");
+            taskElement.id = `task_${task.id}`; // Set task ID as element ID
 
             // Create the star-button element
             const starButton = document.createElement("div");
             starButton.classList.add("star-button");
             starButton.innerHTML = `
-                <a class="important_button" id="kid_star_button_1">
-                <span class="material-symbols-outlined" id="kid_star_icon_1"
-                    ><style>
-                    #kid_star_button {
+                <a class="important_button" id="kid_star_button_${task.id}">
+                <span class="material-symbols-outlined" id="kid_star_icon_${task.id}">
+                    <style>
+                    #kid_star_button_${task.id} {
                     font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
                     }
                     .filled {
@@ -120,7 +121,7 @@ function displayTask(chosen, sectionId) {
             // Create the name-bar element and add the chosen text to it
             const nameBar = document.createElement("div");
             nameBar.classList.add("name-bar");
-            nameBar.innerHTML = `<span class="title-input">${chosen}</span>`;
+            nameBar.innerHTML = `<span class="title-input">${task.chosen}</span>`;
 
             // Create the caret element
             const caret = document.createElement("div");
@@ -130,12 +131,21 @@ function displayTask(chosen, sectionId) {
             const dropdown = document.createElement("ul");
             dropdown.classList.add("dropdown");
             dropdown.innerHTML = `
-                <li class="chosen">TO-DO</li>
+                <li class="chosen">${task.assignedTo}</li>
+                <li>TO-DO</li>
                 <li>IN-PROGRESS</li>
                 <li>FINISHED</li>
                 <li>ARCHIVE</li>
             `;
 
+            const dropdownOptions = getDropdownOptions(task.assignedTo);
+            dropdown.innerHTML = dropdownOptions;
+            
+            // Store a reference to the dropdown element in the task object
+            task.dropdown = dropdown;
+            // Append dropdown to taskElement
+            taskElement.appendChild(dropdown);
+                                    
             // Append all elements to the taskElement
             taskElement.appendChild(starButton);
             taskElement.appendChild(nameBar);
@@ -154,20 +164,123 @@ function displayTask(chosen, sectionId) {
                     caret.classList.toggle('caret-rotate');
                     dropdown.classList.toggle("menu-open");
                 });
-                
-                 // Attach event listener to the star button of the new task element
-                 starButton.querySelector('.important_button').addEventListener('click', function() {
+
+                // Attach event listener to the dropdown menu items
+                dropdown.querySelectorAll("li").forEach(item => {
+                    item.addEventListener("click", () => {
+                        const newStatus = item.textContent.trim().toLowerCase();
+                        if (newStatus !== task.assignedTo.toLowerCase()) {
+                            // Update the task status locally
+                            task.assignedTo = newStatus;
+                            // Update the task status in Firebase
+                            updateTaskStatus(task);
+                            // Move the task to the appropriate section
+                            moveTaskToSection(task, newStatus);
+                        }
+                    });
+                });
+
+                // Attach event listener to the star button of the new task element
+                starButton.querySelector('.important_button').addEventListener('click', function() {
                     const icon = starButton.querySelector('.material-symbols-outlined');
                     icon.classList.toggle('filled');
                 });
-                    
+
             } else {
                 console.error("Parent box element not found.");
             }
         } else {
-            console.error("Chosen value is empty or null.");
+            console.error("Task data is invalid.");
         }
     } else {
         console.error(`Section ${sectionId} not found.`);
     }
+}
+
+function updateTaskStatus(task) {
+    // Update the task status in Firebase database
+    const taskRef = ref(db, `users/${task.userId}/tasks/${task.id}`);
+    set(taskRef, task)
+        .then(() => {
+            console.log("Task status updated successfully in Firebase.");
+        })
+        .catch((error) => {
+            console.error("Error updating task status in Firebase:", error);
+        });
+}
+
+function moveTaskToSection(task, newStatus) {
+    // Get the section corresponding to the new status
+    const sectionId = getStatusSectionId(newStatus);
+    const section = document.getElementById(sectionId);
+    if (section) {
+        // Find the task element
+        const taskElement = document.getElementById(`task_${task.id}`);
+        if (taskElement) {
+            // Find the parent box element of the section
+            const parentBox = section.closest('.box');
+            if (parentBox) {
+                // Remove the task element from its current parent
+                taskElement.remove();
+                // Append the task element to the parent box
+                parentBox.appendChild(taskElement);
+                console.log("Task moved to section:", sectionId);
+                // Update the task's assignedTo property
+                task.assignedTo = newStatus;
+                // Update the dropdown content
+                const dropdownOptions = getDropdownOptions(newStatus);
+                task.dropdown.innerHTML = dropdownOptions;
+                // Close the dropdown menu
+                closeDropdown(task);
+            } else {
+                console.error("Parent box element not found.");
+            }
+        } else {
+            console.error("Task element not found.");
+        }
+    } else {
+        console.error(`Section ${sectionId} not found.`);
+    }
+}
+
+function closeDropdown(task) {
+    // Find the dropdown element associated with the task
+    const dropdown = task.dropdown;
+    if (dropdown) {
+        // Remove the "menu-open" class to close the dropdown
+        dropdown.classList.remove("menu-open");
+        // Find the caret element and remove the "caret-rotate" class
+        const caret = dropdown.previousElementSibling;
+        if (caret) {
+            caret.classList.remove("caret-rotate");
+        }
+    }
+}
+
+function getStatusSectionId(status) {
+    switch (status) {
+        case 'to-do':
+            return 'todo-section';
+        case 'in-progress':
+            return 'in-progress-section';
+        case 'finished':
+            return 'finished-section';
+        case 'archive':
+            return 'archive-section';
+        default:
+            console.error(`Invalid status: ${status}`);
+            return null;
+    }
+}
+
+// Function to generate dropdown options based on task status
+function getDropdownOptions(currentStatus) {
+    const statuses = ['TO-DO', 'IN-PROGRESS', 'FINISHED', 'ARCHIVE'];
+    const options = statuses.map(status => {
+        if (status !== currentStatus.toUpperCase()) {
+            return `<li>${status}</li>`;
+        }
+        return `<li class="chosen">${status}</li>`;
+    });
+    return options.join('');
 }
