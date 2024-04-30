@@ -105,6 +105,10 @@ h1::after{
     justify-content: center;
 }
 
+.box a {
+    text-decoration: none;
+}
+
 .team{
     width: 20%;
     border-radius: 20px;
@@ -137,7 +141,6 @@ h1::after{
     margin-top: 120px;
 }
 
-/* Modal styles (team) */
 .modal {
     display: none;
     position: fixed;
@@ -148,92 +151,6 @@ h1::after{
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     z-index: 9999;
     overflow: auto; 
-}
-
-.modal-content {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 0; 
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    overflow-y: auto; 
-}
-
-.back-button {
-    position: absolute;
-    top: 20px; 
-    right: 80px; 
-    cursor: pointer;
-    font-size: 40px;
-    z-index: 999; 
-    border: none;
-    background-color: transparent;
-    color: #4682A9;
-    padding: 0;
-}
-
-.team-margin{
-    margin-left: 50px;
-}
-
-/*Members*/
-.members-btn {
-    background-color: none;
-    border: 3px solid #4682A9;
-    color: #4682A9;
-    font-size: 16px;
-    padding: 10px 22px;
-    cursor: pointer;
-}
-
-.membersText {
-    background-color: none;
-    color: #4682A9;
-    font-size: 16px;
-}
-
-/*Create team*/
-.box-container {
-    justify-content: center;
-    
-}
-.team-container {
-    border: 2px solid #4b6e7e;
-    border-radius: 20px;
-    padding: 5px 20px 5px 20px;
-    margin: 20px;
-}
-
-
-.create-team-btn {
-    position: absolute;
-    bottom: 50px; 
-    right: 100px; 
-    cursor: pointer;
-    font-size: 14px;
-    z-index: 999;
-    border: none;
-    border-radius: 25px;
-    background-color: #4682A9;
-    color: white;
-    padding: 10px 25px;
-}
-
-.cancel-btn {
-    position: absolute;
-    bottom: 50px; 
-    left: 100px; 
-    cursor: pointer;
-    font-size: 14px;
-    z-index: 999;
-    border: none;
-    background-color: transparent;
-    color: #4682A9;
-    padding: 0;
 }
 
 .team a {
