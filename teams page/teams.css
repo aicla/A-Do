@@ -208,13 +208,6 @@ h1::after{
     margin: 20px;
 }
 
-.team-name-box {
-
-}
-
-.add-members-box {
-
-}
 
 .create-team-btn {
     position: absolute;
@@ -241,4 +234,8 @@ h1::after{
     background-color: transparent;
     color: #4682A9;
     padding: 0;
+}
+
+.team a {
+    text-decoration: none; 
 }

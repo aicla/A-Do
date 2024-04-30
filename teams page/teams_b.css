@@ -94,7 +94,7 @@ h1::after{
     content: " ";
     position: absolute;
     display: block;
-    width: 10%;
+    width: 32%;
     height: 3px;
     background-color: #4682A9;
 }
