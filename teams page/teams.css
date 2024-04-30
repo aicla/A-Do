@@ -134,3 +134,7 @@ h1::after{
     font-size: 13px;
     margin-top: 120px;
 }
+
+.team a {
+    text-decoration: none; 
+}
