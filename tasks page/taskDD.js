@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { getDatabase, ref, get, set, update, remove, push } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -36,7 +36,12 @@ function loadTasks(userId) {
     get(userTasksRef)
         .then((snapshot) => {
             if (snapshot.exists()) {
-                const tasks = snapshot.val();
+                const tasksObject = snapshot.val();
+                // Construct an array of tasks with IDs included
+                const tasks = Object.keys(tasksObject).map(taskId => ({
+                    id: taskId,
+                    ...tasksObject[taskId]
+                }));
                 console.log("Tasks data:", tasks); // Log the tasks data
                 // Sort tasks by assignedTo value
                 const sortedTasks = Object.values(tasks).sort((a, b) => {
@@ -49,6 +54,11 @@ function loadTasks(userId) {
                 });
                 console.log("Sorted tasks:", sortedTasks);
 
+                // Log all taskId values
+                sortedTasks.forEach(task => {
+                    console.log("Task ID:", task.id);
+                });
+
                 // Display tasks in the appropriate sections based on their status
                 sortedTasks.forEach((task) => {
                     // Display only the chosen value of each task
@@ -56,16 +66,16 @@ function loadTasks(userId) {
                     // Determine the section to add the task based on its assignedTo value
                     switch (task.assignedTo.toLowerCase()) {
                         case 'to-do':
-                            displayTask(task, "todo-section");
+                            displayTask(userId, task, "todo-section");
                             break;
                         case 'in-progress':
-                            displayTask(task, "in-progress-section");
+                            displayTask(userId, task, "in-progress-section");
                             break;
                         case 'finished':
-                            displayTask(task, "finished-section");
+                            displayTask(userId, task, "finished-section");
                             break;
                         case 'archive':
-                            displayTask(task, "archive-section");
+                            displayTask(userId, task, "archive-section");
                             break;
                         default:
                             console.error(`Invalid task status: ${task.assignedTo}`);
@@ -76,12 +86,30 @@ function loadTasks(userId) {
                 console.log("No tasks found for this user.");
                 // Remove the first inner-box if no tasks exist
                 const todoSection = document.getElementById("todo-section");
+                const inprogressSection = document.getElementById("in-progress-section");
+                const finishedSection = document.getElementById("finished-section");
+
                 if (todoSection) {
                     const firstInnerBox = todoSection.closest('.inner-box');
                     if (firstInnerBox) {
                         firstInnerBox.remove();
                     }
                 }
+
+                if (inprogressSection) {
+                    const firstInnerBox = inprogressSection.closest('.inner-box');
+                    if (firstInnerBox) {
+                        firstInnerBox.remove();
+                    }
+                }
+
+                if (finishedSection) {
+                    const firstInnerBox = finishedSection.closest('.inner-box');
+                    if (firstInnerBox) {
+                        firstInnerBox.remove();
+                    }
+                }
+
             }
         })
         .catch((error) => {
@@ -90,7 +118,7 @@ function loadTasks(userId) {
 }
 
 
-function displayTask(task, sectionId) {
+function displayTask(userId, task, sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
         if (task && task.chosen) {
@@ -173,9 +201,9 @@ function displayTask(task, sectionId) {
                             // Update the task status locally
                             task.assignedTo = newStatus;
                             // Update the task status in Firebase
-                            updateTaskStatus(task);
+                            updateTaskStatus(userId, task.id, newStatus);
                             // Move the task to the appropriate section
-                            moveTaskToSection(task, newStatus);
+                            moveTaskToSection(userId, task, newStatus);
                         }
                     });
                 });
@@ -197,10 +225,13 @@ function displayTask(task, sectionId) {
     }
 }
 
-function updateTaskStatus(task) {
+function updateTaskStatus(userId, taskId, newStatus) {
     // Update the task status in Firebase database
-    const taskRef = ref(db, `users/${task.userId}/tasks/${task.id}`);
-    set(taskRef, task)
+    console.log("Updating task status in Firebase:", taskId, newStatus);
+    const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
+    const updates = {};
+    updates['assignedTo'] = newStatus;
+    update(taskRef, updates)
         .then(() => {
             console.log("Task status updated successfully in Firebase.");
         })
@@ -209,7 +240,9 @@ function updateTaskStatus(task) {
         });
 }
 
-function moveTaskToSection(task, newStatus) {
+
+
+function moveTaskToSection(userId, task, newStatus) {
     // Get the section corresponding to the new status
     const sectionId = getStatusSectionId(newStatus);
     const section = document.getElementById(sectionId);
@@ -217,23 +250,31 @@ function moveTaskToSection(task, newStatus) {
         // Find the task element
         const taskElement = document.getElementById(`task_${task.id}`);
         if (taskElement) {
-            // Find the parent box element of the section
-            const parentBox = section.closest('.box');
-            if (parentBox) {
-                // Remove the task element from its current parent
+            if (newStatus === 'archive'){
+                // Remove the task element from the display
                 taskElement.remove();
-                // Append the task element to the parent box
-                parentBox.appendChild(taskElement);
-                console.log("Task moved to section:", sectionId);
-                // Update the task's assignedTo property
-                task.assignedTo = newStatus;
-                // Update the dropdown content
-                const dropdownOptions = getDropdownOptions(newStatus);
-                task.dropdown.innerHTML = dropdownOptions;
-                // Close the dropdown menu
-                closeDropdown(task);
+                console.log("Task archived:", task.id);
+                // Move the task to the "archive" section in Firebase
+                archiveTask(userId, task.id);
             } else {
-                console.error("Parent box element not found.");
+                // Find the parent box element of the section
+                const parentBox = section.closest('.box');
+                if (parentBox) {
+                    // Remove the task element from its current parent
+                    taskElement.remove();
+                    // Append the task element to the parent box
+                    parentBox.appendChild(taskElement);
+                    console.log("Task moved to section:", sectionId);
+                    // Update the task's assignedTo property
+                    task.assignedTo = newStatus;
+                    // Update the dropdown content
+                    const dropdownOptions = getDropdownOptions(newStatus);
+                    task.dropdown.innerHTML = dropdownOptions;
+                    // Close the dropdown menu
+                    closeDropdown(task);
+                } else {
+                    console.error("Parent box element not found.");
+                }
             }
         } else {
             console.error("Task element not found.");
@@ -242,6 +283,44 @@ function moveTaskToSection(task, newStatus) {
         console.error(`Section ${sectionId} not found.`);
     }
 }
+
+function archiveTask(userId, taskId) {
+    // Construct the reference to the task in the database
+    const taskRef = `users/${userId}/tasks/${taskId}`;
+    get(ref(db, taskRef))
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                const taskData = snapshot.val();
+                // Push the task to the "archiveTasks" node
+                const archiveTasksRef = ref(db, `users/${userId}/archiveTasks/${taskId}`);
+                set(archiveTasksRef, taskData)
+                    .then(() => {
+                        console.log("Task archived in Firebase:", taskId);
+                        // Remove the task from its current location
+                        remove(ref(db, taskRef))
+                            .then(() => {
+                                console.log("Task removed from its original location:", taskId);
+                            })
+                            .catch((error) => {
+                                console.error("Error removing task from original location:", error);
+                            });
+                    })
+                    .catch((error) => {
+                        console.error("Error archiving task in Firebase:", error);
+                    });
+            } else {
+                console.error("Task does not exist:", taskId);
+            }
+        })
+        .catch((error) => {
+            console.error("Error retrieving task data:", error);
+        });
+}
+
+
+
+
+
 
 function closeDropdown(task) {
     // Find the dropdown element associated with the task
