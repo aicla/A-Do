@@ -21,28 +21,11 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const storage = getStorage(app);
 
-// Send message functionality
-document.getElementById("send-button").addEventListener("click", () => {
-  const messageInput = document.getElementById("message-input");
-  const message = messageInput.value;
-  if (message) {
-    const messagesRef = ref(db, "messages");
+const displayName = localStorage.getItem("displayName");
 
-    // Push the new message data to the "messages" node
-    push(messagesRef, {
-      text: message,
-      timestamp: firebase.database.ServerValue.TIMESTAMP,
-    });
-
-    messageInput.value = "";
+const username = document.getElementById("username");
+  if (username) {
+    username.textContent = displayName;
+  } else {
+    console.error("Username element not found");
   }
-});
-
-const messagesList = document.getElementById("messages-list");
-
-onChildAdded(ref(db, "messages"), (snapshot) => {
-  const message = snapshot.val();
-  const messageElement = document.createElement("div");
-  messageElement.innerText = message.text;
-  messagesList.appendChild(messageElement);
-});
