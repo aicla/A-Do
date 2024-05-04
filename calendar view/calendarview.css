@@ -25,6 +25,9 @@ body {
     background-color: #F6F4EB;
     padding: 10px;
 }
+.task-date {
+    color: green;
+}
 
 .header a {
     float: left;
