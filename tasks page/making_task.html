@@ -86,7 +86,6 @@
         </span>
       </a>
     </div>
-
     <div class="box">
       <div class="inner-box">
         <div class="title">TITLE</div>
@@ -124,9 +123,11 @@
           </ul>
         </div>
         <div class="progress">
-          <a href="#" class="clickable-text">TO-DO</a>
-          <a href="#" class="clickable-text">IN PROGRESS</a>
-        </div>
+          <!-- HTML -->
+            <input type="hidden" class="assigned-to-input" name="assignedTo">
+            <a href="#" class="clickable-text" data-value="TO-DO">TO-DO</a>
+            <a href="#" class="clickable-text" data-value="IN-PROGRESS">IN PROGRESS</a>
+        </div>       
       </div>
     </div>
 
@@ -144,9 +145,10 @@
 
     <div class="button-container">
       <a href="task.html" class="cancel-text">CANCEL</a>
-      <button class="button">SAVE</button>
+      <button id="saveButton">SAVE</button>
     </div>
 
+    <script type="module" src="./making_task.js"></script>
     <script src="task.js"></script>
   </body>
 </html>

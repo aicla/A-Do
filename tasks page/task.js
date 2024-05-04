@@ -1,24 +1,58 @@
-import {
-  getAuth,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
-import firebaseConfig from "../home page/homepage.js";
-import logoutButton from "../home page/homepage.js";
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-logoutButton.addEventListener("click", () => {
-  signOut(auth)
-    .then(() => {
-      console.log("Sign out");
-      window.location.href = "../preview page/login.html";
+function loadTasks(userId) {
+  // Retrieve tasks from Firebase database
+  const userTasksRef = ref(db, "users/" + userId + "/tasks/");
+  get(userTasksRef)
+    .then((snapshot) => {
+      if (snapshot.exists()) {
+        const tasks = snapshot.val();
+        // Iterate through tasks and populate the dropdowns
+        Object.values(tasks).forEach((task) => {
+          if (task.assignedTo === "TO-DO") {
+            addToDoTask(task);
+          } else if (task.assignedTo === "IN PROGRESS") {
+            addInProgressTask(task);
+          }
+        });
+      } else {
+        console.log("No tasks found for this user.");
+      }
     })
     .catch((error) => {
-      console.error("Sign-out error:", error);
+      console.error("Error loading tasks:", error);
     });
-});
+}
+
+// Function to add task to TO-DO dropdown
+function addToDoTask(task) {
+  const todoDropdown = document.getElementById("todo-tasks-dropdown");
+  const taskElement = createTaskElement(task);
+  todoDropdown.appendChild(taskElement);
+}
+
+// Function to add task to IN PROGRESS dropdown
+function addInProgressTask(task) {
+  const inProgressDropdown = document.getElementById(
+    "inprogress-tasks-dropdown"
+  );
+  const taskElement = createTaskElement(task);
+  inProgressDropdown.appendChild(taskElement);
+}
+
+// Function to create task element
+function createTaskElement(task) {
+  const taskElement = document.createElement("div");
+  taskElement.classList.add("task");
+
+  // Create and append other elements for the task
+  const titleElement = document.createElement("div");
+  titleElement.classList.add("task-title");
+  titleElement.textContent = task.title;
+  taskElement.appendChild(titleElement);
+
+  // Similarly, create and append other elements like due date, description, etc.
+
+  return taskElement;
+}
 
 function toggleMenu() {
   var menu = document.getElementById("menu");
@@ -81,3 +115,4 @@ dropdowns.forEach((teams) => {
     });
   });
 });
+
