@@ -209,18 +209,34 @@ const displayMatch = (tasks) => {
   subjectsContainer.innerHTML = "";
 
   tasks.forEach((task) => {
+    const titleNotesContainer = document.createElement("div");
+
     const taskElement = document.createElement("div");
     taskElement.classList.add("subject-title");
 
+    const dotElement = document.createElement("span");
+    dotElement.classList.add("dot");
+    taskElement.appendChild(dotElement);
+
+    //title
     const titleElement = document.createElement("h3");
     titleElement.textContent = task.title;
+    titleNotesContainer.appendChild(titleElement);
 
+    // notes
     const descriptionElement = document.createElement("p");
     descriptionElement.textContent = task.notes;
+    titleNotesContainer.appendChild(descriptionElement);
 
-    taskElement.appendChild(titleElement);
-    taskElement.appendChild(descriptionElement);
+    taskElement.appendChild(titleNotesContainer);
 
+    //three dots
+    const moreVertElement = document.createElement("span");
+    moreVertElement.classList.add("material-symbols-outlined");
+    moreVertElement.textContent = " more_vert ";
+    taskElement.appendChild(moreVertElement);
+
+    // Append the task element to the subjects container
     subjectsContainer.appendChild(taskElement);
   });
 };
