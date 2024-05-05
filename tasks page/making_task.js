@@ -47,7 +47,9 @@ document.addEventListener("DOMContentLoaded", function () {
       const user = auth.currentUser;
       if (user) {
         // User is logged in, proceed to save task
-        const isImportant = document.getElementById("kid_star_icon").classList.contains("filled");
+        const isImportant = document
+          .getElementById("kid_star_icon")
+          .classList.contains("filled");
         saveTask(user.uid, isImportant);
       } else {
         // User is not logged in, handle accordingly
@@ -61,29 +63,25 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("DOM content loaded");
   const assignedToOptions = document.querySelectorAll(".clickable-text");
   console.log("Clickable text elements:", assignedToOptions);
-  
+
   assignedToOptions.forEach((option) => {
-      option.addEventListener("click", () => {
-          console.log("Click event triggered");
-          const selectedAssignedTo = option.getAttribute("data-value");
-          console.log("Selected assigned to:", selectedAssignedTo);
-          
-          const assignedToInput = document.querySelector(".assigned-to-input");
-          if (assignedToInput) {
-              assignedToInput.value = selectedAssignedTo;
-          } else {
-              console.error("Assigned to input element not found.");
-          }
-      });
+    option.addEventListener("click", () => {
+      console.log("Click event triggered");
+      const selectedAssignedTo = option.getAttribute("data-value");
+      console.log("Selected assigned to:", selectedAssignedTo);
+
+      const assignedToInput = document.querySelector(".assigned-to-input");
+      if (assignedToInput) {
+        assignedToInput.value = selectedAssignedTo;
+      } else {
+        console.error("Assigned to input element not found.");
+      }
+    });
   });
-  
 });
 
 // Function to load tasks
-function loadTasks(userId) {
-
-}
-
+function loadTasks(userId) {}
 
 // Function to save task
 function saveTask(userId, isImportant) {
@@ -91,7 +89,7 @@ function saveTask(userId, isImportant) {
   const title = document.querySelector(".title-input").value;
   const date = document.querySelector(".date-input").value;
   const time = document.querySelector(".time-input").value;
-  const chosen = document.querySelector(".chosen").textContent; // get the selected subject 
+  const chosen = document.querySelector(".chosen").textContent; // get the selected subject
   const assignedToInput = document.querySelector(".assigned-to-input");
   if (!assignedToInput) {
     console.error("Assigned-to input element not found.");
@@ -104,7 +102,7 @@ function saveTask(userId, isImportant) {
   if (!title || !date || !time || !chosen || !notes) {
     showToast("Please fill in all required fields.", true); // Red toast for error
     return; // Exit the function early if any field is empty
-}
+  }
 
   // Construct task object
   const task = {
@@ -125,7 +123,10 @@ function saveTask(userId, isImportant) {
       // Redirect or perform any other action after saving the task
       if (isImportant) {
         // Save the task as an important task
-        const importantTasksRef = ref(db, "users/" + userId + "/important_tasks/"); // Get reference to the important_tasks node
+        const importantTasksRef = ref(
+          db,
+          "users/" + userId + "/important_tasks/"
+        ); // Get reference to the important_tasks node
         push(importantTasksRef, task)
           .then(() => {
             console.log("Task saved as important task successfully!");
@@ -139,7 +140,6 @@ function saveTask(userId, isImportant) {
       showToast("Error saving task: " + error, true); // Red toast for error
     });
 }
-
 
 // Function to display toast message
 function showToast(message, isError) {
@@ -157,5 +157,3 @@ function showToast(message, isError) {
     toast.remove();
   }, 3000); // Remove toast after 3 seconds
 }
-
-

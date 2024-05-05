@@ -80,8 +80,9 @@
 
     <!--CALENDAR-->
     <h1>Calendar</h1>
-    <a href="../tasks page/making_task.html" class=""
+    <a href="../tasks page/making_task.html" id="svg_btn" class="add_task"
       ><svg
+        onclick="redirectToTask()"
         class="add"
         fill="#4682A9"
         height="50px"
@@ -166,7 +167,7 @@
           <h2 style="padding-top: 15px">Your Tasks</h2>
         </div>
         <div class="subjects">
-          <span class="dot"></span>
+          <span class="dot" style="display: none"></span>
           <div class="subject-title">
             <h3></h3>
             <p></p>

@@ -163,7 +163,7 @@ const handleDateClick = async (event) => {
 
     const matchTasks = tasks.filter((task) => task.date === formattedDate);
 
-    // Display matched tasks
+    //display matched tasks
     displayMatch(matchTasks);
   } catch (error) {
     console.log("Error fetching tasks:", error);
