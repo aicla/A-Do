@@ -139,21 +139,48 @@ h1::after {
     margin-left: 20px;
     position: relative;
 }
+
 .subjects {
 	display: flex;
 	margin-top: 40px;
 	margin-left: 20px;
 }
-.subjects h3 {
-	font-size: 15px;
-	margin-left: 10px;
-	font-weight: 300;
-	color: #989898;
+.subjects {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-left: 20px;
+    max-height: 300px;
+    overflow-y: auto;
 }
+
+.subjects .subject-title {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.subjects .dot {
+    margin-right: 10px;
+}
+
+.subjects h3 {
+    font-size: 15px;
+    margin-left: 0;
+    margin-right: 10px;
+    font-weight: 300;
+    color: #989898;
+}
+
 .subjects p {
-	font-size: 20px;
-	margin-left: 10px;
-	width: 400px;
+    font-size: 20px;
+    margin-left: 0;
+    width: 400px;
+    margin-right: 10px;
+}
+
+.subjects .material-symbols-outlined {
+    margin-left: auto;
 }
 
 .add {
@@ -246,6 +273,10 @@ header .calendar-current-date {
 
 .calendar-dates li.active {
     color: #fff;
+}
+
+.calendar-dates li.isTask {
+    color: #d07f7f;
 }
 
 .calendar-dates li::before {

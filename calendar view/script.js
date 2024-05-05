@@ -159,10 +159,8 @@ const handleDateClick = async (event) => {
   console.log(formattedDate);
 
   try {
-    // Fetch tasks from the database
     const tasks = await fetchTasks();
 
-    // Filter tasks for the clicked date
     const matchTasks = tasks.filter((task) => task.date === formattedDate);
 
     // Display matched tasks
@@ -176,25 +174,22 @@ const fetchTasks = async () => {
   try {
     const userId = getCurrentUserId();
     const dayRef = ref(db, "users/" + userId + "/tasks/");
-    const snapshot = await get(dayRef); // Use get function to fetch data
+    const snapshot = await get(dayRef);
     const data = snapshot.val();
 
     if (data) {
       return Object.values(data);
     } else {
       console.log("No tasks found for the user.");
-      return []; // Return an empty array if no tasks are found
+      return [];
     }
   } catch (error) {
     console.log("Error fetching tasks:", error);
-    throw error; // Rethrow the error to be caught by the caller
+    throw error; //
   }
 };
 
-// Function to get the current user's ID (Replace this with your actual implementation)
 const getCurrentUserId = () => {
-  // Replace this with your logic to get the current user's ID
-  // For example, if you're using Firebase Authentication, you can get the current user's ID like this:
   const user = auth.currentUser;
   if (user) {
     return user.uid;
@@ -208,39 +203,43 @@ const displayMatch = (tasks) => {
   const subjectsContainer = document.querySelector(".subjects");
   subjectsContainer.innerHTML = "";
 
-  tasks.forEach((task) => {
-    const titleNotesContainer = document.createElement("div");
+  if (tasks.length === 0) {
+    const noTask = document.createElement("div");
+    noTask.textContent = "No task due today.";
+    subjectsContainer.appendChild(noTask);
+  } else {
+    tasks.forEach((task) => {
+      const titleNotesContainer = document.createElement("div");
 
-    const taskElement = document.createElement("div");
-    taskElement.classList.add("subject-title");
+      const taskElement = document.createElement("div");
+      taskElement.classList.add("subject-title");
 
-    const dotElement = document.createElement("span");
-    dotElement.classList.add("dot");
-    taskElement.appendChild(dotElement);
+      const dotElement = document.createElement("span");
+      dotElement.classList.add("dot");
+      taskElement.appendChild(dotElement);
 
-    //title
-    const titleElement = document.createElement("h3");
-    titleElement.textContent = task.title;
-    titleNotesContainer.appendChild(titleElement);
+      //title
+      const titleElement = document.createElement("h3");
+      titleElement.textContent = task.title;
+      titleNotesContainer.appendChild(titleElement);
 
-    // notes
-    const descriptionElement = document.createElement("p");
-    descriptionElement.textContent = task.notes;
-    titleNotesContainer.appendChild(descriptionElement);
+      // notes
+      const descriptionElement = document.createElement("p");
+      descriptionElement.textContent = task.notes;
+      titleNotesContainer.appendChild(descriptionElement);
 
-    taskElement.appendChild(titleNotesContainer);
+      taskElement.appendChild(titleNotesContainer);
 
-    //three dots
-    const moreVertElement = document.createElement("span");
-    moreVertElement.classList.add("material-symbols-outlined");
-    moreVertElement.textContent = " more_vert ";
-    taskElement.appendChild(moreVertElement);
+      //three dots
+      const moreVertElement = document.createElement("span");
+      moreVertElement.classList.add("material-symbols-outlined");
+      moreVertElement.textContent = " more_vert ";
+      taskElement.appendChild(moreVertElement);
 
-    // Append the task element to the subjects container
-    subjectsContainer.appendChild(taskElement);
-  });
+      subjectsContainer.appendChild(taskElement);
+    });
+  }
 };
-
 regenerateCalendar();
 
 // Attach a click event listener to each icon
@@ -265,7 +264,6 @@ prenexIcons.forEach((icon) => {
     } else {
       date = new Date();
     }
-
     regenerateCalendar();
   });
 });
