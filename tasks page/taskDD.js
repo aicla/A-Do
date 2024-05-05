@@ -62,7 +62,7 @@ function loadTasks(userId) {
                 // Display tasks in the appropriate sections based on their status
                 sortedTasks.forEach((task) => {
                     // Display only the chosen value of each task
-                    console.log("Chosen value:", task.chosen);
+                    console.log("Chosen value:", task.title);
                     // Determine the section to add the task based on its assignedTo value
                     switch (task.assignedTo.toLowerCase()) {
                         case 'to-do':
@@ -121,7 +121,7 @@ function loadTasks(userId) {
 function displayTask(userId, task, sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
-        if (task && task.chosen) {
+        if (task && task.title) {
             // Create a new inner-box for each task
             const taskElement = document.createElement("div");
             taskElement.classList.add("inner-box");
@@ -149,7 +149,7 @@ function displayTask(userId, task, sectionId) {
             // Create the name-bar element and add the chosen text to it
             const nameBar = document.createElement("div");
             nameBar.classList.add("name-bar");
-            nameBar.innerHTML = `<span class="title-input">${task.chosen}</span>`;
+            nameBar.innerHTML = `<span class="title-input">${task.title}</span>`;
 
             // Create the caret element
             const caret = document.createElement("div");
@@ -212,6 +212,10 @@ function displayTask(userId, task, sectionId) {
                 starButton.querySelector('.important_button').addEventListener('click', function() {
                     const icon = starButton.querySelector('.material-symbols-outlined');
                     icon.classList.toggle('filled');
+                    if (icon.classList.contains('filled')) {
+                        // Move the task to the important_tasks in Firebase
+                        moveTaskToImportant(userId, task.id);
+                    }
                 });
 
             } else {
@@ -224,6 +228,52 @@ function displayTask(userId, task, sectionId) {
         console.error(`Section ${sectionId} not found.`);
     }
 }
+
+function moveTaskToImportant(userId, taskId) {
+    // Construct the reference to the task in the database
+    const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
+
+    // Update the task data in the "important_tasks" node in Firebase
+    const importantTasksRef = ref(db, `users/${userId}/important_tasks/${taskId}`);
+    get(taskRef)
+        .then((snapshot) => {
+            const taskData = snapshot.val();
+            if (taskData) {
+                // Set the task data in the "important_tasks" node in Firebase
+                set(importantTasksRef, taskData)
+                    .then(() => {
+                        console.log("Task moved to important tasks successfully in Firebase.");
+                        // Remove the task data from the "tasks" node
+                        remove(ref(db, `users/${userId}/tasks/${taskId}`))
+                            .then(() => {
+                                console.log("Task removed from tasks node in Firebase:", taskId);
+                                // Remove the task element from the UI
+                                const taskElement = document.getElementById(`task_${taskId}`);
+                                if (taskElement) {
+                                    taskElement.remove();
+                                    console.log("Task element removed from UI:", taskId);
+                                } else {
+                                    console.error("Task element not found in UI:", taskId);
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("Error removing task from tasks node in Firebase:", error);
+                            });
+                    })
+                    .catch((error) => {
+                        console.error("Error moving task to important tasks in Firebase:", error);
+                    });
+            } else {
+                console.error("Task data not found.");
+            }
+        })
+        .catch((error) => {
+            console.error("Error retrieving task data:", error);
+        });
+}
+
+
+
 
 function updateTaskStatus(userId, taskId, newStatus) {
     // Update the task status in Firebase database
