@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -40,6 +39,12 @@
         }
       });
     </script>
+
+    <!-- Include jQuery and jQuery UI -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
   </head>
   <body>
     <div class="header">
@@ -69,20 +74,20 @@
     <div class="box">
       <div class="inner-box">
         <div class="title">Team name (required)</div>
-        <input type="text" class="title-input" placeholder="Type here..." />
+        <input type="text" class="title-input" id="teamName" placeholder="Type here..." />
       </div>
     </div>
 
     <div class="box">
         <div class="inner-box">
           <div class="title">Add members (enter email addresses)</div>
-          <input type="text" class="title-input" placeholder="Type here..." />
+          <input type="text" class="title-input" id="teamMembers" placeholder="Type here..." />
         </div>
       </div>
 
     <div class="button-container">
       <a href="teams.html" class="cancel-text">CANCEL</a>
-      <button class="button">SAVE</button>
+      <button id="saveTeam" class="button">SAVE</button>
     </div>
 
     <script src="task.js"></script>
