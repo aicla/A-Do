@@ -12,6 +12,7 @@ import {
   push,
   set,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { ToMaking } from "../calendar view/script.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -113,6 +114,11 @@ function saveTask(userId, isImportant) {
     assignedTo: assignedTo,
     notes: notes,
   };
+
+  hello();
+  function hello() {
+    console.log(ToMaking);
+  }
 
   // Save task object to Firebase database under the user's ID
   const userTasksRef = ref(db, "users/" + userId + "/tasks/"); // Get reference to the tasks node
