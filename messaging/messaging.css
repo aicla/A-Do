@@ -135,14 +135,14 @@ body{
   font-weight: 400;
 }
 
-.message-subject{
+.message-header{
   background-color: #D9D9D9;
   height: 3rem;
   padding: 5px;
   margin-top: 0px;
 }
 
-.message-subject h1{
+.message-header h1{
   font-weight: 600;
   margin-left: 30px;
   margin-top: 0;
@@ -176,7 +176,8 @@ body{
   font-weight: 700;
 }
 
-.message-container h4{
+.message-container h4,
+.message-container li{
   font-weight: 400;
   font-size: .9rem;
 }
@@ -193,7 +194,7 @@ body{
   z-index: 1;
 }
 
-#message-input {
+#msgTxt {
   flex: 1;
   margin-right: 10px;
   padding: 8px;
@@ -201,7 +202,7 @@ body{
   border: 1px solid #ccc;
 }
 
-#send-button {
+#msgBtn {
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
@@ -211,6 +212,6 @@ body{
   transition: background-color 0.3s;
 }
 
-#send-button:hover {
+#msgBtn:hover {
   background-color: #205070;
 }

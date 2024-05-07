@@ -37,19 +37,6 @@
             } else {
             console.error("Profile icon element not found");
             }
-
-            const messageProfileIcon = document.querySelector(".message #icon"); // Target the icon in the message section
-            // Attach the same profile picture to the message section icon
-            if (messageProfileIcon) {
-                const messageImg = document.createElement("img");
-                messageImg.src = photoURL;
-                messageImg.alt = "Profile Picture";
-                messageImg.style.width = "80px";
-                messageImg.style.height = "80px";
-                messageImg.style.border = "3px solid #4682A9"
-                messageImg.style.borderRadius = "50px";
-                messageProfileIcon.appendChild(messageImg);
-            }
             
             const messageIcon = document.getElementById("message");
             if (messageIcon) {
@@ -84,14 +71,14 @@
                 <input type="search" id="search-bar"/>
                 <div class="message-preview">
                     <h2>Software Engineering: Vehuel Amante, Ai...</h2>
-                    <h3>SRS Update</h3>
-                    <h4>Would like to update you all about the SRS progress</br>...</h4>
+                    <h3 id="message-subject"></h3>
+                    <h4 id="message-content"></h4>
                 </div>
             </div>
             <div class="vl"></div>
             <div class="right-box">
-                <div class="message-subject">
-                    <h1>SRS Update</h1>
+                <div class="message-header">
+                    <h1 id="message-subject"></h1>
                 </div>
                 <h4 class="members">Software Engineering: Vehuel Amante, Aira Nicole Bucu, Sunshine Chuyat, Verna Fe Dizon, Jazleen Razote</h4>
                 <div class="message-box">
@@ -101,18 +88,19 @@
                         </div>
                         <div class="message-container">
                             <div class="user-info">
-                                <h2 id="username">Aira Nicole Bucu</h2>
-                                <h4>February 24, 2024 at 12:59PM</h4>
+                                <h2 id="name"></h2>
+                                <h4 id="message-time">February 24, 2024 at 12:59PM</h4>
                             </div>
-                            <h4>Would like to update you all about the SRS progress. Only the last revisions are to be made. Can someone read through it and look for errors?
-                            </h4>
+                            <ul id="message-content">
+                            </ul>
                         </div>
                     </div>
-                <div id="message-input-container">
-                    <input id="message-input" type="text" placeholder="Type a message..." />
-                    <input type="file" id="file-input" />
-                    <button id="send-button">Send</button>
                 </div>
+                <form id="message-input-container">
+                    <input id="msgTxt" type="text" placeholder="Type a message..." />
+                    <input type="file" id="file-input" />
+                    <button id="msgBtn">Send</button>
+                </form>
             </div>
         </div>
     </body>
