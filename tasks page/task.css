@@ -17,17 +17,16 @@ body{
     position: absolute;
     left: 0;
     background-color: #F6F4EB;
-    padding: 10px;
+    padding: 5px;
 }
 
 .header a {
     float: left;
     color: #F6F4EB;
     text-align: center;
-    padding: 12px 30px;
+    padding: 13px 20px;
     text-decoration: none;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: .8rem;
 }
 
 .header a:hover {
@@ -46,12 +45,11 @@ body{
 
 .header span {
     float: left;
-    color: #B9E7FF;
+    color: white;
     text-align: center;
     padding: 12px 30px;
     text-decoration: none;
-    font-size: 25px;
-    line-height: 25px;
+    font-size: 1.1rem;
 }
 
 .header span:hover {
@@ -75,17 +73,18 @@ body{
 
 h1 {
     color: #4682A9;
-    margin-left: 200px;
-    font-family: 'Montserrat', Arial;
+    margin-left: 15%;
+    font-family: 'Montserrat';
+    f
 }
 
 h1::after {
     content: " ";
     position: absolute;
     display: block;
-    left: 16%;
-    width: 8%;
-    height: 2px;
+    left: 15%;
+    width: 100px;
+    height: 2.5px;
     background-color: #4682A9;
 }
 
@@ -96,7 +95,7 @@ h1::after {
 }
 
 .add{
-    margin-top: 35px;
+    margin-top: 20px;
     margin-right: 200px;
 }
 

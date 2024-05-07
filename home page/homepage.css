@@ -15,12 +15,11 @@ body{
 
 .header span {
     float: left;
-    color: #B9E7FF;
+    color: white;
     text-align: center;
     padding: 12px 30px;
     text-decoration: none;
-    font-size: 25px;
-    line-height: 25px;
+    font-size: 1.1rem;
 }
 
 .header span:hover {
@@ -32,6 +31,10 @@ body{
 .header span.active {
     background-color: #91C8E4;
     color: #4682A9;
+}
+  
+.header-left {
+    float:left;
 }
 
 .header-right {

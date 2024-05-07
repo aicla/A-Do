@@ -24,30 +24,32 @@ body {
     float: left;
     color: #F6F4EB;
     text-align: center;
-    padding: 13px 30px;
+    padding: 13px 20px;
     text-decoration: none;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: .8rem;
 }
 
 .header a:hover {
     background-color: #91c8e446;
     color: #B9E7FF;
 }
-
+  
 .header a.active {
     background-color: #91C8E4;
     color: #306f99;
 }
+  
+.header-left {
+    float:left;
+}
 
 .header span {
     float: left;
-    color: #B9E7FF;
+    color: white;
     text-align: center;
     padding: 12px 30px;
     text-decoration: none;
-    font-size: 25px;
-    line-height: 25px;
+    font-size: 1.1rem;
 }
 
 .header span:hover {
@@ -55,14 +57,14 @@ body {
     color: #B9E7FF;
     cursor: pointer;
 }
-
+  
 .header span.active {
     background-color: #91C8E4;
     color: #4682A9;
 }
-
+  
 .header-left {
-    float: left;
+    float:left;
 }
 
 .header-right {
