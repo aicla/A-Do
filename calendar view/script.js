@@ -243,19 +243,16 @@ const displayMatch = (tasks) => {
 };
 regenerateCalendar();
 
-// //Date to pass to Making task
-// var add_task = document.getElementById("svg_btn");
-// add_task.addEventListener("click", ToMaking);
+var add_task = document.getElementById("svg_btn");
+add_task.addEventListener("click", ToMaking);
 
-// //deliver date on task
-// export function ToMaking(formattedDate) {
-//   const [year, month, day] = formattedDate.split("-");
-//   const formattedDated = `${String(day).padStart(2, "0")}-${String(
-//     month
-//   ).padStart(2, "0")}-${year}`;
-
-//   myGod(formattedDated);
-// }
+export function ToMaking(formattedDate) {
+  const [year, month, day] = formattedDate.split("-");
+  const formattedDated = `${String(day).padStart(2, "0")}-${String(
+    month
+  ).padStart(2, "0")}-${year}`;
+  return formattedDated;
+}
 
 // Attach a click event listener to each icon
 prenexIcons.forEach((icon) => {
