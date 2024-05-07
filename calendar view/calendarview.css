@@ -29,6 +29,14 @@ body {
     color: green;
 }
 
+.has-tasks {
+    background-color: orange; /* Change the background color to orange */
+    color: white; /* Change the text color to white */
+    border-radius: 50%; /* Make the date circle rounded */
+    /* Add more styling as needed */
+}
+
+
 .header a {
     float: left;
     color: #F6F4EB;
