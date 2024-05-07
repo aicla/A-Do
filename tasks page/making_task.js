@@ -12,7 +12,6 @@ import {
   push,
   set,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-import { ToMaking } from "../calendar view/script.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
