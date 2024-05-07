@@ -10,7 +10,6 @@ import {
   onValue,
   get,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-//import { myGod } from "../tasks page/making_task.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
