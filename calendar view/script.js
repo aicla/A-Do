@@ -10,6 +10,7 @@ import {
   onValue,
   get,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+//import { myGod } from "../tasks page/making_task.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -243,20 +244,19 @@ const displayMatch = (tasks) => {
 };
 regenerateCalendar();
 
-//Date to pass to Making task
-var add_task = document.getElementById("svg_btn");
-add_task.addEventListener("click", ToMaking);
+// //Date to pass to Making task
+// var add_task = document.getElementById("svg_btn");
+// add_task.addEventListener("click", ToMaking);
 
-//deliver date on task
-export function ToMaking(formattedDate) {
-  const [year, month, day] = formattedDate.split("-");
-  const formattedDated = `${String(day).padStart(2, "0")}-${String(
-    month
-  ).padStart(2, "0")}-${year}`;
+// //deliver date on task
+// export function ToMaking(formattedDate) {
+//   const [year, month, day] = formattedDate.split("-");
+//   const formattedDated = `${String(day).padStart(2, "0")}-${String(
+//     month
+//   ).padStart(2, "0")}-${year}`;
 
-  var dateTask = formattedDated;
-  return dateTask;
-}
+//   myGod(formattedDated);
+// }
 
 // Attach a click event listener to each icon
 prenexIcons.forEach((icon) => {
