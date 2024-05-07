@@ -18,13 +18,6 @@ body {
     margin-bottom: 20px;
   }
 
-.menu {
-    display: none;
-    position: absolute;
-    left: 0;
-    background-color: #F6F4EB;
-    padding: 10px;
-}
 .task-date {
     color: green;
 }
@@ -279,6 +272,11 @@ header .calendar-current-date {
     color: #d07f7f;
 }
 
+.light-pink-circle {
+    background-color: lightpink;
+    border-radius: 50%;
+}
+
 .calendar-dates li::before {
     position: absolute;
     content: "";
@@ -312,4 +310,26 @@ header .calendar-current-date {
     text-align: center;
 }
 
+.menu{
+    width: 5%;
+    position: absolute;
+    background-color: #306f99;
+    color: white;
+    padding: 15px;
+    margin: 20px 250px 0;
+    border-radius: 0.5rem;
+    z-index: 1;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.3);
+}
 
+.edit a:hover{
+    padding-right: 50px;
+}
+
+.menu a:hover{
+    align-items: center;
+    cursor: pointer;
+    padding-right: 10px;
+    border-radius: 0.2rem;
+    background-color: #6aa4cb;
+}

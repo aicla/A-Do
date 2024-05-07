@@ -148,6 +148,7 @@ const regenerateCalendar = () => {
 };
 
 const handleDateClick = async (event) => {
+  const clickedDateElement = event.target;
   const clickedDate = event.target.innerText;
 
   const formattedDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(
@@ -241,6 +242,7 @@ const displayMatch = (tasks) => {
 };
 regenerateCalendar();
 
+//this is the part where i give up
 var add_task = document.getElementById("svg_btn");
 add_task.addEventListener("click", ToMaking);
 
@@ -275,5 +277,30 @@ prenexIcons.forEach((icon) => {
       date = new Date();
     }
     regenerateCalendar();
+  });
+});
+
+const dropdowns = document.querySelectorAll(".teams");
+
+dropdowns.forEach((teams) => {
+  const select = teams.querySelector(".select");
+  const caret = teams.querySelector("#caret");
+  const menu = teams.querySelector(".dropdown");
+  const options = teams.querySelectorAll(".dropdown li");
+  const selected = teams.querySelector(".selected");
+
+  select.addEventListener("click", () => {
+    menu.classList.toggle("menu-open");
+  });
+
+  options.forEach((option) => {
+    option.addEventListener("click", () => {
+      selected.innerText = option.innerText;
+      menu.classList.remove("menu-open");
+      options.forEach((option) => {
+        option.classList.remove("chosen");
+      });
+      option.classList.add("chosen");
+    });
   });
 });
