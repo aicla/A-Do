@@ -24,10 +24,9 @@ body{
     float: left;
     color: #F6F4EB;
     text-align: center;
-    padding: 12px 30px;
+    padding: 13px 20px;
     text-decoration: none;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: .8rem;
 }
 
 .header a:hover {
@@ -39,15 +38,18 @@ body{
     background-color: #91C8E4;
     color: #306f99;
 }
+  
+.header-left {
+    float:left;
+}
 
 .header span {
     float: left;
-    color: #B9E7FF;
+    color: white;
     text-align: center;
     padding: 12px 30px;
     text-decoration: none;
-    font-size: 25px;
-    line-height: 25px;
+    font-size: 1.1rem;
 }
 
 .header span:hover {
@@ -97,6 +99,7 @@ body{
     background-color: #4682A9;
     padding: 10px;
     border-radius: 5px;
+    margin-top: 20px;
 }
 
 .inner-box {
@@ -246,14 +249,13 @@ body{
     font-family: 'Montserrat', Arial;
     display: inline-block;
     margin-right: 20px;
-    position: absolute;
     margin-top: 25px;
-    margin-left: 250px;
+    margin-left: 20%
 }
 
 .button-container {
-    display: inline-block;
-    vertical-align: middle;
+    display: flex;
+    justify-content: space-between;
 }
 
 #saveButton {
@@ -265,7 +267,7 @@ body{
     border-radius: 50px;
     cursor: pointer;
     margin-top: 25px;
-    margin-left: 970px;
+    margin-right: 20%;
     transition: opacity 0.3s ease;
     font-family: 'Montserrat', Arial;
 }
