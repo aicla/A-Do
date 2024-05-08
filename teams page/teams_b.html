@@ -17,13 +17,22 @@
     <title>Teams View</title>
     <script type="module" src="teams.js"></script>
     <script>
-      //Profile Picture
-      document.addEventListener("DOMContentLoaded", function () {
-        const photoURL = localStorage.getItem("photoURL");
+        document.addEventListener("DOMContentLoaded", function () {
+        const membersButton = document.querySelector(".members");
 
+        if (membersButton) {
+          membersButton.addEventListener("click", function () {
+            window.location.href = "members.html"; // Redirect to members.html upon click
+          });
+        } else {
+          console.error("Members button element not found");
+        }
+
+        // Profile Picture (Your existing code)
+        const photoURL = localStorage.getItem("photoURL");
         const profileIcon = document.getElementById("pfp");
+
         if (profileIcon) {
-          // Create an image element
           const img = document.createElement("img");
           img.src = photoURL;
           img.alt = "Profile Picture";
@@ -52,6 +61,7 @@
       });
     </script>
   </head>
+  
   <body>
     <div class="header">
       <div class="header-left">

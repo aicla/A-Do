@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
-    "firebase": "^10.8.1"
+    "firebase": "^10.11.1"
   },
   "devDependencies": {
     "webpack": "^5.90.3",
