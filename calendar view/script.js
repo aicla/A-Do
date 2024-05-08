@@ -241,7 +241,14 @@ const displayMatch = (tasks) => {
 };
 regenerateCalendar();
 
-//this is the part where i give up
+function threeDots() {
+  const moreVertElement = document.createElement("span");
+  moreVertElement.classList.add("material-symbols-outlined");
+  moreVertElement.textContent = " more_vert ";
+  taskElement.appendChild(moreVertElement);
+}
+
+//this is the part where i give up fooooooc
 var add_task = document.getElementById("svg_btn");
 add_task.addEventListener("click", ToMaking);
 
