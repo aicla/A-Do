@@ -197,6 +197,7 @@ h1::after {
 
 .subjects .material-symbols-outlined {
     margin-left: auto;
+    cursor: pointer;
 }
 
 .add {
