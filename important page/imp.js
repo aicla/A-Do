@@ -24,42 +24,19 @@ function fetchImportantTasks(userId) {
     const data = snapshot.val();
     if (data) {
       // Convert the object of tasks into an array
-      const tasksArray = Object.values(data);
+      const tasksArray = Object.entries(data).map(([id, task]) => ({ id, ...task }));
+      // Log all the important tasks and their IDs
+      console.log("Important tasks:");
+      tasksArray.forEach((task) => {
+        console.log("Task ID:", task.id);
+        console.log("Task:", task);
+      });
       // Display the important tasks on the page
       displayImportantTasks(tasksArray);
     } else {
       console.log("No important tasks found.");
     }
   });
-}
-
-function deleteItem(event) {
-  // Get the parent box element of the delete button that was clicked
-  const box = event.target.closest(".box");
-  if (!box) {
-    console.error("Box not found.");
-    return;
-  }
-
-  // Get the unique ID of the task associated with this box
-  const taskId = box.dataset.taskId;
-
-  // Remove the box from the DOM
-  box.remove();
-
-  const userId = auth.currentUser.uid; // Get the current user's ID
-  // Remove the corresponding task data from the database
-  const userTasksRef = ref(db, "users/" + userId + "/important_tasks/" + taskId); // Reference to the task in the database
-  remove(userTasksRef)
-    .then(() => {
-      console.log("Task deleted successfully from the database.");
-
-      // Update the order of the remaining task boxes
-      updateTaskBoxOrder();
-    })
-    .catch((error) => {
-      console.error("Error deleting task:", error);
-    });
 }
 
 
@@ -103,25 +80,27 @@ function displayImportantTasks(tasks) {
       return; // Skip this iteration if the task is null or undefined
     }
 
+    // Log the task ID
+    console.log("Task ID:", task.id);
 
     // Populate task data into the HTML elements
     taskElement.innerHTML = `
     <!-- Your task content here -->
     <div class="star-button">
-              <a class="important_button" id="kid_star_button_1">
-              <span class="material-symbols-outlined" id="kid_star_icon_1"
-                ><style>
-                  #kid_star_button {
-                    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-                  }
-                  .filled {
-                    font-variation-settings: "FILL" 1;
-                  }
-                  </style>
-                  kid_star
-                </span>
-              </a>
-            </div>
+      <a class="important_button" id="kid_star_button_1">
+        <span class="material-symbols-outlined" id="kid_star_icon_1">
+          <style>
+            #kid_star_button {
+              font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+            }
+            .filled {
+              font-variation-settings: "FILL" 1;
+            }
+          </style>
+          kid_star
+        </span>
+      </a>
+    </div>
     <div class="text-placeholder top-left">
       <input type="text" class="text-input" value="${task.groupNumber}" />
     </div>
@@ -147,15 +126,51 @@ function displayImportantTasks(tasks) {
 
     // Attach taskId to the taskElement for reference when deleting
     taskElement.dataset.taskId = task.id;
+    console.log("Task ID attached to task element:", taskElement.dataset.taskId);
 
-    // Prepend the task element to the container
-    importantTasksContainer.prepend(taskElement);
 
     // Attach deleteItem() function to the delete button
     const deleteButton = taskElement.querySelector(".trash-icon");
-    deleteButton.addEventListener("click", deleteItem);
+    deleteButton.addEventListener("click", () => deleteItem(taskElement.dataset.taskId));
+
+    
+    // Prepend the task element to the container
+    importantTasksContainer.prepend(taskElement);
   });
 }
+
+function deleteItem(taskId) {
+  console.log("Deleting task with ID:", taskId);
+
+  const userId = auth.currentUser.uid;
+  if (!userId) {
+    console.error("User not authenticated.");
+    return;
+  }
+
+  const userTasksRef = ref(db, "users/" + userId + "/important_tasks/" + taskId);
+
+  remove(userTasksRef)
+    .then(() => {
+      console.log("Task deleted successfully from the database.");
+
+      // Remove the task box from the UI
+      const taskElement = document.querySelector(`.box[data-task-id="${taskId}"]`);
+      if (taskElement) {
+        taskElement.remove();
+
+        // Ensure task box order update only after the task element is removed from the DOM
+        updateTaskBoxOrder();
+      } else {
+        console.error("Task element not found in the UI.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error deleting task:", error);
+    });
+}
+
+
 
 // Monitor authentication state changes
 onAuthStateChanged(auth, (user) => {
