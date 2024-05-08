@@ -202,7 +202,7 @@ body{
     display: inline-block;
     margin-right: 20px;
     position: absolute;
-    margin-top: 25px;
+    margin-top: 150px;
     margin-left: 250px;
 }
 
@@ -219,7 +219,7 @@ body{
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    margin-top: 25px;
+    margin-top: 150px;
     margin-left: 970px;
     transition: opacity 0.3s ease;
     font-family: 'Montserrat', Arial;
@@ -258,4 +258,56 @@ body{
     color: #fff;
     padding: 10px 20px;
     border-radius: 5px;
+}
+
+.box2 {
+    margin-top: 50px;
+    width: 20%; /* Adjust width as needed */
+    background-color: #ffffff;
+    border: 3px solid #306f995c;
+    padding: 15px;
+    border-radius: 20px;
+    position: absolute;
+    left: calc(30% + 5px); /* Position .box2 to the right of the + symbol with spacing */
+    transform: translateX(-50%);
+}
+
+.text-placeholder {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-family: Arial;
+}
+
+.text-placeholder input.text-input {
+    color: black;
+    font-family: Arial;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    width: calc(100% - 25px);
+}
+
+.text-placeholder input.text-input::placeholder {
+    color: rgb(76, 76, 76);
+}
+
+.add-member {
+    position: absolute;
+    margin-top: 52px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #4682A9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    left: 19%; /* Center the + symbol horizontally */
+    transform: translateX(-150%);
 }
