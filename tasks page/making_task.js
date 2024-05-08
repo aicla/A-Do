@@ -22,6 +22,7 @@ const firebaseConfig = {
   messagingSenderId: "488739423620",
   appId: "1:488739423620:web:9bdc3605a45a3714b249d1",
 };
+import { addTask } from "../calendar view/subdirectory/script.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -78,6 +79,8 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
+
+  console.log(addTask);
 });
 
 // Function to load tasks
@@ -92,44 +95,45 @@ function saveTask(userId, isImportant) {
   const chosen = document.querySelector(".chosen").textContent; // get the selected subject
   const assignedToInput = document.querySelector(".assigned-to-input");
   if (!assignedToInput) {
-      console.error("Assigned-to input element not found.");
-      return;
+    console.error("Assigned-to input element not found.");
+    return;
   }
 
   const assignedTo = assignedToInput ? assignedToInput.value : "";
   const notes = document.querySelector(".notes-input").value;
 
   if (!title || !date || !time || !chosen || !notes) {
-      showToast("Please fill in all required fields.", true); // Red toast for error
-      return; // Exit the function early if any field is empty
+    showToast("Please fill in all required fields.", true); // Red toast for error
+    return; // Exit the function early if any field is empty
   }
 
   // Construct task object
   const task = {
-      title: title,
-      date: date,
-      time: time,
-      chosen: chosen,
-      assignedTo: assignedTo,
-      notes: notes,
+    title: title,
+    date: date,
+    time: time,
+    chosen: chosen,
+    assignedTo: assignedTo,
+    notes: notes,
   };
 
   // Save task object to Firebase database under the user's ID
-  const userTasksRef = ref(db, "users/" + userId + (isImportant ? "/important_tasks/" : "/tasks/")); // Determine the path based on importance
+  const userTasksRef = ref(
+    db,
+    "users/" + userId + (isImportant ? "/important_tasks/" : "/tasks/")
+  ); // Determine the path based on importance
   const newTaskRef = push(userTasksRef); // Create a new child location with a unique key
   set(newTaskRef, task)
-      .then(() => {
-          showToast("Task saved successfully!", false); // Green toast for success
-          if (isImportant) {
-              console.log("Task saved as important task successfully!");
-          }
-      })
-      .catch((error) => {
-          showToast("Error saving task: " + error, true); // Red toast for error
-      });
+    .then(() => {
+      showToast("Task saved successfully!", false); // Green toast for success
+      if (isImportant) {
+        console.log("Task saved as important task successfully!");
+      }
+    })
+    .catch((error) => {
+      showToast("Error saving task: " + error, true); // Red toast for error
+    });
 }
-
-
 
 // Function to display toast message
 function showToast(message, isError) {

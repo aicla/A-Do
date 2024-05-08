@@ -149,7 +149,7 @@ h1::after {
 .task .dot {
 	height: 25px;
     width: 25px;
-    background-color: red;
+    background-color: rgb(187, 110, 110);
     border-radius: 50%;
     display: inline-block;
     margin-left: 20px;
