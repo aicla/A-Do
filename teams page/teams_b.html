@@ -17,40 +17,40 @@
     <title>Teams View</title>
     <script type="module" src="teams.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", function () {
-  const membersButton = document.querySelector(".members");
+        document.addEventListener("DOMContentLoaded", function () {
+        const membersButton = document.querySelector(".members");
 
-  if (membersButton) {
-    membersButton.addEventListener("click", function () {
-      window.location.href = "members.html"; // Redirect to members.html upon click
-    });
-  } else {
-    console.error("Members button element not found");
-  }
+        if (membersButton) {
+          membersButton.addEventListener("click", function () {
+            window.location.href = "members.html"; // Redirect to members.html upon click
+          });
+        } else {
+          console.error("Members button element not found");
+        }
 
-  // Profile Picture (Your existing code)
-  const photoURL = localStorage.getItem("photoURL");
-  const profileIcon = document.getElementById("pfp");
+        // Profile Picture (Your existing code)
+        const photoURL = localStorage.getItem("photoURL");
+        const profileIcon = document.getElementById("pfp");
 
-  if (profileIcon) {
-    const img = document.createElement("img");
-    img.src = photoURL;
-    img.alt = "Profile Picture";
-    img.style.width = "24px";
-    img.style.height = "24px";
-    img.style.borderRadius = "50px";
-    profileIcon.appendChild(img);
+        if (profileIcon) {
+          const img = document.createElement("img");
+          img.src = photoURL;
+          img.alt = "Profile Picture";
+          img.style.width = "24px";
+          img.style.height = "24px";
+          img.style.borderRadius = "50px";
+          profileIcon.appendChild(img);
 
-    profileIcon.addEventListener("click", function () {
-      window.location.href = "../profile_view page/profile_view.html";
-    });
-  } else {
-    console.error("Profile icon element not found");
-  }
-});
-
+          profileIcon.addEventListener("click", function () {
+            window.location.href = "../profile_view page/profile_view.html";
+          });
+        } else {
+          console.error("Profile icon element not found");
+        }
+      });
     </script>
   </head>
+  
   <body>
     <div class="header">
       <div class="header-left">
