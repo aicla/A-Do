@@ -22,6 +22,15 @@ body {
     color: green;
 }
 
+.calendar-dates li.has-tasks {
+    background-color: rgb(80, 24, 27);
+    color: white; 
+    border-radius: 50%; 
+    height: 35px;
+    width: 35px;
+}
+
+
 .header a {
     float: left;
     color: #F6F4EB;
