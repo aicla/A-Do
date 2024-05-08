@@ -24,10 +24,9 @@ body{
     float: left;
     color: #F6F4EB;
     text-align: center;
-    padding: 12px 30px;
+    padding: 13px 20px;
     text-decoration: none;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: .8rem;
 }
 
 .header a:hover {
@@ -39,15 +38,18 @@ body{
     background-color: #91C8E4;
     color: #306f99;
 }
+  
+.header-left {
+    float:left;
+}
 
 .header span {
     float: left;
-    color: #B9E7FF;
+    color: white;
     text-align: center;
     padding: 12px 30px;
     text-decoration: none;
-    font-size: 25px;
-    line-height: 25px;
+    font-size: 1.1rem;
 }
 
 .header span:hover {
