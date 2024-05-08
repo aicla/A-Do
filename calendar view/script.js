@@ -148,7 +148,6 @@ const regenerateCalendar = () => {
 };
 
 const handleDateClick = async (event) => {
-  const clickedDateElement = event.target;
   const clickedDate = event.target.innerText;
 
   const formattedDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(
