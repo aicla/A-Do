@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -15,6 +14,8 @@
     />
     <link rel="stylesheet" href="add.css" />
     <title>Create Team</title>
+
+    <script type = "module" src="teams.js"></script>
     <script>
       //Profile Picture
       document.addEventListener("DOMContentLoaded", function () {
@@ -41,6 +42,7 @@
       });
     </script>
   </head>
+  
   <body>
     <div class="header">
       <div class="header-left">
@@ -68,11 +70,15 @@
 
     <div class="box">
       <div class="inner-box">
-        <div class="title">Teams name (required)</div>
-        <input type="text" class="title-input" placeholder="Type here..." />
+        <div class="title">Team name (required)</div>
+        <input type="text" class="title-input" id="teamName" placeholder="Type here..." />
       </div>
     </div>
 
+    <div class="box">
+        <div class="inner-box">
+          <div class="title">Add members (enter email addresses)</div>
+          <input type="text" class="title-input" id="teamMembers" placeholder="Type here..." />
       <span class="add-member">+</span></a>
 
       <div class="box2">
@@ -85,7 +91,7 @@
 
     <div class="button-container">
       <a href="teams.html" class="cancel-text">CANCEL</a>
-      <button class="button">SAVE</button>
+      <button id="saveTeam" class="button">SAVE</button>
     </div>
 
   </body>
