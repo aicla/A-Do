@@ -51,7 +51,7 @@ googleSignInBtn.addEventListener("click", () => {
       console.log("Photo URL:", photoURL);
       console.log("Display Name:", displayName);
 
-      window.location.href = "../home page/homepage.html";
+      window.location.href = "../tasks page/task.html";
     })
     .catch((error) => {
       console.error(error);
