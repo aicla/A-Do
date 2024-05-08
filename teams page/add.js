@@ -1,9 +1,9 @@
+export const memberNames = [];
+
 document.addEventListener("DOMContentLoaded", function () {
     const addMemberButton = document.querySelector(".add-member");
     const memberListBox = document.querySelector(".member-list-box");
     const memberListContainer = document.querySelector(".button-container");
-
-    const memberNames = [];
 
     addMemberButton.addEventListener("click", function () {
         const memberInput = document.querySelector(".text-input");
