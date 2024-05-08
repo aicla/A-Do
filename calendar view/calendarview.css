@@ -29,11 +29,12 @@ body {
     color: green;
 }
 
-.has-tasks {
-    background-color: orange; /* Change the background color to orange */
-    color: white; /* Change the text color to white */
-    border-radius: 50%; /* Make the date circle rounded */
-    /* Add more styling as needed */
+.calendar-dates li.has-tasks {
+    background-color: rgb(80, 24, 27);
+    color: white; 
+    border-radius: 50%; 
+    height: 35px;
+    width: 35px;
 }
 
 
