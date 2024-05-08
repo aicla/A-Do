@@ -22,12 +22,22 @@ body {
     color: green;
 }
 
+.calendar-dates li.has-tasks::before {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #306f995c;
+    transform: translate(-50%, -50%);
+}
+
+/* Style for li elements with tasks */
 .calendar-dates li.has-tasks {
-    background-color: rgb(80, 24, 27);
-    color: white; 
-    border-radius: 50%; 
-    height: 35px;
-    width: 35px;
+    background-color: transparent; /* Set background color as needed */
+    color: rgb(0, 0, 0); /* Text color */
 }
 
 
