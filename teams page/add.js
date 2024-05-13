@@ -1,4 +1,4 @@
-export const memberNames = [];
+const memberNames = [];
 
 document.addEventListener("DOMContentLoaded", function () {
     const addMemberButton = document.querySelector(".add-member");
@@ -54,3 +54,5 @@ document.addEventListener("DOMContentLoaded", function () {
         memberListContainer.style.marginTop = `${memberListBoxHeight + 20}px`;
     }
 });
+
+export { memberNames };
