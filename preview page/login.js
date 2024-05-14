@@ -18,7 +18,7 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-// Your web app's Firebase configuration
+// 1. Firebase Initialization
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
   authDomain: "a-do-ff29e.firebaseapp.com",
@@ -29,28 +29,49 @@ const firebaseConfig = {
   appId: "1:488739423620:web:9bdc3605a45a3714b249d1"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// 2. Auth Initialization
 const auth = getAuth(app);
-const db = getDatabase();
-const firestoreDB = getFirestore(app); // Initialize Firestore
-const colRef = collection(firestoreDB, 'users') // Collection reference
-const docRef = doc(colRef); // Document reference
 
-// Get "users" collection from firestore
-getDocs(colRef)
-  .then((snapshot) => {
-    let users = []
-    snapshot.docs.forEach((doc) => {
-      users.push({ ...doc.data(), id: doc.id })
+// 3. Firestore Operations
+const firestoreDB = getFirestore(app);
+const usersCollection = collection(firestoreDB, 'users');
+
+function getUsersFromFirestore() {
+  getDocs(usersCollection)
+    .then((snapshot) => {
+      let users = [];
+      snapshot.docs.forEach((doc) => {
+        users.push({ ...doc.data(), id: doc.id });
+      });
+      console.log(users);
     })
-    console.log(users)
-  })
-  .catch(err => {
-    console.log(err.message)
-  })
+    .catch(err => {
+      console.log(err.message);
+    });
+}
 
-// Google sign in
+function saveUserToFirestore(uid, displayName, email) {
+  const userDocRef = doc(usersCollection, uid);
+  return setDoc(userDocRef, {
+    displayName: displayName,
+    email: email
+  });
+}
+
+// 4. Realtime Database Operations
+const realtimeDB = getDatabase(app);
+
+function saveUserToRealtimeDatabase(uid, displayName, email) {
+  const userRef = ref(realtimeDB, 'users/' + uid);
+  return set(userRef, {
+    displayName: displayName,
+    email: email
+  });
+}
+
+// 5. Google Sign-In
 const googleSignInBtn = document.getElementById("googleSign");
 
 googleSignInBtn.addEventListener("click", () => {
@@ -60,26 +81,38 @@ googleSignInBtn.addEventListener("click", () => {
       // User successfully signed in.
       const user = result.user;
       const uid = user.uid;
-      const email = user.email; // Retrieve user's email address
-      const photoURL = user.photoURL;
+      const email = user.email;
       const displayName = user.displayName;
+      const photoURL = user.photoURL;
 
       localStorage.setItem("uid", uid);
       localStorage.setItem("photoURL", photoURL);
       localStorage.setItem("displayName", displayName);
 
       // Save user information to Firestore
-      setDoc(docRef, {
-        displayName: displayName,
-        email: email
-      })
-      .then(() => {
-        console.log("User successfully saved to the database", displayName, email)
-      })
+      saveUserToFirestore(uid, displayName, email)
+        .then(() => {
+          console.log("User successfully saved to Firestore:", displayName, email);
+        })
+        .catch(err => {
+          console.error("Error saving user to Firestore:", err);
+        });
+
+      // Save user information to Realtime Database
+      saveUserToRealtimeDatabase(uid, displayName, email)
+        .then(() => {
+          console.log("User successfully saved to Realtime Database:", displayName, email);
+        })
+        .catch(err => {
+          console.error("Error saving user to Realtime Database:", err);
+        });
 
       window.location.href = "../home page/homepage.html";
     })
     .catch((error) => {
-      console.error(error);
+      console.error("Error during sign-in:", error);
     });
 });
+
+// Call function to fetch users from Firestore
+getUsersFromFirestore();
