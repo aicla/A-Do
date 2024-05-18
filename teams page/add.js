@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const suggestionBox = document.getElementById("suggestionBox");
     const memberListBox = document.getElementById("memberListBox");
     const memberInput = document.querySelector(".text-input");
-    const buttonContainer = document.querySelector(".button-container"); // Define buttonContainer here
+    const buttonContainer = document.querySelector(".button-container");
 
     // Initially hide the suggestion and member list boxes
     suggestionBox.style.display = "none";
