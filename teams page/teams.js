@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const teamName = document.querySelector("#teamName").value;
         console.log(teamName, memberNames);
         // Check if memberNames[] exist on firestore db (users)
+
         // If memberNames[] exist, get that/those user(s), save the "teamName" and that/those user(s) in the "teams" collection in firestore
           // If memberNames[] or some of the memberNames[indexes] don't exist, remove that/those memberNames[indexes] from the list, save only those that match in db
             // Show an alert/prompt saying that/those memberNames[indexes] don't exist
@@ -35,3 +36,4 @@ document.addEventListener("DOMContentLoaded", function () {
     })
 });
 
+// 
