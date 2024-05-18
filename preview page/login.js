@@ -10,13 +10,6 @@ import {
   ref,
   set,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-import {
-  getFirestore,
-  collection,
-  doc,
-  setDoc,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -33,22 +26,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
-const firestoreDB = getFirestore(app); // Initialize Firestore
-const colRef = collection(firestoreDB, 'users') // Collection reference
-const docRef = doc(colRef); // Document reference
-
-// Get "users" collection from firestore
-getDocs(colRef)
-  .then((snapshot) => {
-    let users = []
-    snapshot.docs.forEach((doc) => {
-      users.push({ ...doc.data(), id: doc.id })
-    })
-    console.log(users)
-  })
-  .catch(err => {
-    console.log(err.message)
-  })
 
 // Google sign in
 const googleSignInBtn = document.getElementById("googleSign");
@@ -60,22 +37,12 @@ googleSignInBtn.addEventListener("click", () => {
       // User successfully signed in.
       const user = result.user;
       const uid = user.uid;
-      const email = user.email; // Retrieve user's email address
       const photoURL = user.photoURL;
       const displayName = user.displayName;
 
       localStorage.setItem("uid", uid);
       localStorage.setItem("photoURL", photoURL);
       localStorage.setItem("displayName", displayName);
-
-      // Save user information to Firestore
-      setDoc(docRef, {
-        displayName: displayName,
-        email: email
-      })
-      .then(() => {
-        console.log("User successfully saved to the database", displayName, email)
-      })
 
       window.location.href = "../home page/homepage.html";
     })
