@@ -11,6 +11,7 @@ import {
   get,
   push,
   set,
+  update
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
@@ -40,6 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("User is not logged in.");
     }
   });
+
+
+
 
   const saveButton = document.getElementById("saveButton");
   if (saveButton) {
@@ -99,7 +103,7 @@ function saveTask(userId, isImportant) {
   const assignedTo = assignedToInput ? assignedToInput.value : "";
   const notes = document.querySelector(".notes-input").value;
 
-  if (!title || !date || !time || !chosen || !notes) {
+  if (!title || !date || !time || !chosen || !notes || !assignedTo) {
       showToast("Please fill in all required fields.", true); // Red toast for error
       return; // Exit the function early if any field is empty
   }
@@ -147,3 +151,129 @@ function showToast(message, isError) {
     toast.remove();
   }, 3000); // Remove toast after 3 seconds
 }
+
+/*document.addEventListener("DOMContentLoaded", (event) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const taskId = urlParams.get('taskId');
+  const taskTitle = urlParams.get('taskTitle');
+  const taskNotes = urlParams.get('taskNotes');
+  const taskDate = urlParams.get('taskDate');
+  const taskTime = urlParams.get('taskTime');
+
+  const titleInput = document.getElementById('taskTitle');
+  const notesInput = document.getElementById('taskNotes');
+  const dateInput = document.getElementById('taskDate');
+  const timeInput = document.getElementById('taskTime');
+
+  // Populate input fields with task details
+  titleInput.value = taskTitle || '';
+  notesInput.value = taskNotes || '';
+  dateInput.value = taskDate || '';
+  timeInput.value = taskTime || '';
+
+  const saveButton = document.getElementById('saveButton');
+  saveButton.addEventListener('click', async () => {
+      const title = titleInput.value.trim();
+      const notes = notesInput.value.trim();
+      const date = dateInput.value.trim();
+      const time = timeInput.value.trim();
+
+      if (taskId) {
+          // If taskId is present, update the existing task
+          try {
+              const userId = getCurrentUserId();
+              const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
+              await update(taskRef, {
+                  title,
+                  notes,
+                  date,
+                  time
+              });
+              console.log('Task updated successfully');
+              // Redirect to task.html after updating the task
+              window.location.href = '../tasks page/task.html';
+          } catch (error) {
+              console.error('Error updating task:', error);
+          }
+      } else {
+          // If taskId is not present and user is not signed in, show error toast
+          showToast('User not signed in. Please sign in to create a new task.', true);
+      }
+  });
+});
+
+//gumagawa panibagong taskId tas dun nassave mga changes
+document.addEventListener("DOMContentLoaded", (event) => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const taskId = urlParams.get('taskId');
+  const taskTitle = urlParams.get('taskTitle');
+  const taskNotes = urlParams.get('taskNotes');
+  const taskDate = urlParams.get('taskDate');
+  //const taskTime = urlParams.get('taskTime');
+  //const taskChosen = urlParams.get('taskChosen');
+  const taskAssignedTo = urlParams.get('taskAssignedTo');
+
+  const titleInput = document.getElementById('taskTitle');
+  const notesInput = document.getElementById('taskNotes');
+  const dateInput = document.getElementById('taskDate');
+  //const timeInput = document.getElementById('taskTime');
+  //const chosenElement = document.getElementById('taskChosen');
+  const AssignedToInput = document.getElementById('taskAssignedTo');
+
+  // Populate input fields with task details
+  titleInput.value = taskTitle || '';
+  notesInput.value = taskNotes || '';
+  dateInput.value = taskDate || '';
+  //timeInput.value = taskTime || '';
+  //chosenElement.textContent = taskChosen || '';
+  AssignedToInput.value = taskAssignedTo || '';
+
+  const saveButton = document.getElementById('saveButton');
+  saveButton.addEventListener('click', async () => {
+      const title = titleInput.value.trim();
+      const notes = notesInput.value.trim();
+      const date = dateInput.value.trim();
+      //const time = timeInput.value.trim();
+      //const chosen = chosenElement.textContent.trim();
+      const assignedTo = AssignedToInput.value.trim();
+
+      if (taskId) {
+          // If taskId is present, update the existing task
+          try {
+              const userId = getCurrentUserId();
+              const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
+              await update(taskRef, {
+                  title,
+                  notes,
+                  date,
+                  //time,
+                  //chosen,
+                  assignedTo
+              });
+              console.log('Task updated successfully');
+              // Redirect to task.html after updating the task
+              window.location.href = '../tasks page/task.html';
+          } catch (error) {
+              console.error('Error updating task:', error);
+          }
+      } else {
+          // If taskId is not present and user is not signed in, show error toast
+          showToast('User not signed in. Please sign in to create a new task.', true);
+      }
+  });
+});
+
+
+
+
+
+// Define getCurrentUserId function
+function getCurrentUserId() {
+  const user = auth.currentUser;
+  if (user) {
+    return user.uid;
+  } else {
+    console.log("No user signed in.");
+    throw new Error("No user signed in.");
+  }
+}*/

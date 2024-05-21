@@ -335,26 +335,27 @@ header .calendar-current-date {
 }
 
 .menu{
-    width: 5%;
     position: absolute;
     background-color: #306f99;
     color: white;
     padding: 15px;
-    margin: 20px 250px 0;
+    margin: 20px 20% 0;
     border-radius: 0.5rem;
     z-index: 1;
     box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.3);
-    
+}
+
+.menu a{
+    display: block;
+    margin: 3px;
 }
 
 .edit a:hover{
-    padding-right: 50px;
 }
 
 .menu a:hover{
     align-items: center;
     cursor: pointer;
-    padding-right: 10px;
     border-radius: 0.2rem;
     background-color: #6aa4cb;
 }
