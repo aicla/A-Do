@@ -12,7 +12,6 @@ import {
   push,
   set,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-import { ToMaking } from "../calendar view/script.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -28,31 +27,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
-
-document.addEventListener("DOMContentLoaded", () => {
-  const svgBtn = document.getElementById("svg_btn");
-  svgBtn.addEventListener("click", handleSVG);
-});
-
-const handleSVG = (event) => {
-  const clicked = getCD();
-  console.log("Clicked Date: ", clicked);
-
-  //format
-  const formattedDate = ToMaking(clicked);
-  console.log("Formatted Date: ", formattedDate);
-};
-
-const getCD = () => {
-  const dates = document.querySelectorAll(".calendar-dates li");
-  let clicked = null;
-  dates.forEach((dateElement) => {
-    if (dateElement.classList.contains("active")) {
-      clicked = dateElement.innerText;
-    }
-  });
-  return clicked;
-};
 
 const saveButton = document.getElementById("saveButton");
 if (saveButton) {
