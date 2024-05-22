@@ -29,16 +29,31 @@ const db = getDatabase(app);
 // Function to fetch tasks for a given user ID
 const fetchTasks = async (userId) => {
   try {
-    const dayRef = ref(db, `users/${userId}/tasks/`);
-    const snapshot = await get(dayRef);
-    const data = snapshot.val();
+    const regularTasksRef = ref(db, `users/${userId}/tasks/`);
+    const importantTasksRef = ref(db, `users/${userId}/important_tasks/`);
 
-    if (data) {
-      return Object.keys(data).map((key) => ({ key, ...data[key] }));
-    } else {
-      console.log("No tasks found for the user.");
-      return [];
-    }
+    // Fetch regular tasks
+    const regularTasksSnapshot = await get(regularTasksRef);
+    const regularTasksData = regularTasksSnapshot.val();
+    const regularTasks = regularTasksData
+      ? Object.keys(regularTasksData).map((key) => ({
+          key,
+          ...regularTasksData[key],
+        }))
+      : [];
+
+    // Fetch important tasks
+    const importantTasksSnapshot = await get(importantTasksRef);
+    const importantTasksData = importantTasksSnapshot.val();
+    const importantTasks = importantTasksData
+      ? Object.keys(importantTasksData).map((key) => ({
+          key,
+          ...importantTasksData[key],
+        }))
+      : [];
+
+    // Merge regular and important tasks and return
+    return regularTasks.concat(importantTasks);
   } catch (error) {
     console.log("Error fetching tasks:", error);
     throw error;
