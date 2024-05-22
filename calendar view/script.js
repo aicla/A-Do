@@ -8,6 +8,7 @@ import {
   getDatabase,
   ref,
   onValue,
+  remove,
   get,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
@@ -41,6 +42,13 @@ const fetchTasks = async (userId) => {
 
     // Combine data
     const combinedData = { tasks: data1 || {}, important_tasks: data2 || {} };
+
+    if (combinedData) {
+      return Object.keys(combinedData).map((key) => ({
+        key,
+        ...combinedData[key],
+      }));
+    }
 
     // Convert combined data to an array of values, if needed
     const allTasks = [
@@ -109,6 +117,7 @@ const displayMatch = (tasks) => {
 
       const taskElement = document.createElement("div");
       taskElement.classList.add("subject-title");
+      taskElement.setAttribute("data-task-id", task.key);
 
       const dotElement = document.createElement("span");
       dotElement.classList.add("dot");
@@ -132,8 +141,52 @@ const displayMatch = (tasks) => {
       moreVertElement.textContent = " more_vert ";
       taskElement.appendChild(moreVertElement);
 
+      // Append the menu to each taskElement
+      const menu = createMenu(task.key, task); // Create the menu
+      taskElement.appendChild(menu); // Append the menu
+
+      // Event listener for three dots
+      moreVertElement.addEventListener("click", () => {
+        // Toggle the display of the menu
+        const taskMenu = taskElement.querySelector(".menu");
+        taskMenu.style.display =
+          taskMenu.style.display === "none" ? "block" : "none";
+      });
+
       subjectsContainer.appendChild(taskElement);
     });
+  }
+};
+
+const removeTaskFromUI = (taskId) => {
+  const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
+  if (taskElement) {
+    taskElement.remove();
+    console.log(`Task ${taskId} removed from UI`);
+  }
+};
+
+const handleDelete = async (taskId) => {
+  try {
+    console.log("Deleting task with ID:", taskId); // Log the taskId
+    const userId = getCurrentUserId();
+    const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
+
+    // Get the task date before deleting
+    const taskSnapshot = await get(taskRef);
+    const taskData = taskSnapshot.val();
+    const taskDate = taskData.date;
+
+    await remove(taskRef);
+    console.log("Task deleted successfully");
+
+    // Remove the task from the UI
+    removeTaskFromUI(taskId);
+
+    // Update the calendar UI after deleting the task
+    await updateCalendarDate(taskDate);
+  } catch (error) {
+    console.log("Error deleting task:", error);
   }
 };
 
