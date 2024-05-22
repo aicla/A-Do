@@ -43,42 +43,41 @@
         img.style.borderRadius = "50px";
         profileIcon.appendChild(img);
 
-        profileIcon.addEventListener("click", function () {
-          window.location.href = "../profile_view page/profile_view.html";
-        });
-      } else {
-        console.error("Profile icon element not found");
-      }
+          profileIcon.addEventListener("click", function () {
+            window.location.href = "../profile_view page/profile_view.html";
+          });
+        } else {
+          console.error("Profile icon element not found");
+        }
 
-      // Set the team name in the header
-      const urlParams = new URLSearchParams(window.location.search);
-      const teamKey = urlParams.get('teamKey');
-      const teamList = JSON.parse(localStorage.getItem('teamList')) || {};
-      const team = teamList[teamKey];
-      const teamName = team ? team.teamName : "Unknown Team";
-      const teamNamePlaceholder = document.getElementById("teamNamePlaceholder");
-      if (teamNamePlaceholder) {
-        teamNamePlaceholder.textContent = teamName;
-      }
-    });
-  </script>
-</head>
-<body>
-  <div class="header">
-    <div class="header-left">
-      <a href="../home page/homepage.html">Home</a>
-      <a href="../tasks page/task.html">Task</a>
-      <a href="../important page/important.html">Important</a>
-      <a href="../assigned to me page/assigned.html">Assigned to me</a>
-      <a class="active" href="../teams page/teams.html">Teams</a>
-      <a href="../calendar view/calendar.html">Calendar</a>
+        const messageIcon = document.getElementById("message");
+        if (messageIcon) {
+          messageIcon.addEventListener("click", function () {
+            window.location.href = "../messaging/messaging.html";
+          });
+        } else {
+          console.error("Message icon element not found");
+        }
+      });
+    </script>
+  </head>
+  
+  <body>
+    <div class="header">
+      <div class="header-left">
+        <a href="../home page/homepage.html">Home</a>
+        <a href="../tasks page/task.html">Task</a>
+        <a href="../important page/important.html">Important</a>
+        <a href="../assigned to me page/assigned.html">Assigned to me</a>
+        <a class="active" href="../teams page/teams.html">Teams</a>
+        <a href="../calendar view/calendar.html">Calendar</a>
+      </div>
+      <div class="header-right">
+        <span id="message" class="material-symbols-outlined"> mail </span>
+        <span id="pfp" class="material-symbols-outlined"></span>
+        <span id="logout" class="material-symbols-outlined"> logout </span>
+      </div>
     </div>
-    <div class="header-right">
-      <span class="material-symbols-outlined">mail</span>
-      <span id="pfp" class="material-symbols-outlined"></span>
-      <span class="material-symbols-outlined">logout</span>
-    </div>
-  </div>
 
   <div class="team_name">
     <h1 id="teamNamePlaceholder">Team Name Placeholder</h1>
@@ -89,17 +88,17 @@
 
   <button class="members">Members</button>
 
-  <div class="box">
-    <div class="inner-box">
-      <div class="icon">
-        <span class="material-symbols-outlined">task</span>
-      </div>
-      <div class="details">
-        <h2>User posted a new assignment: Activity Name</h2>
-        <h3>March 04</h3>
+    <div class="box">
+      <div class="inner-box">
+        <div class="icon">
+          <span class="material-symbols-outlined"> task </span>
+        </div>
+        <div class="details">
+          <h2>User posted a new assignment: Activity Name</h2>
+          <h3>March 04</h3>
+        </div>
       </div>
     </div>
-  </div>
 
   <script src="important.js"></script>
 </body>

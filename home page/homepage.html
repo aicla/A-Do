@@ -29,8 +29,9 @@
           img.src = photoURL;
           img.alt = "Profile Picture";
 
-          img.style.width = "24px";
-          img.style.height = "24px";
+          img.style.width = "22px";
+          img.style.height = "22px";
+          img.style.marginTop = "-5px";
           img.style.borderRadius = "50px";
           profileIcon.appendChild(img);
 
@@ -39,6 +40,15 @@
           });
         } else {
           console.error("Profile icon element not found");
+        }
+
+        const messageIcon = document.getElementById("message");
+        if (messageIcon) {
+          messageIcon.addEventListener("click", function () {
+            window.location.href = "../messaging/messaging.html";
+          });
+        } else {
+          console.error("Message icon element not found");
         }
       });
     </script>
@@ -75,14 +85,6 @@
           </div>
           <div class="icon">
             <li>
-              <a class="menu_item" href="../assigned to me page/assigned.html">
-                <span class="material-symbols-outlined"> task_alt </span>
-                Assigned to Me</a
-              >
-            </li>
-          </div>
-          <div class="icon">
-            <li>
               <a class="menu_item" href="../teams page/teams.html">
                 <span class="material-symbols-outlined"> group </span>
                 Teams</a
@@ -97,24 +99,35 @@
               >
             </li>
           </div>
+          <div class="due">
+            <div class="due_header">
+              <span class="material-symbols-outlined"> today </span>
+              <h1>Due</h1>
+            </div>
+            <!-- date -->
+            <h2 id="currentDate"></h2>
+            <!-- tasks -->
+            <h3 style="display: none">task</h3>
+            <h3 style="display: none">task</h3>
+          </div>
         </ul>
       </nav>
       <!-- task view -->
       <div class="task_container">
-        <div class="tasks">
+        <div class="tasks" id="todo">
           <h2>TO DO</h2>
           <h3>task</h3>
           <h3>task</h3>
           <h3>task</h3>
         </div>
-        <div class="tasks">
+        <div class="tasks" id="inprogress">
           <h2>IN PROGRESS</h2>
           <h3>task</h3>
           <h3>task</h3>
           <h3>task</h3>
         </div>
-        <div class="tasks">
-          <h2>FINISHED</h2>
+        <div class="tasks" id="archive">
+          <h2>ARCHIVE</h2>
           <h3>task</h3>
           <h3>task</h3>
           <h3>task</h3>
@@ -123,69 +136,6 @@
     </div>
     <div class="box_2">
       <!-- dues -->
-      <div class="due">
-        <div class="due_header">
-          <span class="material-symbols-outlined"> today </span>
-          <h1>Due</h1>
-        </div>
-        <!-- date -->
-        <h2>February 22, 2024</h2>
-        <!-- tasks -->
-        <h3>task</h3>
-        <h3>task</h3>
-      </div>
-      <!-- agenda view -->
-      <div class="agenda">
-        <h2>AGENDA</h2>
-        <div class="date">
-          <h5>Today</h5>
-          <h4>February 22, 2024</h4>
-        </div>
-        <!-- task -->
-        <h3>Software Requirement Specification</h3>
-        <!-- link to open task -->
-        <div class="task_link">
-          <span class="material-symbols-outlined"> navigate_next </span>
-          <h4>Go to Group: Software Engineering</h4>
-        </div>
-        <div class="date">
-          <h5>Tomorrow</h5>
-          <h4>February 23, 2024</h4>
-        </div>
-        <!-- task -->
-        <h3>Software Requirement Specification</h3>
-        <!-- link to open task -->
-        <div class="task_link">
-          <span class="material-symbols-outlined"> navigate_next </span>
-          <h4>Go to Group: Software Engineering</h4>
-        </div>
-        <div class="date">
-          <h5>Coming Up</h5>
-        </div>
-        <!-- task -->
-        <h3>Software Requirement Specification</h3>
-        <!-- link to open task -->
-        <div class="task_link">
-          <span class="material-symbols-outlined"> navigate_next </span>
-          <h4>Go to Group: Software Engineering</h4>
-        </div>
-      </div>
-      <!-- full assignment view -->
-      <div class="assignment">
-        <h2>ASSIGNMENT LIST</h2>
-        <div class="assignment_content">
-          <h3>Software Specification Requiremnts</h3>
-          <h4>February 22, 2024</h4>
-        </div>
-        <div class="assignment_content">
-          <h3>Software Specification Requiremnts</h3>
-          <h4>February 22, 2024</h4>
-        </div>
-        <div class="assignment_content">
-          <h3>Software Specification Requiremnts</h3>
-          <h4>February 22, 2024</h4>
-        </div>
-      </div>
     </div>
 
     <script src="important.js"></script>

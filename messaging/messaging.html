@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Messaging System</title>
+        <link rel="stylesheet" href="messaging.css" />
+        <script type="module" src="messaging.js"></script>
+        <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet"
+        />
+        <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <script>
+        //Profile Picture
+        document.addEventListener("DOMContentLoaded", function () {
+            const photoURL = localStorage.getItem("photoURL");
+            
+            const profileIcon = document.getElementById("pfp");
+            if (profileIcon) {
+            // Create an image element
+            const img = document.createElement("img");
+            img.src = photoURL;
+            img.alt = "Profile Picture";
+
+            img.style.width = "22px";
+            img.style.height = "22px";
+            img.style.marginTop = "-5px";
+            img.style.borderRadius = "50px";
+            profileIcon.appendChild(img);
+
+            profileIcon.addEventListener("click", function () {
+                window.location.href = "../profile_view page/profile_view.html";
+            });
+            } else {
+            console.error("Profile icon element not found");
+            }
+
+            const messageIcons = document.querySelectorAll(".message-2 #icon, .message-3 #icon, .message-4 #icon");
+            messageIcons.forEach(icon => {
+                const messageImg = document.createElement("img");
+                messageImg.src = photoURL;
+                messageImg.alt = "Profile Picture";
+                messageImg.style.width = "80px";
+                messageImg.style.height = "80px";
+                messageImg.style.border = "3px solid #4682A9";
+                messageImg.style.borderRadius = "50px";
+                icon.appendChild(messageImg);
+            });
+            
+            const messageIcon = document.getElementById("message");
+            if (messageIcon) {
+            messageIcon.addEventListener("click", function () {
+                window.location.href = "../messaging/messaging.html";
+            });
+            } else {
+            console.error("Message icon element not found");
+            }
+            });
+        </script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="header-left">
+                <a href="../home page/homepage.html">Home</a>
+                <a href="../tasks page/task.html">Task</a>
+                <a href="../important page/important.html">Important</a>
+                <a href="../teams page/teams.html">Teams</a>
+                <a href="../calendar view/calendar.html">Calendar</a>
+            </div>
+            <div class="header-right">
+                <span id="message" class="material-symbols-outlined"> mail </span>
+                <span id="pfp" class="material-symbols-outlined"> </span>
+                <span id="logout" class="material-symbols-outlined"> logout </span>
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="left-box">
+                <input type="search" id="search-bar" placeholder="Search messages..." />
+                <a class="message-preview-1">
+                    <div >
+                        <h2>Software Engineering: Vehuel Amante, Ai...</h2>
+                        <h3>SRS Update</h3>
+                        <h4>Would like to update you all about the SRS progress</br>...</h4>
+                    </div>
+                </a>
+                <a class="message-preview-2">
+                    <div >
+                        <h2>Basic Accounting: Vehuel Amante, Ai...</h2>
+                        <h3>Financial Statement</h3>
+                        <h4>Has anyone started on searching for a company?</br>...</h4>
+                    </div>
+                </a>
+            </div>
+            <div class="vl"></div>
+            <div class="right-box-1">
+                <div class="message-subject">
+                    <h1>SRS Update</h1>
+                </div>
+                <h4 class="members">Software Engineering: Vehuel Amante, Aira Nicole Bucu, Sunshine Chuyat, Verna Fe Dizon, Jazleen Razote</h4>
+                <div class="message-box">
+                    <div class="message-2">
+                        <div class="user">
+                            <span id="icon" class="material-symbols-outlined"> </span>
+                        </div>
+                        <div class="message-container">
+                            <h2 id="username">Aira Nicole Bucu</h2>
+                            <h4 id="message-time">February 24, 2024 at 12:59PM</h4>
+                            <h4 id="message-content">Would like to update you all about the SRS progress. Only the last revisions are to be made. Can someone read through it and look for errors?
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="message-3">
+                        <div class="user">
+                            <span id="icon" class="material-symbols-outlined"> </span>
+                        </div>
+                        <div class="message-container">
+                            <h2 id="username">Aira Nicole Bucu</h2>
+                            <h4 id="message-time">February 24, 2024 at 12:59PM</h4>
+                            <h4 id="message-content">Would like to update you all about the SRS progress. Only the last revisions are to be made. Can someone read through it and look for errors?
+                            </h4>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id="message-input-container">
+                    <input id="msgTxt" type="text" placeholder="Type a message..." />
+                    <input type="file" id="file-input" />
+                    <button id="msgBtn">Send</button>
+                </div>
+            </div>
+            <div class="right-box-2">
+                <div class="message-subject">
+                    <h1>Financial Statement</h1>
+                </div>
+                <h4 class="members">Basic Accounting: Vehuel Amante, Aira Nicole Bucu, Sunshine Chuyat, Verna Fe Dizon, Jazleen Razote</h4>
+                <div class="message-box">
+                    <div class="message-2">
+                        <div class="user">
+                            <span id="icon" class="material-symbols-outlined"> </span>
+                        </div>
+                        <div class="message-container">
+                            <h2 id="username">Aira Nicole Bucu</h2>
+                            <h4 id="message-time">February 24, 2024 at 12:59PM</h4>
+                            <h4 id="message-content">Would like to update you all about the SRS progress. Only the last revisions are to be made. Can someone read through it and look for errors?
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="message-4">
+                        <div class="user">
+                            <span id="icon" class="material-symbols-outlined"> </span>
+                        </div>
+                        <div class="message-container">
+                            <h2 id="username">Aira Nicole Bucu</h2>
+                            <h4 id="message-time">February 24, 2024 at 12:59PM</h4>
+                            <img src="screenshot.png" id="file-content">
+                            </img>
+                        </div>
+                    </div>
+                    
+                </div>
+                <div id="message-input-container">
+                    <input id="msgTxt" type="text" placeholder="Type a message..." />
+                    <input type="file" id="file-input" />
+                    <button id="msgBtn">Send</button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

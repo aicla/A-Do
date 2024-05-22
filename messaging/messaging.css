@@ -1,0 +1,260 @@
+body{
+    background-color: #F6F4EB;
+    font-family: 'Montserrat';
+    margin: 0;
+    padding: 0;
+    color: #306f99;
+}
+
+.header {
+    position: relative;
+    overflow: hidden;
+    background-color: #4682A9;
+    font-family: 'Montserrat';
+    font-weight: 600;
+    z-index: 10;
+  }
+
+.menu {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: #F6F4EB;
+    padding: 10px;
+}
+
+.header a {
+    float: left;
+    color: #F6F4EB;
+    text-align: center;
+    padding: 13px 20px;
+    text-decoration: none;
+    font-size: .8rem;
+}
+
+.header a:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+}
+  
+.header a.active {
+    background-color: #91C8E4;
+    color: #306f99;
+}
+  
+.header-left {
+    float:left;
+}
+
+.header span {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.header span:hover {
+    background-color: #91c8e446;
+    color: #B9E7FF;
+    cursor: pointer;
+}
+  
+.header span.active {
+    background-color: #91C8E4;
+    color: #4682A9;
+}
+  
+.header-left {
+    float:left;
+}
+
+.header-right {
+    float:right;
+}
+
+.box {
+  display: flex;
+  width: 100%;
+  height: calc(100vh - 50px);
+}
+
+.vl {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 25%; /* Adjust as needed to position the vertical line */
+  border-left: 3px solid #4682A9;
+  height: 100vh; 
+  z-index: 1;
+}
+
+.left-box{
+  width: 25%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.left-box h2,
+.left-box h3,
+.left-box h4{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.right-box-1,
+.right-box-2{
+  flex: 1;
+  height: 100%;
+  position: relative;
+}
+
+.right-box-2{
+  display: none;
+}
+
+#search-bar {
+  width: 80%;
+  padding: 10px;
+  margin: 20px;
+}
+
+.message-preview-1,
+.message-preview-2
+{
+  width: 100%;
+  background-color: #D9D9D9;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.message-preview-1 h2,
+.message-preview-1 h3,
+.message-preview-1 h4,
+.message-preview-2 h2,
+.message-preview-2 h3,
+.message-preview-2 h4{
+  font-size: .8rem;
+}
+
+.message-preview-1 h3,
+.message-preview-2 h3{
+  font-weight: 600;
+}
+
+.message-preview-1 h4,
+.message-preview-2 h4{
+  font-weight: 400;
+}
+
+.message-header{
+  background-color: #D9D9D9;
+  height: 3rem;
+  padding: 5px;
+  margin-top: 0px;
+}
+
+.message-header h1{
+  font-weight: 600;
+  margin-left: 30px;
+  margin-top: 0;
+}
+
+.members{
+  font-weight: 400;
+  font-size: .8rem;
+  text-align: center;
+}
+
+.message-1,
+.message-2,
+.message-3,
+.message-4
+{
+  display: flex;
+  padding: 20px;
+}
+
+.message-subject{
+    background-color: #D9D9D9;
+    padding: 5px;
+}
+
+.message-subject h1{
+    margin-left: 20px;
+}
+
+.message-box{
+  overflow-y: auto;
+  height: 65%;
+  padding-bottom: 60px;
+}
+
+.user{
+  margin: 20px 30px 0;
+}
+
+#message-time{
+  font-size: .8rem;
+  margin-top: -20px;
+  color: #2050708a;
+}
+
+.message-container h2{
+  font-weight: 700;
+}
+
+.message-container h4,
+.message-container li{
+  font-weight: 400;
+  font-size: .9rem;
+}
+
+#message-input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+  position: absolute;
+  bottom: 0;
+  width: 98%;
+}
+
+#msgTxt {
+  flex: 1;
+  margin-right: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#msgBtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4682A9;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#msgBtn:hover {
+  background-color: #205070;
+}
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: visibility 0s, opacity 0.5s linear, height 0.5s linear;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+  height: auto;
+}

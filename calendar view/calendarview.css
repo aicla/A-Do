@@ -18,22 +18,36 @@ body {
     margin-bottom: 20px;
   }
 
-.menu {
-    display: none;
-    position: absolute;
-    left: 0;
-    background-color: #F6F4EB;
-    padding: 10px;
+.task-date {
+    color: green;
 }
+
+.calendar-dates li.has-tasks::before {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #306f995c;
+    transform: translate(-50%, -50%);
+}
+
+/* Style for li elements with tasks */
+.calendar-dates li.has-tasks {
+    background-color: transparent; /* Set background color as needed */
+    color: rgb(0, 0, 0); /* Text color */
+}
+
 
 .header a {
     float: left;
     color: #F6F4EB;
     text-align: center;
-    padding: 12px 30px;
+    padding: 13px 20px;
     text-decoration: none;
-    font-size: 18px;
-    line-height: 25px;
+    font-size: .8rem;
 }
 
 .header a:hover {
@@ -45,15 +59,18 @@ body {
     background-color: #91C8E4;
     color: #306f99;
 }
+  
+.header-left {
+    float:left;
+}
 
 .header span {
     float: left;
-    color: #B9E7FF;
+    color: white;
     text-align: center;
     padding: 12px 30px;
     text-decoration: none;
-    font-size: 25px;
-    line-height: 25px;
+    font-size: 1.1rem;
 }
 
 .header span:hover {
@@ -77,17 +94,19 @@ body {
 
 h1 {
     color: #4682A9;
-    margin-left: 195px;
-	font-size: 50px;
+    margin-left: 15%;
+	font-size: 2rem;
     font-family: 'Montserrat';
 }
 
 h1::after {
+    margin-top: 5px;
     content: " ";
     position: absolute;
     display: block;
-    width: 14%;
-    height: 2px;
+    left: 15%;
+    width: 180px;
+    height: 2.5px;
     background-color: #4682A9;
 }
 
@@ -96,7 +115,7 @@ h1::after {
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
-    margin-top: 5px;
+    margin-top: 3%;
 }
 
 .task {
@@ -136,21 +155,49 @@ h1::after {
     margin-left: 20px;
     position: relative;
 }
+
 .subjects {
 	display: flex;
 	margin-top: 40px;
 	margin-left: 20px;
 }
-.subjects h3 {
-	font-size: 15px;
-	margin-left: 10px;
-	font-weight: 300;
-	color: #989898;
+.subjects {
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    margin-left: 20px;
+    max-height: 300px;
+    overflow-y: auto;
 }
+
+.subjects .subject-title {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.subjects .dot {
+    margin-right: 10px;
+}
+
+.subjects h3 {
+    font-size: 15px;
+    margin-left: 0;
+    margin-right: 10px;
+    font-weight: 300;
+    color: #989898;
+}
+
 .subjects p {
-	font-size: 20px;
-	margin-left: 10px;
-	width: 400px;
+    font-size: 20px;
+    margin-left: 0;
+    width: 400px;
+    margin-right: 10px;
+}
+
+.subjects .material-symbols-outlined {
+    margin-left: auto;
+    cursor: pointer;
 }
 
 .add {
@@ -162,7 +209,7 @@ h1::after {
     width: 45%;
     border-radius: 10px;
     margin-right: 20px;
-	margin-left: 150px;
+	margin-left: 8%;
 }
 .calendar-current-date {
 	margin-left: 10px;
@@ -188,7 +235,7 @@ header .calendar-navigation span {
     border-radius: 50%;
     user-select: none;
     color: #aeabab;
-    font-size: 1.9rem;
+    font-size: 1.7rem;
 }
 
 .calendar-navigation span:last-child {
@@ -201,7 +248,7 @@ header .calendar-navigation span:hover {
 
 header .calendar-current-date {
     font-weight: 500;
-    font-size: 40px;
+    font-size: 2rem;
 }
 
 .calendar-body {
@@ -221,7 +268,7 @@ header .calendar-current-date {
 
 .calendar-body li {
     width: calc(100% / 7);
-    font-size: 25px;
+    font-size: 1rem;
     color: #414141;
 }
 
@@ -243,6 +290,15 @@ header .calendar-current-date {
 
 .calendar-dates li.active {
     color: #fff;
+}
+
+.calendar-dates li.isTask {
+    color: #d07f7f;
+}
+
+.light-pink-circle {
+    background-color: lightpink;
+    border-radius: 50%;
 }
 
 .calendar-dates li::before {
@@ -278,4 +334,28 @@ header .calendar-current-date {
     text-align: center;
 }
 
+.menu{
+    position: absolute;
+    background-color: #306f99;
+    color: white;
+    padding: 15px;
+    margin: 20px 20% 0;
+    border-radius: 0.5rem;
+    z-index: 1;
+    box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.3);
+}
 
+.menu a{
+    display: block;
+    margin: 3px;
+}
+
+.edit a:hover{
+}
+
+.menu a:hover{
+    align-items: center;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    background-color: #6aa4cb;
+}

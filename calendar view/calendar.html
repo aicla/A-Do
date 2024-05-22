@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="
+    <link rel="stylesheet" href="" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -11,7 +11,8 @@
     <!--boss tumahimik kanaa, FONT-->
     <title>Calendar</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="calendarview.css" />
+    <link rel="stylesheet" href="./calendarview.css" />
+    <script type="module" src="./script.js"></script>
     <!--link for css pi-->
     <link
       rel="stylesheet"
@@ -34,8 +35,9 @@
           img.src = photoURL;
           img.alt = "Profile Picture";
 
-          img.style.width = "24px";
-          img.style.height = "24px";
+          img.style.width = "22px";
+          img.style.height = "22px";
+          img.style.marginTop = "-5px";
           img.style.borderRadius = "50px";
           profileIcon.appendChild(img);
 
@@ -44,6 +46,15 @@
           });
         } else {
           console.error("Profile icon element not found");
+        }
+
+        const messageIcon = document.getElementById("message");
+        if (messageIcon) {
+          messageIcon.addEventListener("click", function () {
+            window.location.href = "../messaging/messaging.html";
+          });
+        } else {
+          console.error("Message icon element not found");
         }
       });
     </script>
@@ -62,68 +73,68 @@
         <a class="active" href="../calendar view/calendar.html">Calendar</a>
       </div>
       <div class="header-right">
-        <span class="material-symbols-outlined"> mail </span>
+        <span id="message" class="material-symbols-outlined"> mail </span>
         <span id="pfp" class="material-symbols-outlined"> </span>
-        <span class="material-symbols-outlined">
-          logout
-          </span>
+        <span id="logout" class="material-symbols-outlined"> logout </span>
       </div>
     </div>
 
     <!--CALENDAR-->
     <h1>Calendar</h1>
-    <svg
-      class="add"
-      fill="#4682A9"
-      height="50px"
-      width="50px"
-      version="1.1"
-      id="Capa_1"
-      xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
-      viewBox="-29.4 -29.4 548.80 548.80"
-      xml:space="preserve"
-      stroke="#4682A9"
-      stroke-width="8.82"
-    >
-      <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke="#CCCCCC"
-        stroke-width="10.78"
-      ></g>
-      <g id="SVGRepo_iconCarrier">
-        <g>
+    <a href="../tasks page/making_task.html" id="svg_btn" class="add_task"
+      ><svg
+        onclick="redirectToTask()"
+        class="add"
+        fill="#4682A9"
+        height="50px"
+        width="50px"
+        version="1.1"
+        id="Capa_1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        viewBox="-29.4 -29.4 548.80 548.80"
+        xml:space="preserve"
+        stroke="#4682A9"
+        stroke-width="8.82"
+      >
+        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+        <g
+          id="SVGRepo_tracerCarrier"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke="#CCCCCC"
+          stroke-width="10.78"
+        ></g>
+        <g id="SVGRepo_iconCarrier">
           <g>
             <g>
-              <path
-                d="M227.8,174.1v53.7h-53.7c-9.5,0-17.2,7.7-17.2,17.2s7.7,17.2,17.2,17.2h53.7v53.7c0,9.5,7.7,17.2,17.2,17.2 s17.1-7.7,17.1-17.2v-53.7h53.7c9.5,0,17.2-7.7,17.2-17.2s-7.7-17.2-17.2-17.2h-53.7v-53.7c0-9.5-7.7-17.2-17.1-17.2 S227.8,164.6,227.8,174.1z"
-              ></path>
-              <path
-                d="M71.7,71.7C25.5,118,0,179.5,0,245s25.5,127,71.8,173.3C118,464.5,179.6,490,245,490s127-25.5,173.3-71.8 C464.5,372,490,310.4,490,245s-25.5-127-71.8-173.3C372,25.5,310.5,0,245,0C179.6,0,118,25.5,71.7,71.7z M455.7,245 c0,56.3-21.9,109.2-61.7,149s-92.7,61.7-149,61.7S135.8,433.8,96,394s-61.7-92.7-61.7-149S56.2,135.8,96,96s92.7-61.7,149-61.7 S354.2,56.2,394,96S455.7,188.7,455.7,245z"
-              ></path>
+              <g>
+                <path
+                  d="M227.8,174.1v53.7h-53.7c-9.5,0-17.2,7.7-17.2,17.2s7.7,17.2,17.2,17.2h53.7v53.7c0,9.5,7.7,17.2,17.2,17.2 s17.1-7.7,17.1-17.2v-53.7h53.7c9.5,0,17.2-7.7,17.2-17.2s-7.7-17.2-17.2-17.2h-53.7v-53.7c0-9.5-7.7-17.2-17.1-17.2 S227.8,164.6,227.8,174.1z"
+                ></path>
+                <path
+                  d="M71.7,71.7C25.5,118,0,179.5,0,245s25.5,127,71.8,173.3C118,464.5,179.6,490,245,490s127-25.5,173.3-71.8 C464.5,372,490,310.4,490,245s-25.5-127-71.8-173.3C372,25.5,310.5,0,245,0C179.6,0,118,25.5,71.7,71.7z M455.7,245 c0,56.3-21.9,109.2-61.7,149s-92.7,61.7-149,61.7S135.8,433.8,96,394s-61.7-92.7-61.7-149S56.2,135.8,96,96s92.7-61.7,149-61.7 S354.2,56.2,394,96S455.7,188.7,455.7,245z"
+                ></path>
+              </g>
             </g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
+            <g></g>
           </g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-          <g></g>
-        </g>
-      </g>
-    </svg>
+        </g></svg
+    ></a>
     <div class="main-container">
       <div class="calendar-container">
         <header class="calendar-header">
@@ -147,24 +158,28 @@
             <li>Fri</li>
             <li>Sat</li>
           </ul>
-          <ul class="calendar-dates"></ul>
+          <ul id="date" class="calendar-dates"></ul>
         </div>
       </div>
+
       <!--TASK CONTAINER-->
       <div class="task">
         <div class="yourtask">
           <h2 style="padding-top: 15px">Your Tasks</h2>
         </div>
         <div class="subjects">
-          <span class="dot"></span>
+          <span class="dot" style="display: none"></span>
           <div class="subject-title">
-            <h3>Software Engineering</h3>
-            <p>Research</p>
+            <h3></h3>
+            <p></p>
           </div>
-          <span class="material-symbols-outlined"> more_vert </span>
+          <span class="material-symbols-outlined"></span>
+          <div class="menu" style="display: none">
+            <a class="edit">Edit</a>
+            <a class="delete">Delete</a>
+          </div>
         </div>
       </div>
     </div>
-    <script src="script.js"></script>
   </body>
 </html>

@@ -9,22 +9,70 @@
     <link rel="stylesheet" href="teams.css" />
     <title>Teams View</title>
     <script type="module" src="teams.js"></script>
-</head>
-<body>
+    <script>
+      //Profile Picture
+      document.addEventListener("DOMContentLoaded", function () {
+        const photoURL = localStorage.getItem("photoURL");
+
+        const profileIcon = document.getElementById("pfp");
+        if (profileIcon) {
+          // Create an image element
+          const img = document.createElement("img");
+          img.src = photoURL;
+          img.alt = "Profile Picture";
+
+          img.style.width = "24px";
+          img.style.height = "24px";
+          img.style.borderRadius = "50px";
+          profileIcon.appendChild(img);
+
+          profileIcon.addEventListener("click", function () {
+            window.location.href = "../profile_view page/profile_view.html";
+          });
+        } else {
+          console.error("Profile icon element not found");
+        }
+
+        const messageIcon = document.getElementById("message");
+        if (messageIcon) {
+          messageIcon.addEventListener("click", function () {
+            window.location.href = "../messaging/messaging.html";
+          });
+        } else {
+          console.error("Message icon element not found");
+        }
+      });
+
+      //Create Team
+      document.addEventListener("DOMContentLoaded", function () {
+    const addIcon = document.querySelector(".add");
+  
+    if (addIcon) {
+      addIcon.addEventListener("click", function () {
+        window.location.href = "../teams page/add.html"; // Redirect to add.html upon click
+      });
+    } else {
+      console.error("Add icon element not found");
+    }
+  });
+
+    </script>
+  </head>
+  <body>
     <div class="header">
-        <div class="header-left">
-            <a href="../home page/homepage.html">Home</a>
-            <a href="../tasks page/task.html">Task</a>
-            <a href="../important page/important.html">Important</a>
-            <a href="../assigned to me page/assigned.html">Assigned to me</a>
-            <a class="active" href="../teams page/teams.html">Teams</a>
-            <a href="../calendar view/calendar.html">Calendar</a>
-        </div>
-        <div class="header-right">
-            <span class="material-symbols-outlined"> mail </span>
-            <span id="pfp" class="material-symbols-outlined"> account_circle </span>
-            <span class="material-symbols-outlined"> logout </span>
-        </div>
+      <div class="header-left">
+        <a href="../home page/homepage.html">Home</a>
+        <a href="../tasks page/task.html">Task</a>
+        <a href="../important page/important.html">Important</a>
+        <a href="../assigned to me page/assigned.html">Assigned to me</a>
+        <a class="active" href="../teams page/teams.html">Teams</a>
+        <a href="../calendar view/calendar.html">Calendar</a>
+      </div>
+      <div class="header-right">
+        <span id="message" class="material-symbols-outlined"> mail </span>
+        <span id="pfp" class="material-symbols-outlined"></span>
+        <span id="logout" class="material-symbols-outlined"> logout </span>
+      </div>
     </div>
 
     <div class="title">
