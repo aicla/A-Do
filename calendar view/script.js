@@ -172,24 +172,57 @@ const handleDelete = async (taskId) => {
     console.log("Deleting task with ID:", taskId); // Log the taskId
     const userId = getCurrentUserId();
     const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
+    const importantTaskRef = ref(db, `users/${userId}/important_tasks/${taskId}`); // Reference to important_tasks collection
 
-    // Get the task date before deleting
+    // Get the task data before deleting to retrieve the date
     const taskSnapshot = await get(taskRef);
-    const taskData = taskSnapshot.val();
+    const importantTaskSnapshot = await get(importantTaskRef);
+
+    if (!taskSnapshot.exists() && !importantTaskSnapshot.exists()) {
+      throw new Error("Task not found in both collections.");
+    }
+
+    // Retrieve the task date from whichever snapshot exists
+    const taskData = taskSnapshot.exists() ? taskSnapshot.val() : importantTaskSnapshot.val();
     const taskDate = taskData.date;
 
-    await remove(taskRef);
-    console.log("Task deleted successfully");
+    // Remove the task from the regular tasks collection if it exists
+    if (taskSnapshot.exists()) {
+      await remove(taskRef);
+      console.log("Task deleted successfully from regular tasks.");
+    } else {
+      console.log("Task not found in regular tasks.");
+    }
+
+    // Remove the task from the important_tasks collection if it exists
+    if (importantTaskSnapshot.exists()) {
+      await remove(importantTaskRef);
+      console.log("Task deleted successfully from important tasks in Firebase.");
+    } else {
+      console.log("Task not found in important tasks.");
+    }
 
     // Remove the task from the UI
     removeTaskFromUI(taskId);
 
-    // Update the calendar UI after deleting the task
+    // Refresh important tasks data
+    //await refreshImportantTasksData();
+
+    // Update the calendar UI with the task date
     await updateCalendarDate(taskDate);
   } catch (error) {
-    console.log("Error deleting task:", error);
+    console.error("Error deleting task:", error);
   }
 };
+
+
+
+
+
+
+
+
+
 
 
 // Function to display matched tasks
