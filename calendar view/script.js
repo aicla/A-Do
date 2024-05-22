@@ -63,10 +63,11 @@ const handleDateClick = async (event) => {
   ).padStart(2, "0")}`;
 
   console.log(formattedDate);
+  ToMaking(formattedDate);
 
   try {
-    const userId = getCurrentUserId(); // Get the user ID
-    const tasks = await fetchTasks(userId); // Fetch tasks for the user
+    const userId = getCurrentUserId();
+    const tasks = await fetchTasks(userId);
 
     // Filter tasks for the clicked date
     const matchTasks = tasks.filter((task) => task.date === formattedDate);
@@ -110,7 +111,7 @@ const displayMatch = (tasks) => {
 
       taskElement.appendChild(titleNotesContainer);
 
-      // Three dots
+      // Three dots - edi and delete
       const moreVertElement = document.createElement("span");
       moreVertElement.classList.add("material-symbols-outlined");
       moreVertElement.textContent = " more_vert ";
@@ -239,6 +240,15 @@ const regenerateCalendar = async () => {
     console.log("Error regenerating calendar:", error);
   }
 };
+
+export function ToMaking(formattedDate) {
+  const [year, month, day] = formattedDate.split("-");
+  const formattedDated = `${String(day).padStart(2, "0")}-${String(
+    month
+  ).padStart(2, "0")}-${year}`;
+  console.log("To Making: ", formattedDated);
+  return formattedDated;
+}
 
 // Attach a click event listener to each icon
 prenexIcons.forEach((icon) => {

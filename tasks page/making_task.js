@@ -12,6 +12,7 @@ import {
   push,
   set,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+import { ToMaking } from "../calendar view/script.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -27,6 +28,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
+
+document.addEventListener("DOMContentLoaded", () => {
+  const svgBtn = document.getElementById("svg_btn");
+  svgBtn.addEventListener("click", handleSVG);
+});
+
+const handleSVG = (event) => {
+  const clicked = getCD();
+  console.log("Clicked Date: ", clicked);
+
+  //format
+  const formattedDate = ToMaking(clicked);
+  console.log("Formatted Date: ", formattedDate);
+};
+
+const getCD = () => {
+  const dates = document.querySelectorAll(".calendar-dates li");
+  let clicked = null;
+  dates.forEach((dateElement) => {
+    if (dateElement.classList.contains("active")) {
+      clicked = dateElement.innerText;
+    }
+  });
+  return clicked;
+};
 
 const saveButton = document.getElementById("saveButton");
 if (saveButton) {
@@ -134,3 +160,15 @@ function showToast(message, isError) {
     toast.remove();
   }, 3000); // Remove toast after 3 seconds
 }
+// Function to extract clicked date from URL query parameters
+const getClickedDateFromURL = () => {
+  const queryParams = new URLSearchParams(window.location.search);
+  return queryParams.get("date");
+};
+
+// Retrieve clicked date from URL when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  const clickedDate = getClickedDateFromURL();
+  console.log("Clicked date:", clickedDate);
+  // Use the clicked date as needed
+});
