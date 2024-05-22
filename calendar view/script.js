@@ -9,7 +9,6 @@ import {
   ref,
   onValue,
   get,
-  remove
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
@@ -87,123 +86,13 @@ const handleDateClick = async (event) => {
 
     // Filter tasks for the clicked date
     const matchTasks = tasks.filter((task) => task.date === formattedDate);
+
     // Display matched tasks
     displayMatch(matchTasks);
   } catch (error) {
     console.log("Error fetching tasks:", error);
   }
 };
-
-// Function to create the menu element
-const createMenu = (taskId, taskData) => {
-  if (!taskId || !taskData) {
-    console.error("Task ID is missing or invalid.");
-    return null; // Return null or handle the error accordingly
-  }
-
-  const menu = document.createElement("div");
-  menu.classList.add("menu");
-  menu.style.display = "none"; // Initially hide the menu
-
-  // Add menu items (Edit and Delete)
-  const editLink = document.createElement("a");
-  editLink.textContent = "Edit";
-  editLink.classList.add("edit");
-  
-  const deleteLink = document.createElement("a");
-  deleteLink.textContent = "Delete";
-  deleteLink.classList.add("delete");
-  deleteLink.addEventListener("click", () => {
-    console.log("Deleting task with ID:", taskId);
-    handleDelete(taskId);
-  })
-
-  menu.appendChild(deleteLink);
-
-  // Append menu items to the menu
-  menu.appendChild(editLink);
-
-// Modify the edit link event listener to pass task data and date to the making task page
-editLink.addEventListener("click", () => {
-  // Extract task data and date
-  const { key, title, notes, date, chosen, assignedTo } = taskData;
-
-  // Encode task data and date in URL parameters
-  const queryParams = new URLSearchParams({
-    taskId: key,
-    taskTitle: title,
-    taskNotes: notes,
-    taskDate: date,
-    //taskChosen: chosen,
-    taskAssignedTo: assignedTo
-    
-
-  }).toString();
-
-  // Redirect to making task page with task data and date as URL parameters
-  window.location.href = `../tasks page/making_task.html?${queryParams}`;
-});
-
-
-
-  return menu;
-};
-
-const updateCalendarDate = async (formattedDate) => {
-  try {
-    const userId = getCurrentUserId();
-    const tasks = await fetchTasks(userId);
-
-    // Check if there are still tasks on the given date
-    const hasTasks = tasks.some(task => task.date === formattedDate);
-
-    // Find the calendar date element
-    const dayElement = document.querySelector(`.calendar-dates li[data-date="${formattedDate}"]`);
-    if (dayElement) {
-      if (hasTasks) {
-        dayElement.classList.add("has-tasks");
-      } else {
-        dayElement.classList.remove("has-tasks");
-      }
-    }
-  } catch (error) {
-    console.log("Error updating calendar date:", error);
-  }
-};
-
-const removeTaskFromUI = (taskId) => {
-  const taskElement = document.querySelector(`[data-task-id="${taskId}"]`);
-  if (taskElement) {
-    taskElement.remove();
-    console.log(`Task ${taskId} removed from UI`);
-  }
-};
-
-
-const handleDelete = async (taskId) => {
-  try {
-    console.log("Deleting task with ID:", taskId); // Log the taskId
-    const userId = getCurrentUserId();
-    const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
-
-    // Get the task date before deleting
-    const taskSnapshot = await get(taskRef);
-    const taskData = taskSnapshot.val();
-    const taskDate = taskData.date;
-
-    await remove(taskRef);
-    console.log("Task deleted successfully");
-
-    // Remove the task from the UI
-    removeTaskFromUI(taskId);
-
-    // Update the calendar UI after deleting the task
-    await updateCalendarDate(taskDate);
-  } catch (error) {
-    console.log("Error deleting task:", error);
-  }
-};
-
 
 // Function to display matched tasks
 const displayMatch = (tasks) => {
@@ -216,12 +105,10 @@ const displayMatch = (tasks) => {
     subjectsContainer.appendChild(noTask);
   } else {
     tasks.forEach((task) => {
-      console.log("Task Object:", task); // Log the entire task object
       const titleNotesContainer = document.createElement("div");
 
       const taskElement = document.createElement("div");
       taskElement.classList.add("subject-title");
-      taskElement.setAttribute("data-task-id", task.key); //add data-task-id attribute
 
       const dotElement = document.createElement("span");
       dotElement.classList.add("dot");
@@ -244,23 +131,13 @@ const displayMatch = (tasks) => {
       moreVertElement.classList.add("material-symbols-outlined");
       moreVertElement.textContent = " more_vert ";
       taskElement.appendChild(moreVertElement);
-      
-      // Append the menu to each taskElement
-      const menu = createMenu(task.key, task); // Create the menu
-      taskElement.appendChild(menu); // Append the menu
-
-      // Event listener for three dots
-      moreVertElement.addEventListener("click", () => {
-        // Toggle the display of the menu
-        const taskMenu = taskElement.querySelector(".menu");
-        taskMenu.style.display = taskMenu.style.display === "none" ? "block" : "none";
-      });
 
       subjectsContainer.appendChild(taskElement);
     });
   }
 };
 
+// Function to manipulate the calendar
 const manipulate = async () => {
   try {
     const userId = getCurrentUserId();
@@ -309,7 +186,7 @@ const manipulate = async () => {
         cssClass += " has-tasks";
       }
 
-      lit += `<li class="${cssClass}" data-date="${formattedDate}">${i}</li>`;
+      lit += `<li class="${cssClass}">${i}</li>`;
     }
 
     // Loop to add the first dates of the next month
@@ -326,7 +203,6 @@ const manipulate = async () => {
     console.log("Error manipulating calendar: ", error);
   }
 };
-
 
 // Event listener for logout button
 const logoutButton = document.getElementById("logout");
