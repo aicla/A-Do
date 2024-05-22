@@ -29,64 +29,41 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Handle authentication state changes
-  auth.onAuthStateChanged((user) => {
-    console.log("Current user:", user);
+const saveButton = document.getElementById("saveButton");
+if (saveButton) {
+  saveButton.addEventListener("click", () => {
+    const user = auth.currentUser;
     if (user) {
-      // User is logged in, proceed to load tasks or perform other actions
-      loadTasks(user.uid);
+      // User is logged in, proceed to save task
+      const isImportant = document
+        .getElementById("kid_star_icon")
+        .classList.contains("filled");
+      saveTask(user.uid, isImportant);
     } else {
-      // User is not logged in, handle accordingly (redirect to login page, etc.)
-      console.log("User is not logged in.");
+      // User is not logged in, handle accordingly
+      console.error("User is not logged in.");
     }
   });
+} else {
+  console.error("Save button not found");
+}
 
-  const saveButton = document.getElementById("saveButton");
-  if (saveButton) {
-    saveButton.addEventListener("click", async () => {
-      const user = auth.currentUser;
-      if (user) {
-        // User is logged in, proceed to save or update task
-        const isImportant = document
-          .getElementById("kid_star_icon")
-          .classList.contains("filled");
-        
-        const urlParams = new URLSearchParams(window.location.search);
-        const taskId = urlParams.get('taskId');
-        if (taskId) {
-          // If taskId is present, update the existing task
-          await updateTask(user.uid, taskId, isImportant);
-        } else {
-          // If taskId is not present, create a new task
-          saveTask(user.uid, isImportant);
-        }
-      } else {
-        // User is not logged in, handle accordingly
-        console.error("User is not logged in.");
-      }
-    });
-  } else {
-    console.error("Save button not found");
-  }
+console.log("DOM content loaded");
+const assignedToOptions = document.querySelectorAll(".clickable-text");
+console.log("Clickable text elements:", assignedToOptions);
 
-  console.log("DOM content loaded");
-  const assignedToOptions = document.querySelectorAll(".clickable-text");
-  console.log("Clickable text elements:", assignedToOptions);
+assignedToOptions.forEach((option) => {
+  option.addEventListener("click", () => {
+    console.log("Click event triggered");
+    const selectedAssignedTo = option.getAttribute("data-value");
+    console.log("Selected assigned to:", selectedAssignedTo);
 
-  assignedToOptions.forEach((option) => {
-    option.addEventListener("click", () => {
-      console.log("Click event triggered");
-      const selectedAssignedTo = option.getAttribute("data-value");
-      console.log("Selected assigned to:", selectedAssignedTo);
-
-      const assignedToInput = document.querySelector(".assigned-to-input");
-      if (assignedToInput) {
-        assignedToInput.value = selectedAssignedTo;
-      } else {
-        console.error("Assigned to input element not found.");
-      }
-    });
+    const assignedToInput = document.querySelector(".assigned-to-input");
+    if (assignedToInput) {
+      assignedToInput.value = selectedAssignedTo;
+    } else {
+      console.error("Assigned to input element not found.");
+    }
   });
 });
 
@@ -103,18 +80,34 @@ function saveTask(userId, isImportant) {
   const time = document.querySelector(".time-input").value;
   const chosen = document.querySelector(".chosen").textContent;
   const assignedToInput = document.querySelector(".assigned-to-input");
-  const notes = document.querySelector(".notes-input").value;
-
-  if (!title || !date || !time || !chosen || !notes || !assignedToInput.value) {
-    showToast("Please fill in all required fields.", true); // Red toast for error
+  if (!assignedToInput) {
+    console.error("Assigned-to input element not found.");
     return;
   }
 
+  const assignedTo = assignedToInput ? assignedToInput.value : "";
+  const notes = document.querySelector(".notes-input").value;
+
+  if (!title || !date || !time || !chosen || !notes) {
+    showToast("Please fill in all required fields.", true); // Red toast for error
+    return; // Exit the function early if any field is empty
+  }
+
   // Construct task object
-  const task = { title, date, time, chosen, assignedTo: assignedToInput.value, notes };
+  const task = {
+    title: title,
+    date: date,
+    time: time,
+    chosen: chosen,
+    assignedTo: assignedTo,
+    notes: notes,
+  };
 
   // Save task object to Firebase database under the user's ID
-  const userTasksRef = ref(db, `users/${userId}${isImportant ? '/important_tasks/' : '/tasks/'}`);
+  const userTasksRef = ref(
+    db,
+    "users/" + userId + (isImportant ? "/important_tasks/" : "/tasks/")
+  ); // Determine the path based on importance
   const newTaskRef = push(userTasksRef); // Create a new child location with a unique key
   set(newTaskRef, task)
     .then(() => {
@@ -126,35 +119,6 @@ function saveTask(userId, isImportant) {
     .catch((error) => {
       showToast("Error saving task: " + error, true); // Red toast for error
     });
-}
-
-// Function to update an existing task
-async function updateTask(userId, taskId, isImportant) {
-  // Retrieve input values
-  const title = document.querySelector(".title-input").value;
-  const date = document.querySelector(".date-input").value;
-  const time = document.querySelector(".time-input").value;
-  const chosen = document.querySelector(".chosen").textContent;
-  const assignedToInput = document.querySelector(".assigned-to-input");
-  const notes = document.querySelector(".notes-input").value;
-
-  if (!title || !date || !time || !chosen || !notes || !assignedToInput.value) {
-    showToast("Please fill in all required fields.", true); // Red toast for error
-    return;
-  }
-
-  // Construct task object
-  const task = { title, date, time, chosen, assignedTo: assignedToInput.value, notes };
-
-  try {
-    const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
-    await update(taskRef, task);
-    showToast("Task updated successfully!", false); // Green toast for success
-    console.log("Task updated successfully");
-  } catch (error) {
-    showToast("Error updating task: " + error, true); // Red toast for error
-    console.error("Error updating task:", error);
-  }
 }
 
 // Function to display toast message
@@ -169,63 +133,15 @@ function showToast(message, isError) {
     toast.remove();
   }, 3000); // Remove toast after 3 seconds
 }
+// Function to extract clicked date from URL query parameters
+const getClickedDateFromURL = () => {
+  const queryParams = new URLSearchParams(window.location.search);
+  return queryParams.get("date");
+};
 
-// Populate form fields when editing a task
-document.addEventListener("DOMContentLoaded", (event) => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const taskId = urlParams.get('taskId');
-  const taskTitle = urlParams.get('taskTitle');
-  const taskNotes = urlParams.get('taskNotes');
-  const taskDate = urlParams.get('taskDate');
-  const taskAssignedTo = urlParams.get('taskAssignedTo');
-
-  console.log('taskId: ', taskId);
-
-  const titleInput = document.getElementById('taskTitle');
-  const notesInput = document.getElementById('taskNotes');
-  const dateInput = document.getElementById('taskDate');
-  const assignedToInput = document.getElementById('taskAssignedTo');
-
-  // Populate input fields with task details
-  titleInput.value = taskTitle || '';
-  notesInput.value = taskNotes || '';
-  dateInput.value = taskDate || '';
-  assignedToInput.value = taskAssignedTo || '';
-
-  const saveButton = document.getElementById('saveButton');
-  saveButton.addEventListener('click', async () => {
-    const title = titleInput.value.trim();
-    const notes = notesInput.value.trim();
-    const date = dateInput.value.trim();
-    const assignedTo = assignedToInput.value.trim();
-
-    if (taskId) {
-      // If taskId is present, update the existing task
-      try {
-        console.log('Updating task with ID: ', taskId);
-        const userId = getCurrentUserId();
-        const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
-        await update(taskRef, { title, notes, date, assignedTo });
-        console.log('Task updated successfully');
-        // Redirect to task.html after updating the task
-        // window.location.href = '../tasks page/task.html';
-      } catch (error) {
-        console.error('Error updating task:', error);
-      }
-    } else {
-      // If taskId is not present and user is not signed in, show error toast
-      // showToast('User not signed in. Please sign in to create a new task.', true);
-    }
-  });
+// Retrieve clicked date from URL when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  const clickedDate = getClickedDateFromURL();
+  console.log("Clicked date:", clickedDate);
+  // Use the clicked date as needed
 });
-
-// Define getCurrentUserId function
-function getCurrentUserId() {
-  const user = auth.currentUser;
-  if (user) {
-    return user.uid;
-  } else {
-    console.log("No user signed in.");
-    throw new Error("No user signed in.");
-  }
-}

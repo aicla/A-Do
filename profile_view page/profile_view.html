@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="
+    <link rel="stylesheet" href="" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       rel="stylesheet"
@@ -62,6 +62,7 @@
         }
       });
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <div class="header">
@@ -89,22 +90,8 @@
       </div>
     </div>
     <div class="Tasks">
-      <h1>Tasks</h1>
-      <p>Software Engineering</p>
-      <div class="Tasks-progress">
-        <span class="material-symbols-outlined"> donut_large </span>
-        <p>91% of the task is achieved.</p>
-      </div>
-      <div id="Remaining-Tasks">
-        <p>Remaining Tasks: <b>Revise proposal, SRS</b></p>
-      </div>
-      <p>CPA</p>
-      <div class="Tasks-progress-2">
-        <span class="material-symbols-outlined"> check_circle </span>
-        <p>100% task is achieved.</p>
-      </div>
-      <div id="Remaining-Tasks">
-        <p>No more remaining tasks!</p>
+      <div id="chart-container" class="chart-container">
+        <canvas id="chart"></canvas>
       </div>
     </div>
   </body>
