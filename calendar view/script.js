@@ -26,7 +26,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-// Function to fetch tasks for a given user ID
 const fetchTasks = async (userId) => {
   try {
     const regularTasksRef = ref(db, `users/${userId}/tasks/`);
@@ -35,22 +34,12 @@ const fetchTasks = async (userId) => {
     // Fetch regular tasks
     const regularTasksSnapshot = await get(regularTasksRef);
     const regularTasksData = regularTasksSnapshot.val();
-    const regularTasks = regularTasksData
-      ? Object.keys(regularTasksData).map((key) => ({
-          key,
-          ...regularTasksData[key],
-        }))
-      : [];
+    const regularTasks = regularTasksData ? Object.keys(regularTasksData).map(key => ({ key, ...regularTasksData[key]})) : [];
 
     // Fetch important tasks
     const importantTasksSnapshot = await get(importantTasksRef);
     const importantTasksData = importantTasksSnapshot.val();
-    const importantTasks = importantTasksData
-      ? Object.keys(importantTasksData).map((key) => ({
-          key,
-          ...importantTasksData[key],
-        }))
-      : [];
+    const importantTasks = importantTasksData ? Object.keys(importantTasksData).map(key => ({ key, ...importantTasksData[key]})) : [];
 
     // Merge regular and important tasks and return
     return regularTasks.concat(importantTasks);
@@ -59,6 +48,7 @@ const fetchTasks = async (userId) => {
     throw error;
   }
 };
+
 
 // Function to get the current user ID
 const getCurrentUserId = () => {
