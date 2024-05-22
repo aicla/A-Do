@@ -15,26 +15,28 @@ function addTeam(teamKey, teamName, members) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const teamSection = document.querySelector(".team");
-
   if (Object.keys(teamList).length > 0) {
-    teamSection.style.display = "block";
     renderTeams(); // Render all teams initially
   } else {
+    const teamSection = document.getElementById("teamContainer");
     teamSection.style.display = "none";
   }
 });
 
 // Render all teams
 function renderTeams() {
-  const teamSection = document.querySelector(".team");
+  const teamSection = document.getElementById("teamContainer");
   teamSection.innerHTML = ""; // Clear existing teams
   Object.keys(teamList).forEach(teamKey => {
     const team = teamList[teamKey];
     const teamTemplate = document.getElementById('teamTemplate');
     const newTeam = teamTemplate.content.cloneNode(true);
     newTeam.querySelector('.teamName').textContent = team.teamName;
-    newTeam.querySelector('.numMembers').textContent = team.members.length;
+    newTeam.querySelector('.numMembers').textContent = `${team.members.length} members`;
+
+    // Update the link with the teamKey
+    newTeam.querySelector('.teamLink').href = `teams_b.html?teamKey=${teamKey}`;
+    
     teamSection.appendChild(newTeam);
   });
 }
@@ -47,7 +49,5 @@ saveTeam.addEventListener("click", (e) => {
   const teamName = document.querySelector("#teamName").value;
   teamKey += 1;
   addTeam(teamKey, teamName, memberNames);
-  renderTeams(); // Render all teams
-  console.log(teamList); // for testing
   window.location.href = 'teams.html';
 });

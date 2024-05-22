@@ -70,11 +70,11 @@
     </div>
 
     <div class="team_name">
-      <h1>Software Engineering</h1>
+      <h1 id="teamNamePlaceholder">Team Name Placeholder</h1>
       <a class="back_button" href="./teams.html">
-        <span class="material-symbols-outlined"> arrow_back </span>
+          <span class="material-symbols-outlined"> arrow_back </span>
       </a>
-    </div>
+  </div>
 
     <button class="members">Members</button>
 
@@ -91,6 +91,26 @@
         </div>
       </div>
     </div>
+
+    <script type="module">
+      // Parse URL parameters to get the teamKey
+      const urlParams = new URLSearchParams(window.location.search);
+      const teamKey = urlParams.get('teamKey');
+  
+      // Retrieve teamList from localStorage
+      const teamList = JSON.parse(localStorage.getItem('teamList')) || {};
+  
+      // Get the teamName using the teamKey
+      const team = teamList[teamKey];
+      const teamName = team ? team.teamName : "Unknown Team";
+  
+      // Set the team name as the content of the <h1> tag
+      const teamNamePlaceholder = document.getElementById("teamNamePlaceholder");
+      if (teamNamePlaceholder) {
+          teamNamePlaceholder.textContent = teamName;
+      }
+  </script>
+  
 
     <script src="important.js"></script>
   </body>
