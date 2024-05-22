@@ -244,3 +244,14 @@ body{
 #msgBtn:hover {
   background-color: #205070;
 }
+
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s linear, height 0.5s linear;
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
