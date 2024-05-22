@@ -180,3 +180,22 @@ h4 {
     align-items: center;
     margin: 0;
 }
+
+.chart-container {
+    width: 90%;
+    max-width: 1200px;
+    height: 500px;
+    margin: 2% auto;
+    overflow: hidden;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}

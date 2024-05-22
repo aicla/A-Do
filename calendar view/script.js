@@ -29,11 +29,27 @@ const db = getDatabase(app);
 const fetchTasks = async (userId) => {
   try {
     const dayRef = ref(db, `users/${userId}/tasks/`);
-    const snapshot = await get(dayRef);
-    const data = snapshot.val();
+    const dayRef2 = ref(db, `users/${userId}/important_tasks/`);
 
-    if (data) {
-      return Object.values(data);
+    // Fetch data from both references
+    const snapshot1 = await get(dayRef);
+    const snapshot2 = await get(dayRef2);
+
+    // Retrieve data from snapshots
+    const data1 = snapshot1.val();
+    const data2 = snapshot2.val();
+
+    // Combine data
+    const combinedData = { tasks: data1 || {}, important_tasks: data2 || {} };
+
+    // Convert combined data to an array of values, if needed
+    const allTasks = [
+      ...Object.values(combinedData.tasks),
+      ...Object.values(combinedData.important_tasks),
+    ];
+
+    if (allTasks.length > 0) {
+      return allTasks;
     } else {
       console.log("No tasks found for the user.");
       return [];

@@ -89,7 +89,7 @@
     <div class="box">
       <div class="inner-box">
         <div class="title">TITLE</div>
-        <input type="text" class="title-input" placeholder="Type here..." />
+        <input id = "taskTitle" type="text" class="title-input" placeholder="Type here..." />
       </div>
     </div>
 
@@ -103,7 +103,7 @@
       <div class="time_box">
         <div class="inner-box">
           <div class="time">TIME REMINDER</div>
-          <input type="time" class="time-input" />
+          <input id = "taskTime" type="time" class="time-input" />
         </div>
       </div>
     </div>
@@ -124,7 +124,7 @@
         </div>
         <div class="progress">
           <!-- HTML -->
-          <input type="hidden" class="assigned-to-input" name="assignedTo" />
+          <input id="taskAssignedTo" type="hidden" class="assigned-to-input" name="assignedTo" />
           <a href="#" class="clickable-text" data-value="TO-DO">TO-DO</a>
           <a href="#" class="clickable-text" data-value="IN-PROGRESS"
             >IN PROGRESS</a
@@ -139,6 +139,7 @@
         <textarea
           name="text"
           class="notes-input"
+          id = "taskNotes"
           rows="6"
           placeholder="Type here..."
         ></textarea>
@@ -152,5 +153,6 @@
 
     <script type="module" src="./making_task.js"></script>
     <script src="task.js"></script>
+
   </body>
 </html>

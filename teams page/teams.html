@@ -49,6 +49,20 @@
           console.error("Message icon element not found");
         }
       });
+
+      //Create Team
+      document.addEventListener("DOMContentLoaded", function () {
+    const addIcon = document.querySelector(".add");
+  
+    if (addIcon) {
+      addIcon.addEventListener("click", function () {
+        window.location.href = "../teams page/add.html"; // Redirect to add.html upon click
+      });
+    } else {
+      console.error("Add icon element not found");
+    }
+  });
+
     </script>
   </head>
   <body>
@@ -124,33 +138,34 @@
       </svg>
     </div>
 
+
+    <!--Teams Section-->
     <div class="box">
-      <div class="team">
+      <a href="teams_b.html" class="team">
         <h2>Team Name</h2>
         <h3># of members</h3>
-      </div>
-      <div class="team">
+      </a>
+      <a href="teams_b.html" class="team">
         <h2>Team Name</h2>
         <h3># of members</h3>
-      </div>
-      <div class="team">
+      </a>
+      <a href="teams_b.html" class="team">
         <h2>Team Name</h2>
         <h3># of members</h3>
-      </div>
-      <div class="team">
+      </a>
+      <a href="teams_b.html" class="team">
         <h2>Team Name</h2>
         <h3># of members</h3>
-      </div>
-      <div class="team">
+      </a>
+      <a href="teams_b.html" class="team">
         <h2>Team Name</h2>
         <h3># of members</h3>
-      </div>
-      <div class="team">
+      </a>
+      <a href="teams_b.html" class="team">
         <h2>Team Name</h2>
         <h3># of members</h3>
-      </div>
+      </a>
     </div>
 
-    <script src="important.js"></script>
   </body>
 </html>

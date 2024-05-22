@@ -11,6 +11,7 @@ import {
   get,
   push,
   set,
+  update
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 const firebaseConfig = {
@@ -67,15 +68,17 @@ assignedToOptions.forEach((option) => {
 });
 
 // Function to load tasks
-function loadTasks(userId) {}
+function loadTasks(userId) {
+  // Your logic to load tasks
+}
 
-// Function to save task
+// Function to save a new task
 function saveTask(userId, isImportant) {
   // Retrieve input values
   const title = document.querySelector(".title-input").value;
   const date = document.querySelector(".date-input").value;
   const time = document.querySelector(".time-input").value;
-  const chosen = document.querySelector(".chosen").textContent; // get the selected subject
+  const chosen = document.querySelector(".chosen").textContent;
   const assignedToInput = document.querySelector(".assigned-to-input");
   if (!assignedToInput) {
     console.error("Assigned-to input element not found.");
@@ -122,11 +125,7 @@ function saveTask(userId, isImportant) {
 function showToast(message, isError) {
   const toast = document.createElement("div");
   toast.classList.add("toast");
-  if (isError) {
-    toast.classList.add("toast-danger");
-  } else {
-    toast.classList.add("toast-success");
-  }
+  toast.classList.add(isError ? "toast-danger" : "toast-success");
   toast.textContent = message;
   document.body.appendChild(toast);
 
