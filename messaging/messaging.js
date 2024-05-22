@@ -1,11 +1,8 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import {
-  getDatabase,
-  ref,
-  push,
-  onChildAdded,
-} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
-import { getStorage } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-storage.js";
+  getAuth,
+  signOut,
+} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -19,34 +16,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getDatabase(app);
-const storage = getStorage(app);
-
-// Send message functionality
-document.getElementById("send-button").addEventListener("click", () => {
-  const messageInput = document.getElementById("message-input");
-  const message = messageInput.value;
-  if (message) {
-    const messagesRef = ref(db, "messages");
-
-    // Push the new message data to the "messages" node
-    push(messagesRef, {
-      text: message,
-      timestamp: firebase.database.ServerValue.TIMESTAMP,
-    });
-
-    messageInput.value = "";
-  }
-});
-
-const messagesList = document.getElementById("messages-list");
-
-onChildAdded(ref(db, "messages"), (snapshot) => {
-  const message = snapshot.val();
-  const messageElement = document.createElement("div");
-  messageElement.innerText = message.text;
-  messagesList.appendChild(messageElement);
-});
 
 const logoutButton = document.getElementById("logout");
 logoutButton.addEventListener("click", () => {
@@ -59,3 +28,65 @@ logoutButton.addEventListener("click", () => {
       console.error("Sign-out error:", error);
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  const displayName = localStorage.getItem("displayName");
+  const msgBtn = document.getElementById("msgBtn");
+  const messageContent = document.querySelector(".message-2 #message-content");
+  const messageTime = document.querySelector(".message-2 #message-time");
+  const messagePreview1 = document.querySelector(".message-preview-1");
+  const messagePreview2 = document.querySelector(".message-preview-2");
+  const rightBox1 = document.querySelector(".right-box-1");
+  const rightBox2 = document.querySelector(".right-box-2");
+
+    // Function to show rightBox1 and hide rightBox2
+    function showMessagePreview1() {
+        rightBox1.style.display = "block";
+        rightBox2.style.display = "none";
+    }
+
+    // Function to show rightBox2 and hide rightBox1
+    function showMessagePreview2() {
+        rightBox1.style.display = "none";
+        rightBox2.style.display = "block";
+    }
+
+    // Initially show rightBox1 and hide rightBox2
+    showMessagePreview1();
+
+    // Event listener for messagePreview1
+    messagePreview1.addEventListener("click", function () {
+        showMessagePreview1();
+    });
+
+    // Event listener for messagePreview2
+    messagePreview2.addEventListener("click", function () {
+        showMessagePreview2();
+    });
+  // Function to apply flex and space-between styles to user-info
+  function applyFlexStyles() {
+    const userInfo = document.querySelector(".message-2 .user-info");
+    userInfo.style.display = "flex !important";
+    userInfo.style.justifyContent = "space-between !important";
+}
+
+  if (msgBtn && messageContent && messageTime) {
+      msgBtn.addEventListener("click", function () {
+          const msgTxt = document.getElementById("msgTxt").value;
+          messageContent.textContent = msgTxt;
+          applyFlexStyles(); // Reapply flex styles after updating message content
+      });
+  } else {
+      console.error("Message button, message content, or message time element not found");
+  }
+
+  // Apply flex styles when the page loads
+  applyFlexStyles();
+
+  const usernames = document.querySelectorAll(".message-2 #username, .message-3 #username, .message-4 #username");
+  usernames.forEach(username => {
+      username.textContent = displayName;
+  });
+});
+
+ 

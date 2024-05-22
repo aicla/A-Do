@@ -1,11 +1,14 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
 import {
   getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
   signOut,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 import {
   getDatabase,
   ref,
+  get,
   push,
   set,
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
@@ -20,92 +23,110 @@ const firebaseConfig = {
   appId: "1:488739423620:web:9bdc3605a45a3714b249d1",
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase();
 
-const logoutButton = document.getElementById("logout");
-logoutButton.addEventListener("click", () => {
-  signOut(auth)
-    .then(() => {
-      console.log("Sign out");
-      window.location.href = "../preview page/login.html";
-    })
-    .catch((error) => {
-      console.error("Sign-out error:", error);
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Handle authentication state changes
-  auth.onAuthStateChanged((user) => {
-    console.log("Current user:", user);
+const saveButton = document.getElementById("saveButton");
+if (saveButton) {
+  saveButton.addEventListener("click", () => {
+    const user = auth.currentUser;
     if (user) {
-      loadTasks(user.uid);
+      // User is logged in, proceed to save task
+      const isImportant = document
+        .getElementById("kid_star_icon")
+        .classList.contains("filled");
+      saveTask(user.uid, isImportant);
     } else {
-      console.log("User is not logged in.");
+      // User is not logged in, handle accordingly
+      console.error("User is not logged in.");
     }
   });
+} else {
+  console.error("Save button not found");
+}
 
-  const saveButton = document.getElementById("saveButton");
-  if (saveButton) {
-    saveButton.addEventListener("click", () => {
-      const user = auth.currentUser;
-      if (user) {
-        // User is logged in, proceed to save task
-        saveTask(user.uid);
-      } else {
-        // User is not logged in, handle accordingly
-        console.error("User is not logged in.");
-      }
-    });
-  } else {
-    console.error("Save button not found");
-  }
+console.log("DOM content loaded");
+const assignedToOptions = document.querySelectorAll(".clickable-text");
+console.log("Clickable text elements:", assignedToOptions);
+
+assignedToOptions.forEach((option) => {
+  option.addEventListener("click", () => {
+    console.log("Click event triggered");
+    const selectedAssignedTo = option.getAttribute("data-value");
+    console.log("Selected assigned to:", selectedAssignedTo);
+
+    const assignedToInput = document.querySelector(".assigned-to-input");
+    if (assignedToInput) {
+      assignedToInput.value = selectedAssignedTo;
+    } else {
+      console.error("Assigned to input element not found.");
+    }
+  });
 });
 
 // Function to load tasks
-function loadTasks(userId) {
-  // Implement loading tasks logic here
-}
+function loadTasks(userId) {}
 
 // Function to save task
-function saveTask(userId) {
+function saveTask(userId, isImportant) {
   // Retrieve input values
   const title = document.querySelector(".title-input").value;
   const date = document.querySelector(".date-input").value;
   const time = document.querySelector(".time-input").value;
-  //const assignedTo = document.querySelector(".assigned-to-input").value;
+  const chosen = document.querySelector(".chosen").textContent; // get the selected subject
+  const assignedToInput = document.querySelector(".assigned-to-input");
+  if (!assignedToInput) {
+    console.error("Assigned-to input element not found.");
+    return;
+  }
+
+  const assignedTo = assignedToInput ? assignedToInput.value : "";
   const notes = document.querySelector(".notes-input").value;
+
+  if (!title || !date || !time || !chosen || !notes) {
+    showToast("Please fill in all required fields.", true); // Red toast for error
+    return; // Exit the function early if any field is empty
+  }
 
   // Construct task object
   const task = {
     title: title,
     date: date,
     time: time,
-    //assignedTo: assignedTo,
+    chosen: chosen,
+    assignedTo: assignedTo,
     notes: notes,
   };
 
   // Save task object to Firebase database under the user's ID
-  const userTasksRef = ref(db, "users/" + userId + "/tasks/"); // Get reference to the tasks node
+  const userTasksRef = ref(
+    db,
+    "users/" + userId + (isImportant ? "/important_tasks/" : "/tasks/")
+  ); // Determine the path based on importance
   const newTaskRef = push(userTasksRef); // Create a new child location with a unique key
-  set(newTaskRef, task) // Set the value of the new child location to the task object
+  set(newTaskRef, task)
     .then(() => {
-      // Display toast message
-      showToast("Task saved successfully!");
-
-      // Redirect or perform any other action after saving the task
+      showToast("Task saved successfully!", false); // Green toast for success
+      if (isImportant) {
+        console.log("Task saved as important task successfully!");
+      }
     })
     .catch((error) => {
-      console.error("Error saving task:", error);
+      showToast("Error saving task: " + error, true); // Red toast for error
     });
 }
 
 // Function to display toast message
-function showToast(message) {
+function showToast(message, isError) {
   const toast = document.createElement("div");
   toast.classList.add("toast");
+  if (isError) {
+    toast.classList.add("toast-danger");
+  } else {
+    toast.classList.add("toast-success");
+  }
   toast.textContent = message;
   document.body.appendChild(toast);
 
@@ -113,3 +134,15 @@ function showToast(message) {
     toast.remove();
   }, 3000); // Remove toast after 3 seconds
 }
+// Function to extract clicked date from URL query parameters
+const getClickedDateFromURL = () => {
+  const queryParams = new URLSearchParams(window.location.search);
+  return queryParams.get("date");
+};
+
+// Retrieve clicked date from URL when the page loads
+document.addEventListener("DOMContentLoaded", () => {
+  const clickedDate = getClickedDateFromURL();
+  console.log("Clicked date:", clickedDate);
+  // Use the clicked date as needed
+});
