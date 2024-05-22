@@ -1,106 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-    />
-    <link rel="stylesheet" href="members.css" />
-    <title>Members</title>
-    <script type="module" src="teams.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-  const membersButton = document.querySelector(".members");
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="members.css" />
+  <title>Members</title>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Profile Picture (Your existing code)
+      const photoURL = localStorage.getItem("photoURL");
+      const profileIcon = document.getElementById("pfp");
 
-  if (membersButton) {
-    membersButton.addEventListener("click", function () {
-      window.location.href = "members.html"; // Redirect to members.html upon click
+      if (profileIcon) {
+        const img = document.createElement("img");
+        img.src = photoURL;
+        img.alt = "Profile Picture";
+        img.style.width = "24px";
+        img.style.height = "24px";
+        img.style.borderRadius = "50px";
+        profileIcon.appendChild(img);
+
+        profileIcon.addEventListener("click", function () {
+          window.location.href = "../profile_view page/profile_view.html";
+        });
+      } else {
+        console.error("Profile icon element not found");
+      }
+
+      // Parse URL parameters to get the teamKey
+      const urlParams = new URLSearchParams(window.location.search);
+      const teamKey = urlParams.get('teamKey');
+
+      // Retrieve teamList from localStorage
+      const teamList = JSON.parse(localStorage.getItem('teamList')) || {};
+
+      // Get the team using the teamKey
+      const team = teamList[teamKey];
+      if (!team) {
+        console.error("Team not found");
+        return;
+      }
+
+      // Set the team name as the content of the <h1> tag
+      const teamNamePlaceholder = document.querySelector(".team_name h1");
+      if (teamNamePlaceholder) {
+        teamNamePlaceholder.textContent = team.teamName;
+      } else {
+        console.error("Team name placeholder element not found");
+      }
+
+      // Display team members
+      const membersContainer = document.querySelector(".members-container");
+      if (membersContainer) {
+        team.members.forEach(member => {
+          const memberBox = document.createElement("div");
+          memberBox.className = "box";
+
+          const picturePlaceholder = document.createElement("div");
+          picturePlaceholder.className = "picture-placeholder";
+
+          const textPlaceholder = document.createElement("div");
+          textPlaceholder.className = "text-placeholder center";
+
+          const memberName = document.createElement("span");
+          memberName.className = "member-name";
+          memberName.textContent = member;
+
+          textPlaceholder.appendChild(memberName);
+          memberBox.appendChild(picturePlaceholder);
+          memberBox.appendChild(textPlaceholder);
+          membersContainer.appendChild(memberBox);
+        });
+      } else {
+        console.error("Members container element not found");
+      }
     });
-  } else {
-    console.error("Members button element not found");
-  }
-
-  // Profile Picture (Your existing code)
-  const photoURL = localStorage.getItem("photoURL");
-  const profileIcon = document.getElementById("pfp");
-
-  if (profileIcon) {
-    const img = document.createElement("img");
-    img.src = photoURL;
-    img.alt = "Profile Picture";
-    img.style.width = "24px";
-    img.style.height = "24px";
-    img.style.borderRadius = "50px";
-    profileIcon.appendChild(img);
-
-    profileIcon.addEventListener("click", function () {
-      window.location.href = "../profile_view page/profile_view.html";
-    });
-  } else {
-    console.error("Profile icon element not found");
-  }
-});
-
-    </script>
-  </head>
-  <body>
-    <div class="header">
-      <div class="header-left">
-        <a href="../home page/homepage.html">Home</a>
-        <a href="../tasks page/task.html">Task</a>
-        <a href="../important page/important.html">Important</a>
-        <a href="../assigned to me page/assigned.html">Assigned to me</a>
-        <a class="active" href="../teams page/teams.html">Teams</a>
-        <a href="../calendar view/calendar.html">Calendar</a>
-      </div>
-      <div class="header-right">
-        <span class="material-symbols-outlined"> mail </span>
-        <span id="pfp" class="material-symbols-outlined"></span>
-        <span class="material-symbols-outlined">
-          logout
-          </span>
-      </div>
+  </script>
+</head>
+<body>
+  <div class="header">
+    <div class="header-left">
+      <a href="../home page/homepage.html">Home</a>
+      <a href="../tasks page/task.html">Task</a>
+      <a href="../important page/important.html">Important</a>
+      <a href="../assigned to me page/assigned.html">Assigned to me</a>
+      <a class="active" href="../teams page/teams.html">Teams</a>
+      <a href="../calendar view/calendar.html">Calendar</a>
     </div>
-
-    <div class="team_name">
-      <h1>Software Engineering</h1>
-      <a class="back_button" href="./teams.html">
-        <span class="material-symbols-outlined"> arrow_back </span>
-      </a>
+    <div class="header-right">
+      <span class="material-symbols-outlined">mail</span>
+      <span id="pfp" class="material-symbols-outlined"></span>
+      <span class="material-symbols-outlined">logout</span>
     </div>
+  </div>
 
-    <button class="members">Members</button>
+  <div class="team_name">
+    <h1>Team Name Placeholder</h1>
+    <a class="back_button" href="./teams.html">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </a>
+  </div>
 
-    <div class="box">
-        <div class="picture-placeholder"></div>
-        <div class="text-placeholder center">
-            <span class="member-name">Member Name</span>
-        </div>
+  <button class="members">Members</button>
+
+  <div class="members-container"></div>
+
+  <span class="add-member">+</span>
+
+  <div class="box2">
+    <div class="text-placeholder center">
+      <span class="member-name">Additional Member</span>
     </div>
-
-    <div class="box">
-        <div class="picture-placeholder"></div>
-        <div class="text-placeholder center">
-            <span class="member-name">Member Name</span>
-        </div>
-    </div>
-    
-    <span class="add-member">+</span></a>
-
-    <div class="box2">
-        <div class="text-placeholder center">
-          <input type="text" class="text-input" placeholder="Add member..." />
-        </div>
-      </div>
-
-    <script src="important.js"></script>
-  </body>
+  </div>
+</body>
 </html>
