@@ -93,8 +93,10 @@ body{
 
 .box {
     width: 100%;
+    position: relative;
     display: flex;
     flex-wrap: wrap;
+    height: 900px;
 }
 
 .task_container{
@@ -109,6 +111,7 @@ body{
     border-radius: 20px;
     background-color: #4682A9;
     margin: 40px 10px;
+    padding-bottom: 20px;
 }
 
 .tasks h2{
@@ -140,6 +143,7 @@ body{
 .due_header{
     display: flex;
     flex-wrap: wrap;
+    margin-left: 16%;
 }
 
 .due span{
@@ -158,13 +162,14 @@ body{
     font-size: 10px;
     color: #749BC2;
     margin-top: -5px;
+    margin-left: 15%;
 }
 
 .due h2::after{
     content: " ";
     display: block;
     margin-top: 5px;
-    width: 250px;
+    width: 80%;
     height: 2px;
     background-color: #4682A9;
 }
