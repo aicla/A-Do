@@ -1,42 +1,53 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js";
-import { 
-  getFirestore,
-  collection,
-  addDoc
-} from "https://www.gstatic.com/firebasejs/9.8.4/firebase-firestore.js"
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
-  authDomain: "a-do-ff29e.firebaseapp.com",
-  databaseURL: "https://a-do-ff29e-default-rtdb.firebaseio.com",
-  projectId: "a-do-ff29e",
-  storageBucket: "a-do-ff29e.appspot.com",
-  messagingSenderId: "488739423620",
-  appId: "1:488739423620:web:9bdc3605a45a3714b249d1"
-};
-
 // Import memberNames list
 import { memberNames } from './add.js';
 
-// Initialize Firebase
-initializeApp(firebaseConfig);
-const db = getFirestore();
-const teamColRef = collection(db, 'teams');
+let teamList = JSON.parse(localStorage.getItem('teamList')) || {};
+let teamKey = Object.keys(teamList).length;
 
-//Save team
-const saveTeam = document.querySelector("#saveTeam");
-saveTeam.addEventListener("click", (e) => {
-  e.preventDefault()
-
-  const teamName = document.querySelector("#teamName").value;
-  console.log("Edi wow", teamName, memberNames)
-  
-  addDoc(teamColRef, {
+// Function to add a team to the teamList
+function addTeam(teamKey, teamName, members) {
+  teamList[teamKey] = {
     teamName: teamName,
-    teamMembers: memberNames
-  })
-  .then(() => {
-    console.log(teamName, memberNames);
-  })
+    members: members
+  };
+  // Save teamList to local storage
+  localStorage.setItem('teamList', JSON.stringify(teamList));
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const teamSection = document.querySelector(".team");
+  console.log(teamList); // for testing
+  if (Object.keys(teamList).length > 0) {
+    teamSection.style.display = "block";
+    renderTeams(); // Render all teams initially
+  } else {
+    teamSection.style.display = "none";
+  }
 });
 
+// Render all teams
+function renderTeams() {
+  const teamSection = document.querySelector(".team");
+  teamSection.innerHTML = ""; // Clear existing teams
+  Object.keys(teamList).forEach(teamKey => {
+    const team = teamList[teamKey];
+    const teamTemplate = document.getElementById('teamTemplate');
+    const newTeam = teamTemplate.content.cloneNode(true);
+    newTeam.querySelector('.teamName').textContent = team.teamName;
+    newTeam.querySelector('.numMembers').textContent = team.members.length;
+    teamSection.appendChild(newTeam);
+  });
+}
+
+// Save team
+const saveTeam = document.querySelector("#saveTeam");
+saveTeam.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  const teamName = document.querySelector("#teamName").value;
+  teamKey += 1;
+  addTeam(teamKey, teamName, memberNames);
+  renderTeams(); // Render all teams
+  console.log(teamList); // for testing
+  window.location.href = 'teams.html';
+});

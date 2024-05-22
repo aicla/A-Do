@@ -14,6 +14,8 @@
     />
     <link rel="stylesheet" href="teams.css" />
     <title>Teams View</title>
+
+    <script type="module" src="teams.js"></script>
     <script type="module" src="teams.js"></script>
     <script>
       //Profile Picture
@@ -129,33 +131,17 @@
       </svg>
     </div>
 
+    <!-- Template for .team code block -->
+    <template id="teamTemplate">
+      <div class="team">
+        <h2 class="teamName">Team Name</h2>
+        <h3 class="numMembers"># of members</h3>
+      </div>
+    </template>
 
     <!--Teams Section-->
     <div class="box">
-      <a href="teams_b.html" class="team">
-        <h2>Team Name</h2>
-        <h3># of members</h3>
-      </a>
-      <a href="teams_b.html" class="team">
-        <h2>Team Name</h2>
-        <h3># of members</h3>
-      </a>
-      <a href="teams_b.html" class="team">
-        <h2>Team Name</h2>
-        <h3># of members</h3>
-      </a>
-      <a href="teams_b.html" class="team">
-        <h2>Team Name</h2>
-        <h3># of members</h3>
-      </a>
-      <a href="teams_b.html" class="team">
-        <h2>Team Name</h2>
-        <h3># of members</h3>
-      </a>
-      <a href="teams_b.html" class="team">
-        <h2>Team Name</h2>
-        <h3># of members</h3>
-      </a>
+      <div class="team"></div>
     </div>
 
   </body>
