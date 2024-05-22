@@ -74,10 +74,10 @@ body{
     float:right;
 }
 
-.box{
+.box {
   display: flex;
   width: 100%;
-  overflow: hidden; /* Hide overflow to prevent body scrolling */
+  height: calc(100vh - 50px);
 }
 
 .vl {
@@ -105,9 +105,15 @@ body{
   margin-right: 30px;
 }
 
-.right-box{
+.right-box-1,
+.right-box-2{
   flex: 1;
   height: 100%;
+  position: relative;
+}
+
+.right-box-2{
+  display: none;
 }
 
 #search-bar {
@@ -116,22 +122,31 @@ body{
   margin: 20px;
 }
 
-.message-preview{
+.message-preview-1,
+.message-preview-2
+{
   width: 100%;
   background-color: #D9D9D9;
+  margin-bottom: 5px;
+  cursor: pointer;
 }
 
-.message-preview h2,
-.message-preview h3,
-.message-preview h4{
+.message-preview-1 h2,
+.message-preview-1 h3,
+.message-preview-1 h4,
+.message-preview-2 h2,
+.message-preview-2 h3,
+.message-preview-2 h4{
   font-size: .8rem;
 }
 
-.message-preview h3{
+.message-preview-1 h3,
+.message-preview-2 h3{
   font-weight: 600;
 }
 
-.message-preview h4{
+.message-preview-1 h4,
+.message-preview-2 h4{
   font-weight: 400;
 }
 
@@ -154,7 +169,11 @@ body{
   text-align: center;
 }
 
-.message{
+.message-1,
+.message-2,
+.message-3,
+.message-4
+{
   display: flex;
   padding: 20px;
 }
@@ -170,15 +189,18 @@ body{
 
 .message-box{
   overflow-y: auto;
+  height: 65%;
+  padding-bottom: 60px;
 }
 
 .user{
   margin: 20px 30px 0;
 }
 
-.user-info{
-  display: flex;
-  justify-content: space-between;
+#message-time{
+  font-size: .8rem;
+  margin-top: -20px;
+  color: #2050708a;
 }
 
 .message-container h2{
@@ -193,14 +215,12 @@ body{
 
 #message-input-container {
   display: flex;
-  position: absolute;
-  bottom: 0;
-  flex: 1;
-  width: 72%;
   align-items: center;
   padding: 10px;
   background-color: #f0f0f0;
-  z-index: 0;
+  position: absolute;
+  bottom: 0;
+  width: 98%;
 }
 
 #msgTxt {
