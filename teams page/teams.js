@@ -1,4 +1,3 @@
-// Import memberNames list
 import { memberNames } from './add.js';
 
 let teamList = JSON.parse(localStorage.getItem('teamList')) || {};
@@ -6,48 +5,27 @@ let teamKey = Object.keys(teamList).length;
 
 // Function to add a team to the teamList
 function addTeam(teamKey, teamName, members) {
-  teamList[teamKey] = {
-    teamName: teamName,
-    members: members
-  };
-  // Save teamList to local storage
-  localStorage.setItem('teamList', JSON.stringify(teamList));
+    teamList[teamKey] = {
+        teamName: teamName,
+        members: members
+    };
+    // Save teamList to local storage
+    localStorage.setItem('teamList', JSON.stringify(teamList));
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  const teamSection = document.querySelector(".team");
-  console.log(teamList); // for testing
-  if (Object.keys(teamList).length > 0) {
-    teamSection.style.display = "block";
-    renderTeams(); // Render all teams initially
-  } else {
-    teamSection.style.display = "none";
-  }
-});
-
-// Render all teams
+// Function to render teams on the page
 function renderTeams() {
-  const teamSection = document.querySelector(".team");
-  teamSection.innerHTML = ""; // Clear existing teams
-  Object.keys(teamList).forEach(teamKey => {
-    const team = teamList[teamKey];
-    const teamTemplate = document.getElementById('teamTemplate');
-    const newTeam = teamTemplate.content.cloneNode(true);
-    newTeam.querySelector('.teamName').textContent = team.teamName;
-    newTeam.querySelector('.numMembers').textContent = team.members.length;
-    teamSection.appendChild(newTeam);
-  });
+    const teamContainer = document.getElementById('teamContainer');
+    teamContainer.innerHTML = ''; // Clear previous content
+    Object.keys(teamList).forEach(teamKey => {
+        const teamData = teamList[teamKey];
+        const teamTemplate = document.getElementById('teamTemplate');
+        const teamElement = teamTemplate.content.cloneNode(true);
+        teamElement.querySelector('.teamName').textContent = teamData.teamName;
+        teamElement.querySelector('.numMembers').textContent = teamData.members.length + ' members';
+        teamContainer.appendChild(teamElement);
+    });
 }
 
-// Save team
-const saveTeam = document.querySelector("#saveTeam");
-saveTeam.addEventListener("click", (e) => {
-  e.preventDefault();
-
-  const teamName = document.querySelector("#teamName").value;
-  teamKey += 1;
-  addTeam(teamKey, teamName, memberNames);
-  renderTeams(); // Render all teams
-  console.log(teamList); // for testing
-  window.location.href = 'teams.html';
-});
+// Initial render
+renderTeams();

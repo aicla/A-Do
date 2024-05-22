@@ -1,4 +1,4 @@
-body{
+body {
     background-color: #F6F4EB;
     font-family: 'Montserrat';
     margin: 0;
@@ -10,14 +10,6 @@ body{
     background-color: #4682A9;
     font-family: 'Montserrat';
     font-weight: 600;
-  }
-
-.menu {
-    display: none;
-    position: absolute;
-    left: 0;
-    background-color: #F6F4EB;
-    padding: 10px;
 }
 
 .header a {
@@ -34,7 +26,7 @@ body{
     background-color: #91c8e446;
     color: #B9E7FF;
 }
-  
+
 .header a.active {
     background-color: #91C8E4;
     color: #306f99;
@@ -55,26 +47,21 @@ body{
     color: #B9E7FF;
     cursor: pointer;
 }
-  
-.header span.active {
-    background-color: #91C8E4;
-    color: #4682A9;
-}
-  
+
 .header-left {
-    float:left;
+    float: left;
 }
 
 .header-right {
-    float:right;
+    float: right;
 }
 
-h1{
+h1 {
     color: #4682A9;
     margin-left: 195px;
 }
 
-h1::after{
+h1::after {
     content: " ";
     position: absolute;
     display: block;
@@ -83,76 +70,39 @@ h1::after{
     background-color: #4682A9;
 }
 
-.title{
+.title {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
 }
 
-.add{
+.add {
     margin-top: 35px;
     margin-right: 200px;
-    cursor: pointer;
-}
-
-.add:hover {
-    cursor: pointer;
 }
 
 .box {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 40px;
 }
 
-.box a {
-    text-decoration: none;
-}
-
-.team{
+.team {
     width: 20%;
     border-radius: 20px;
     background-color: #4682A9;
-    margin: 40px 25px;
-    padding: 10px 30px;
-    cursor: pointer;
+    margin: 20px;
+    padding: 20px;
 }
 
-.team h2{
+.team h2 {
     color: #F6F4EB;
     font-weight: 600;
 }
 
-.team h2::after{
-    content: " ";
-    position: absolute;
-    display: block;
-    margin-top: 5px;
-    margin-left: -30px;
-    width: 30%;
-    height: 2px;
-    background-color: #F6F4EB;
-}
-
-.team h3{
+.team h3 {
     color: #F6F4EB;
-    font-weight: 500;
-    font-size: 13px;
-    margin-top: 120px;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 9999;
-    overflow: auto; 
-}
-
-.team a {
-    text-decoration: none; 
+    font-weight: 400;
 }
