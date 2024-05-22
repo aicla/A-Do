@@ -32,28 +32,35 @@ logoutButton.addEventListener("click", () => {
 document.addEventListener("DOMContentLoaded", function () {
   const displayName = localStorage.getItem("displayName");
   const msgBtn = document.getElementById("msgBtn");
-  const messageContent = document.querySelector(".message-2 #message-content");
+  const messageContent2 = document.querySelector(".message-2 #message-content");
+  const messageContent3 = document.querySelector(".message-3 #message-content");
   const messagePreview1 = document.querySelector(".message-preview-1");
   const messagePreview2 = document.querySelector(".message-preview-2");
   const rightBox1 = document.querySelector(".right-box-1");
   const rightBox2 = document.querySelector(".right-box-2");
   const message2 = document.querySelector(".message-2");
+  const message3 = document.querySelector(".message-3");
+  const searchForm = document.getElementById("search-form");
+  const searchBar = document.getElementById("search-bar");
 
-  // Initially hide message-2
+  // Initially hide message-2 and message-3
   if (message2) {
-    message2.classList.add("hidden");
+      message2.classList.add("hidden");
+  }
+  if (message3) {
+      message3.classList.add("hidden");
   }
 
   // Function to show rightBox1 and hide rightBox2
   function showMessagePreview1() {
-    rightBox1.style.display = "block";
-    rightBox2.style.display = "none";
+      rightBox1.style.display = "block";
+      rightBox2.style.display = "none";
   }
 
   // Function to show rightBox2 and hide rightBox1
   function showMessagePreview2() {
-    rightBox1.style.display = "none";
-    rightBox2.style.display = "block";
+      rightBox1.style.display = "none";
+      rightBox2.style.display = "block";
   }
 
   // Initially show rightBox1 and hide rightBox2
@@ -61,40 +68,71 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Event listener for messagePreview1
   messagePreview1.addEventListener("click", function () {
-    showMessagePreview1();
+      showMessagePreview1();
   });
 
   // Event listener for messagePreview2
   messagePreview2.addEventListener("click", function () {
-    showMessagePreview2();
+      showMessagePreview2();
   });
 
   // Function to apply flex and space-between styles to user-info
   function applyFlexStyles() {
-    const userInfo = document.querySelector(".message-2 .user-info");
-    if (userInfo) {
-      userInfo.style.display = "flex";
-      userInfo.style.justifyContent = "space-between";
-    }
+      const userInfos = document.querySelectorAll(".message-2 .user-info, .message-3 .user-info");
+      userInfos.forEach(userInfo => {
+          if (userInfo) {
+              userInfo.style.display = "flex";
+              userInfo.style.justifyContent = "space-between";
+          }
+      });
   }
 
-  if (msgBtn && messageContent) {
+  if (msgBtn && messageContent2 && messageContent3) {
     msgBtn.addEventListener("click", function () {
-      const msgTxt = document.getElementById("msgTxt").value;
-      messageContent.textContent = msgTxt;
-      message2.classList.remove("hidden");
-      message2.classList.add("visible"); // Show message-2 when the message is sent
-      applyFlexStyles(); // Reapply flex styles after updating message content
+        const msgTxt = document.getElementById("msgTxt");
+        const inputValue = msgTxt.value; // Store the current value before clearing
+        if (message2.classList.contains("hidden")) {
+            messageContent2.textContent = inputValue;
+            message2.classList.remove("hidden");
+            message2.classList.add("visible");
+        } else if (message3.classList.contains("hidden")) {
+            messageContent3.textContent = inputValue;
+            message3.classList.remove("hidden");
+            message3.classList.add("visible");
+        }
+        applyFlexStyles(); // Reapply flex styles after updating message content
+
+        // Clear the msgTxt input field after processing
+        msgTxt.value = "";
     });
-  } else {
+} else {
     console.error("Message button, message content, or message time element not found");
-  }
+}
 
   // Apply flex styles when the page loads
   applyFlexStyles();
 
   const usernames = document.querySelectorAll(".message-2 #username, .message-3 #username, .message-4 #username");
   usernames.forEach((username) => {
-    username.textContent = displayName;
+      username.textContent = displayName;
+  });
+
+  // Search functionality
+  searchBar.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+          event.preventDefault();
+          const searchTerm = searchBar.value.toLowerCase();
+          const messagePreviews = document.querySelectorAll(".left-box a");
+
+          messagePreviews.forEach(preview => {
+              const h2Text = preview.querySelector("h2").textContent.toLowerCase();
+              if (h2Text.includes(searchTerm)) {
+                  preview.style.display = "block";
+              } else {
+                  preview.style.display = "none";
+              }
+          });
+      }
   });
 });
+
