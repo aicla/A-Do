@@ -58,13 +58,15 @@ const getCurrentUserId = () => {
 // Function to handle date click
 const handleDateClick = async (event) => {
   const clickedDate = event.target.innerText;
-  const formattedDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(clickedDate).padStart(2, "0")}`;
+  const formattedDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(
+    clickedDate
+  ).padStart(2, "0")}`;
 
   console.log(formattedDate);
 
   try {
-    const userId = getCurrentUserId(); // Get the user ID
-    const tasks = await fetchTasks(userId); // Fetch tasks for the user
+    const userId = getCurrentUserId();
+    const tasks = await fetchTasks(userId);
 
     // Filter tasks for the clicked date
     const matchTasks = tasks.filter((task) => task.date === formattedDate);
@@ -108,7 +110,7 @@ const displayMatch = (tasks) => {
 
       taskElement.appendChild(titleNotesContainer);
 
-      // Three dots
+      // Three dots - edi and delete
       const moreVertElement = document.createElement("span");
       moreVertElement.classList.add("material-symbols-outlined");
       moreVertElement.textContent = " more_vert ";
@@ -156,7 +158,10 @@ const manipulate = async () => {
           : "";
 
       // Check if the current date has tasks
-      const formattedDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(i).padStart(2, "0")}`;
+      const formattedDate = `${year}-${String(month + 1).padStart(
+        2,
+        "0"
+      )}-${String(i).padStart(2, "0")}`;
       const hasTasks = tasks.some((task) => task.date === formattedDate);
 
       // Add CSS class to indicate tasks
@@ -206,14 +211,25 @@ const prenexIcons = document.querySelectorAll(".calendar-navigation span");
 
 // Array of month names
 const months = [
-  "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 // Function to regenerate the calendar
 const regenerateCalendar = async () => {
   try {
     await manipulate();
-    
+
     // Add event listener to each date element
     const dates = document.querySelectorAll(".calendar-dates li");
     dates.forEach((dateElement) => {
@@ -223,25 +239,6 @@ const regenerateCalendar = async () => {
     console.log("Error regenerating calendar:", error);
   }
 };
-
-function threeDots() {
-  const moreVertElement = document.createElement("span");
-  moreVertElement.classList.add("material-symbols-outlined");
-  moreVertElement.textContent = " more_vert ";
-  taskElement.appendChild(moreVertElement);
-}
-
-//this is the part where i give up fooooooc
-var add_task = document.getElementById("svg_btn");
-add_task.addEventListener("click", ToMaking);
-
-export function ToMaking(formattedDate) {
-  const [year, month, day] = formattedDate.split("-");
-  const formattedDated = `${String(day).padStart(2, "0")}-${String(
-    month
-  ).padStart(2, "0")}-${year}`;
-  return formattedDated;
-}
 
 // Attach a click event listener to each icon
 prenexIcons.forEach((icon) => {
@@ -261,7 +258,7 @@ prenexIcons.forEach((icon) => {
 // Function to execute on authentication state change
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User is signed in:", user.uid);
+    console.log("User is signed in:", user.email);
     regenerateCalendar();
   } else {
     console.log("No user signed in.");
