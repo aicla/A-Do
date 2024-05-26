@@ -90,6 +90,7 @@ h1::after {
 }
 
 .team {
+    position: relative; /* Added to position the trash icon relative to this element */
     width: 20%;
     border-radius: 20px;
     background-color: #4682A9;
@@ -105,4 +106,26 @@ h1::after {
 .team h3 {
     color: #F6F4EB;
     font-weight: 400;
+}
+
+.teamLink {
+    text-decoration: none;
+}
+
+.teamLink:hover {
+    text-decoration: none;
+}
+
+.trash-icon {
+    position: absolute;
+    top: 37%; 
+    right: 10px; 
+    transform: translateY(-50%); 
+    color: #F6F4EB; 
+    cursor: pointer;
+    font-size: 24px; 
+}
+
+.trash-icon:hover {
+    color: #B9E7FF; 
 }

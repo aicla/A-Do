@@ -10,7 +10,6 @@
   <title>Members</title>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Profile Picture (Your existing code)
       const photoURL = localStorage.getItem("photoURL");
       const profileIcon = document.getElementById("pfp");
 
@@ -30,21 +29,16 @@
         console.error("Profile icon element not found");
       }
 
-      // Parse URL parameters to get the teamKey
       const urlParams = new URLSearchParams(window.location.search);
       const teamKey = urlParams.get('teamKey');
-
-      // Retrieve teamList from localStorage
       const teamList = JSON.parse(localStorage.getItem('teamList')) || {};
-
-      // Get the team using the teamKey
       const team = teamList[teamKey];
+
       if (!team) {
         console.error("Team not found");
         return;
       }
 
-      // Set the team name as the content of the <h1> tag
       const teamNamePlaceholder = document.querySelector(".team_name h1");
       if (teamNamePlaceholder) {
         teamNamePlaceholder.textContent = team.teamName;
@@ -52,7 +46,6 @@
         console.error("Team name placeholder element not found");
       }
 
-      // Display team members
       const membersContainer = document.querySelector(".members-container");
       if (membersContainer) {
         team.members.forEach(member => {
@@ -69,9 +62,18 @@
           memberName.className = "member-name";
           memberName.textContent = member;
 
+          const trashIcon = document.createElement("span");
+          trashIcon.className = "material-symbols-outlined trash-icon";
+          trashIcon.textContent = "delete";
+          trashIcon.addEventListener("click", () => {
+            // Implement your delete functionality here
+            console.log(`Deleting member: ${member}`);
+          });
+
           textPlaceholder.appendChild(memberName);
           memberBox.appendChild(picturePlaceholder);
           memberBox.appendChild(textPlaceholder);
+          memberBox.appendChild(trashIcon);
           membersContainer.appendChild(memberBox);
         });
       } else {
