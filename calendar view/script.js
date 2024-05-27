@@ -250,6 +250,20 @@ const displayMatch = (tasks) => {
 
       const dotElement = document.createElement("span");
       dotElement.classList.add("dot");
+      switch (task.assignedTo.toLowerCase()) {
+        case "to-do":
+          dotElement.style.backgroundColor = "red";
+          break;
+        case "in-progress":
+          dotElement.style.backgroundColor = "violet";
+          break;
+        case "finished":
+          dotElement.style.backgroundColor = "green";
+          break;
+        default:
+          dotElement.style.backgroundColor = "gray";
+      }
+
       taskElement.appendChild(dotElement);
 
       // Title

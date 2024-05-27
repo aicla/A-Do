@@ -16,7 +16,7 @@ body {
     font-family: 'Montserrat';
     font-weight: 600;
     margin-bottom: 20px;
-  }
+}
 
 .task-date {
     color: green;
@@ -34,12 +34,10 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* Style for li elements with tasks */
 .calendar-dates li.has-tasks {
-    background-color: transparent; /* Set background color as needed */
-    color: rgb(0, 0, 0); /* Text color */
+    background-color: transparent;
+    color: rgb(0, 0, 0);
 }
-
 
 .header a {
     float: left;
@@ -54,14 +52,10 @@ body {
     background-color: #91c8e446;
     color: #B9E7FF;
 }
-  
+
 .header a.active {
     background-color: #91C8E4;
     color: #306f99;
-}
-  
-.header-left {
-    float:left;
 }
 
 .header span {
@@ -78,24 +72,24 @@ body {
     color: #B9E7FF;
     cursor: pointer;
 }
-  
+
 .header span.active {
     background-color: #91C8E4;
     color: #4682A9;
 }
-  
+
 .header-left {
-    float:left;
+    float: left;
 }
 
 .header-right {
-    float:right;
+    float: right;
 }
 
 h1 {
     color: #4682A9;
     margin-left: 15%;
-	font-size: 2rem;
+    font-size: 2rem;
     font-family: 'Montserrat';
 }
 
@@ -120,47 +114,89 @@ h1::after {
 
 .task {
     border-radius: 10px;
-	border: 3px solid #749BC2;
-  	padding: 20px;
-  	width: 30%;
-  	height: 400px;
-	background: white;
-    
+    border: 3px solid #749BC2;
+    padding: 20px;
+    width: 30%;
+    height: 400px;
+    background: white;
 }
 
-.yourtask{
-	position: flex;
-	align-items: center;
-	justify-content: center;
-	color: black;
-	border-radius: 10px;
-	width: 150px;
-	height: 50px;
-	background: #E4E4E4;
+.yourtask-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
-.yourtask h2{
-	font-size: 20px;
-	font-weight: 400;
-	margin-top: 10px;
-	top: 50%;
-	text-align: center;
+
+.yourtask {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    border-radius: 10px;
+    width: 100%;
+    height: 50px;
+    background: #E4E4E4;
+    margin-bottom: 10px;
+    /* Add margin for space between header and legend */
+}
+
+.yourtask h2 {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+    text-align: center;
+}
+
+/* Legend styles */
+.legend {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.legend div {
+    display: flex;
+    align-items: center;
+}
+
+.legend span {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+    font-size: 14px;
 }
 
 .task .dot {
-	height: 25px;
+    height: 25px;
     width: 25px;
-    background-color: red;
+    background-color: rgb(0, 0, 0);
     border-radius: 50%;
     display: inline-block;
     margin-left: 20px;
     position: relative;
 }
 
-.subjects {
-	display: flex;
-	margin-top: 40px;
-	margin-left: 20px;
+.legend .dot {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
 }
+
+.legend .dot.red {
+    background-color: red;
+}
+
+.legend .dot.violet {
+    background-color: violet;
+}
+
+.legend .dot.green {
+    background-color: green;
+}
+
 .subjects {
     display: flex;
     flex-direction: column;
@@ -201,19 +237,21 @@ h1::after {
 }
 
 .add {
-	margin-top: -20%;
-	margin-left: 80%;
+    margin-top: -20%;
+    margin-left: 80%;
 }
 
 .calendar-container {
     width: 45%;
     border-radius: 10px;
     margin-right: 20px;
-	margin-left: 8%;
+    margin-left: 8%;
 }
+
 .calendar-current-date {
-	margin-left: 10px;
+    margin-left: 10px;
 }
+
 .calendar-container header {
     display: flex;
     align-items: center;
@@ -334,7 +372,7 @@ header .calendar-current-date {
     text-align: center;
 }
 
-.menu{
+.menu {
     position: absolute;
     background-color: #306f99;
     color: white;
@@ -345,15 +383,14 @@ header .calendar-current-date {
     box-shadow: 0 0.5em 1em rgba(0, 0, 0, 0.3);
 }
 
-.menu a{
+.menu a {
     display: block;
     margin: 3px;
 }
 
-.edit a:hover{
-}
+.edit a:hover {}
 
-.menu a:hover{
+.menu a:hover {
     align-items: center;
     cursor: pointer;
     border-radius: 0.2rem;
