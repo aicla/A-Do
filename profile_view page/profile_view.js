@@ -90,50 +90,64 @@ function loadTasks(userId) {
       }));
       console.log("Tasks data:", tasks);
 
-      // Sort tasks by assignedTo value
-      const sortedTasks = Object.values(tasks).sort((a, b) => {
-        const assignedToA = a.assignedTo.trim().toLowerCase();
-        const assignedToB = b.assignedTo.trim().toLowerCase();
-        if (assignedToA < assignedToB) return -1;
-        if (assignedToA > assignedToB) return 1;
-        return 0;
-      });
-      console.log("Sorted tasks:", sortedTasks);
-
-      // Count the number of tasks in each category
-      const taskCounts = { todo: 0, inProgress: 0 };
-      sortedTasks.forEach((task) => {
-        if (task.assignedTo === "TO-DO") taskCounts.todo++;
-        if (
-          task.assignedTo === "in-progress" ||
-          task.assignedTo === "IN-PROGRESS"
-        )
-          taskCounts.inProgress++;
+      const tasksBySubject = {};
+      tasks.forEach((task) => {
+        const subject = task.chosen;
+        if (!tasksBySubject[subject]) {
+          tasksBySubject[subject] = { todo: 0, inProgress: 0, finished: 0 };
+        }
+        switch (task.assignedTo.trim().toLowerCase()) {
+          case "to-do":
+            tasksBySubject[subject].todo++;
+            break;
+          case "in-progress":
+            tasksBySubject[subject].inProgress++;
+            break;
+          case "finished":
+            tasksBySubject[subject].finished++;
+            break;
+        }
       });
 
-      console.log("Task counts:", taskCounts);
+      console.log("Tasks by subject:", tasksBySubject);
 
-      // Create the chart
-      createChart(taskCounts);
+      // Create a chart for each subject
+      for (const subject in tasksBySubject) {
+        createChart(subject, tasksBySubject[subject]);
+      }
     }
   });
 }
 
-function createChart(taskCounts) {
-  const ctx = document.getElementById("chart").getContext("2d");
+function createChart(subject, taskCounts) {
+  const chartsContainer = document.getElementById("charts-container");
+  const chartContainer = document.createElement("div");
+  chartContainer.classList.add("chart-container");
+
+  const canvas = document.createElement("canvas");
+  canvas.id = `chart-${subject}`;
+  chartContainer.appendChild(canvas);
+  chartsContainer.appendChild(chartContainer);
+
+  const ctx = canvas.getContext("2d");
   new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["To-Do", "In-Progress"],
+      labels: ["To-Do", "In-Progress", "Finished"],
       datasets: [
         {
-          label: "Task Status",
-          data: [taskCounts.todo, taskCounts.inProgress],
+          label: `${subject} Tasks`,
+          data: [taskCounts.todo, taskCounts.inProgress, taskCounts.finished],
           backgroundColor: [
             "rgba(75, 192, 192, 0.2)",
             "rgba(153, 102, 255, 0.2)",
+            "rgba(75, 192, 75, 0.2)",
           ],
-          borderColor: ["rgba(75, 192, 192, 1)", "rgba(153, 102, 255, 1)"],
+          borderColor: [
+            "rgba(75, 192, 192, 1)",
+            "rgba(153, 102, 255, 1)",
+            "rgba(75, 192, 75, 1)",
+          ],
           borderWidth: 1,
         },
       ],
