@@ -98,14 +98,18 @@ h1::after {
 }
 
 .box {
+    position: relative;
     margin-top: 30px;
-    width: 70%;
-    height: 70%;
-    margin-left: 13%;
-    background-color: #ffffff;
-    border: 3px solid #306f995c;
-    padding: 0.2rem 2.5rem;
-    border-radius: 20px;
+    width: 72%;
+    height: 80px; 
+    margin-left: 195px;
+    background-color: #4682A9;
+    padding: 10px;
+    border-radius: 5px;
+    padding-left: 80px; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .inner-box {
@@ -137,28 +141,11 @@ h1::after {
 }
 
 .picture-placeholder {
-    position: absolute;
-    top: 50%;
-    left: 25px;
-    transform: translateY(-50%);
     width: 60px; 
     height: 60px; 
     background-color: #fff;
     border-radius: 50%;
 }
-
-.box {
-    position: relative;
-    margin-top: 30px;
-    width: 72%;
-    height: 80px; 
-    margin-left: 195px;
-    background-color: #4682A9;
-    padding: 10px;
-    border-radius: 5px;
-    padding-left: 80px; 
-}
-
 
 .add-member {
     position: absolute;
@@ -173,27 +160,23 @@ h1::after {
     color: white;
     font-size: 20px;
     cursor: pointer;
-    left: 20%; /* Center the + symbol horizontally */
+    left: 20%; 
     transform: translateX(-150%);
 }
 
 .box2 {
     margin-top: 50px;
-    width: 20%; /* Adjust width as needed */
+    width: 20%; 
     background-color: #ffffff;
     border: 3px solid #306f995c;
     padding: 15px;
     border-radius: 20px;
     position: absolute;
-    left: calc(30% + 20px); /* Position .box2 to the right of the + symbol with spacing */
+    left: calc(30% + 20px); 
     transform: translateX(-50%);
 }
 
 .text-placeholder {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: #fff;
     font-family: Arial;
 }
@@ -203,7 +186,6 @@ h1::after {
     font-family: Arial;
     font-size: 15px;
 }
-
 
 .text-placeholder input.text-input {
     color: black;
@@ -219,3 +201,9 @@ h1::after {
     color: rgb(76, 76, 76);
 }
 
+.trash-icon {
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+}
