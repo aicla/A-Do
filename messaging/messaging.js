@@ -1,8 +1,7 @@
-import {
-  getAuth,
-  signOut,
-} from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDTeKSFZF9qGWCJqHXev9Yj2Man36IDgx4",
@@ -14,9 +13,12 @@ const firebaseConfig = {
   appId: "1:488739423620:web:9bdc3605a45a3714b249d1",
 };
 
+// Initialize Firebase app
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getDatabase(app);
 
+// Logout button functionality
 const logoutButton = document.getElementById("logout");
 logoutButton.addEventListener("click", () => {
   signOut(auth)
@@ -29,110 +31,77 @@ logoutButton.addEventListener("click", () => {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  const displayName = localStorage.getItem("displayName");
-  const msgBtn = document.getElementById("msgBtn");
-  const messageContent2 = document.querySelector(".message-2 #message-content");
-  const messageContent3 = document.querySelector(".message-3 #message-content");
-  const messagePreview1 = document.querySelector(".message-preview-1");
-  const messagePreview2 = document.querySelector(".message-preview-2");
-  const rightBox1 = document.querySelector(".right-box-1");
-  const rightBox2 = document.querySelector(".right-box-2");
-  const message2 = document.querySelector(".message-2");
-  const message3 = document.querySelector(".message-3");
-  const searchForm = document.getElementById("search-form");
-  const searchBar = document.getElementById("search-bar");
-
-  // Initially hide message-2 and message-3
-  if (message2) {
-      message2.classList.add("hidden");
-  }
-  if (message3) {
-      message3.classList.add("hidden");
-  }
-
-  // Function to show rightBox1 and hide rightBox2
-  function showMessagePreview1() {
-      rightBox1.style.display = "block";
-      rightBox2.style.display = "none";
-  }
-
-  // Function to show rightBox2 and hide rightBox1
-  function showMessagePreview2() {
-      rightBox1.style.display = "none";
-      rightBox2.style.display = "block";
-  }
-
-  // Initially show rightBox1 and hide rightBox2
-  showMessagePreview1();
-
-  // Event listener for messagePreview1
-  messagePreview1.addEventListener("click", function () {
-      showMessagePreview1();
-  });
-
-  // Event listener for messagePreview2
-  messagePreview2.addEventListener("click", function () {
-      showMessagePreview2();
-  });
-
-  // Function to apply flex and space-between styles to user-info
-  function applyFlexStyles() {
-      const userInfos = document.querySelectorAll(".message-2 .user-info, .message-3 .user-info");
-      userInfos.forEach(userInfo => {
-          if (userInfo) {
-              userInfo.style.display = "flex";
-              userInfo.style.justifyContent = "space-between";
-          }
+function sendMessage(messageText) {
+  const currentUser = auth.currentUser;
+  if (currentUser) {
+    const messageData = {
+      text: messageText,
+      sender: {
+        uid: currentUser.uid,
+        displayName: currentUser.displayName,
+        email: currentUser.email
+      },
+      timestamp: new Date().getTime() // or use firebase.database.ServerValue.TIMESTAMP
+    };
+    const messagesRef = ref(db, 'messages');
+    push(messagesRef, messageData)
+      .then((newMessageRef) => {
+        console.log("Message sent with ID:", newMessageRef.key);
+        console.log("Message data:", messageData);
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
       });
+  } else {
+    console.error("No user signed in.");
   }
-
-  if (msgBtn && messageContent2 && messageContent3) {
-    msgBtn.addEventListener("click", function () {
-        const msgTxt = document.getElementById("msgTxt");
-        const inputValue = msgTxt.value; // Store the current value before clearing
-        if (message2.classList.contains("hidden")) {
-            messageContent2.textContent = inputValue;
-            message2.classList.remove("hidden");
-            message2.classList.add("visible");
-        } else if (message3.classList.contains("hidden")) {
-            messageContent3.textContent = inputValue;
-            message3.classList.remove("hidden");
-            message3.classList.add("visible");
-        }
-        applyFlexStyles(); // Reapply flex styles after updating message content
-
-        // Clear the msgTxt input field after processing
-        msgTxt.value = "";
-    });
-} else {
-    console.error("Message button, message content, or message time element not found");
 }
 
-  // Apply flex styles when the page loads
-  applyFlexStyles();
+// Function to load messages
+function loadMessages() {
+    console.log("Loading messages...");
+    const messagesRef = ref(db, 'messages');
+    onValue(messagesRef, (snapshot) => {
+      const messageBox = document.querySelector('.message-box');
+      messageBox.innerHTML = ''; // Clear existing messages before loading new ones
+      snapshot.forEach((childSnapshot) => {
+        const message = childSnapshot.val();
+        console.log("Loaded message:", message); // Debug log
+        // Display the message
+        displayMessage(message, messageBox);
+      });
+    });
+  }
 
-  const usernames = document.querySelectorAll(".message-2 #username, .message-3 #username, .message-4 #username");
-  usernames.forEach((username) => {
-      username.textContent = displayName;
-  });
+function displayMessage(message, messageBox) {
+  const messageHTML = `
+    <div class="message">
+      <div class="user">
+        <span id="icon" class="material-symbols-outlined"></span>
+      </div>
+      <div class="message-container">
+        <h2 id="username">${message.sender.displayName}</h2>
+        <h4 id="message-time">${new Date(message.timestamp).toLocaleString()}</h4>
+        <h4 id="message-content">${message.text}</h4>
+      </div>
+    </div>
+  `;
 
-  // Search functionality
-  searchBar.addEventListener("keypress", function (event) {
-      if (event.key === "Enter") {
-          event.preventDefault();
-          const searchTerm = searchBar.value.toLowerCase();
-          const messagePreviews = document.querySelectorAll(".left-box a");
+  // Append the new message to the message box
+  messageBox.innerHTML += messageHTML;
+}
 
-          messagePreviews.forEach(preview => {
-              const h2Text = preview.querySelector("h2").textContent.toLowerCase();
-              if (h2Text.includes(searchTerm)) {
-                  preview.style.display = "block";
-              } else {
-                  preview.style.display = "none";
-              }
-          });
-      }
-  });
+// Event listener for sending a message
+document.getElementById('msgBtn').addEventListener('click', function() {
+  const messageInput = document.getElementById('msgTxt');
+  const messageText = messageInput.value;
+  if (messageText.trim() !== '') {
+    sendMessage(messageText);
+    messageInput.value = '';
+  }
 });
 
+// Load messages when the page is loaded
+window.onload = function() {
+  loadMessages();
+};
