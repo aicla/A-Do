@@ -14,6 +14,32 @@ function addTeam(teamKey, teamName, members) {
   localStorage.setItem('teamList', JSON.stringify(teamList));
 }
 
+// Function to delete a team from the teamList
+function deleteTeam(key) {
+  // Delete the team from the teamList
+  delete teamList[key];
+
+  // Reassign the keys of the remaining teams
+  const updatedTeamList = {};
+  let newKey = 1;
+
+  for (const oldKey in teamList) {
+    if (teamList.hasOwnProperty(oldKey)) {
+      updatedTeamList[newKey] = teamList[oldKey];
+      newKey++;
+    }
+  }
+
+  teamList = updatedTeamList;
+  teamKey = Object.keys(teamList).length;
+
+  // Save the updated teamList to local storage
+  localStorage.setItem('teamList', JSON.stringify(teamList));
+
+  // Re-render teams
+  renderTeams();
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   if (Object.keys(teamList).length > 0) {
     renderTeams(); // Render all teams initially
@@ -36,7 +62,16 @@ function renderTeams() {
 
     // Update the link with the teamKey
     newTeam.querySelector('.teamLink').href = `teams_b.html?teamKey=${teamKey}`;
-    
+
+    // Add event listener for delete button
+    const deleteButton = newTeam.querySelector('.trash-icon');
+    deleteButton.addEventListener('click', () => {
+      const confirmed = confirm("Are you sure you want to delete this team?");
+      if (confirmed) {
+        deleteTeam(teamKey);
+      }
+    });
+
     teamSection.appendChild(newTeam);
   });
 }

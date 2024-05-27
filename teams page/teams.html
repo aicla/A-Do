@@ -10,7 +10,7 @@
     <title>Teams View</title>
     <script type="module" src="teams.js"></script>
     <script>
-      //Profile Picture
+      // Profile Picture
       document.addEventListener("DOMContentLoaded", function () {
         const photoURL = localStorage.getItem("photoURL");
 
@@ -43,22 +43,21 @@
         }
       });
 
-      //Create Team
+      // Create Team
       document.addEventListener("DOMContentLoaded", function () {
-    const addIcon = document.querySelector(".add");
-  
-    if (addIcon) {
-      addIcon.addEventListener("click", function () {
-        window.location.href = "../teams page/add.html"; // Redirect to add.html upon click
-      });
-    } else {
-      console.error("Add icon element not found");
-    }
-  });
+        const addIcon = document.querySelector(".add");
 
+        if (addIcon) {
+          addIcon.addEventListener("click", function () {
+            window.location.href = "../teams page/add.html"; // Redirect to add.html upon click
+          });
+        } else {
+          console.error("Add icon element not found");
+        }
+      });
     </script>
-  </head>
-  <body>
+</head>
+<body>
     <div class="header">
       <div class="header-left">
         <a href="../home page/homepage.html">Home</a>
@@ -99,11 +98,19 @@
                 <h2 class="teamName">Team Name</h2>
             </a>
             <h3 class="numMembers"># of members</h3>
-            <span class="material-symbols-outlined trash-icon"> delete </span>
+            <span class="material-symbols-outlined trash-icon" id="deleteTeam"> delete </span>
         </div>
     </template>
     
-
     <div class="box" id="teamContainer"></div>
+
+    <div id="deleteConfirmation" class="modal">
+        <div class="modal-content">
+            <p>Are you sure you want to delete this team?</p>
+            <button id="confirmDelete">Delete</button>
+            <button id="cancelDelete">Cancel</button>
+        </div>
+    </div>
+
 </body>
 </html>
