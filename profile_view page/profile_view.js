@@ -114,29 +114,46 @@ function loadTasks(userId) {
       console.log("Task counts:", taskCounts);
 
       // Create the chart
-      createChart(taskCounts);
+      createChart(taskCounts,sortedTasks);
     }
   });
 }
 
-function createChart(taskCounts) {
+function createChart(taskCounts, sortedTasks) {
   const ctx = document.getElementById("chart").getContext("2d");
+  const taskLabels = ["To-Do", "In-Progress"];
+
+  // Extract titles and dates for each task
+  const taskTitles = sortedTasks.map(task => task.chosen);
+  const taskDates = sortedTasks.map(task => task.date);
+
+  // Initialize datasets array to hold individual datasets for each task
+  const datasets = [];
+
+  // Iterate over taskLabels (To-Do and In-Progress)
+  taskLabels.forEach(label => {
+    // Filter tasks based on the current label (To-Do or In-Progress)
+    const filteredTasks = sortedTasks.filter(task => task.assignedTo.toLowerCase() === label.toLowerCase());
+    
+    // Generate dataset for the current label
+    const dataset = {
+      label: label,
+      data: filteredTasks.map(task => 1), // Set each task to a count of 1
+      backgroundColor: label === "To-Do" ? "rgba(75, 192, 192, 0.2)" : "rgba(153, 102, 255, 0.2)",
+      borderColor: label === "To-Do" ? "rgba(75, 192, 192, 1)" : "rgba(153, 102, 255, 1)",
+      borderWidth: 1,
+    };
+
+    // Push the dataset to the datasets array
+    datasets.push(dataset);
+  });
+
+  // Create the chart
   new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["To-Do", "In-Progress"],
-      datasets: [
-        {
-          label: "Task Status",
-          data: [taskCounts.todo, taskCounts.inProgress],
-          backgroundColor: [
-            "rgba(75, 192, 192, 0.2)",
-            "rgba(153, 102, 255, 0.2)",
-          ],
-          borderColor: ["rgba(75, 192, 192, 1)", "rgba(153, 102, 255, 1)"],
-          borderWidth: 1,
-        },
-      ],
+      labels: taskTitles,
+      datasets: datasets, // Use the dynamically generated datasets
     },
     options: {
       responsive: true,
@@ -152,19 +169,17 @@ function createChart(taskCounts) {
         },
       },
       plugins: {
-        legend: {
-          labels: {
-            font: {
-              size: 14,
-            },
-          },
-        },
         tooltip: {
-          titleFont: {
-            size: 16,
-          },
-          bodyFont: {
-            size: 14,
+          mode: "index",
+          intersect: false,
+          callbacks: {
+            label: function (context) {
+              const datasetLabel = context.dataset.label || "";
+              const index = context.dataIndex;
+              const taskTitle = taskTitles[index];
+              const taskDate = taskDates[index];
+              return `${datasetLabel}: ${taskTitle} - ${taskDate}`;
+            },
           },
         },
       },
