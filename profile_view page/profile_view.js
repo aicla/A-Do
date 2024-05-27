@@ -89,7 +89,7 @@ function loadTasks(userId) {
         ...tasksObject[taskId],
       }));
       console.log("Tasks data:", tasks);
-
+      // Group tasks by subject and status
       const tasksBySubject = {};
       tasks.forEach((task) => {
         const subject = task.chosen;
