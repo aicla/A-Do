@@ -59,8 +59,6 @@ document.addEventListener("DOMContentLoaded", function () {
           await updateTask(user.uid, taskId, isImportant);
         } else {
           // If taskId is not present, create a new task
-          const newTaskId = saveTask(user.uid, isImportant);
-          window.location.href = `../tasks page/task.html?taskId=${newTaskId}`;
           saveTask(user.uid, isImportant);
         }
       } else {

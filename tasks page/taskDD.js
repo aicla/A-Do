@@ -452,7 +452,11 @@ function getStatusLabel(status) {
       return "TO-DO";
     case "in-progress":
       return "IN-PROGRESS";
+    case "IN-PROGRESS":
+      return "IN-PROGRESS";
     case "finished":
+      return "FINISHED";
+    case "FINISHED":
       return "FINISHED";
     default:
       return "UNKNOWN";
