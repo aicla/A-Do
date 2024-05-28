@@ -56,15 +56,45 @@ document.addEventListener("DOMContentLoaded", function () {
       // Fetch team data from database using teamKey
       const teamRef = ref(getDatabase(), `teams/${teamKey}`);
       get(teamRef)
-        .then((snapshot) => {
-          const teamData = snapshot.val();
-          if (teamData) {
-            document.getElementById("teamNamePlaceholder").textContent = teamData.teamName;
-            window.team = teamData; // Set team data in a global variable
-          } else {
-            console.error("Team not found in the database for key:", teamKey);
-          }
-        })
+      .then((snapshot) => {
+        const teamData = snapshot.val();
+        if (teamData) {
+          document.getElementById("teamNamePlaceholder").textContent = teamData.teamName;
+          window.team = teamData; // Set team data in a global variable
+      
+          // Access the members array from teamData
+          const members = teamData.members || [];
+      
+          // Loop through each member and create member boxes
+          members.forEach(member => {
+            const memberBox = document.createElement("div");
+            memberBox.className = "box";
+
+            const picturePlaceholder = document.createElement("div");
+            picturePlaceholder.className = "picture-placeholder";
+
+            const textPlaceholder = document.createElement("div");
+            textPlaceholder.className = "text-placeholder center";
+
+            const memberName = document.createElement("span");
+            memberName.className = "member-name";
+            memberName.textContent = member;
+
+            const trashIcon = document.createElement("span");
+            trashIcon.className = "material-symbols-outlined trash-icon";
+            trashIcon.textContent = "delete";
+            // Implement member deletion functionality here (optional)
+
+            textPlaceholder.appendChild(memberName);
+            memberBox.appendChild(picturePlaceholder);
+            memberBox.appendChild(textPlaceholder);
+            memberBox.appendChild(trashIcon);
+            document.querySelector(".members-container").appendChild(memberBox);
+          });
+        } else {
+          console.error("Team not found in the database for key:", teamKey);
+        }
+      })
         .catch((error) => {
           console.error("Error fetching team data:", error);
         });

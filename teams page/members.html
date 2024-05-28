@@ -10,37 +10,7 @@
   <title>Members</title>
 
   <script type="module" src="teams_b.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      
-      const teamMembers = window.team?.members || []; // Get members from teams_b.js
-      teamMembers.forEach(member => {
-        const memberBox = document.createElement("div");
-        memberBox.className = "box";
-
-        const picturePlaceholder = document.createElement("div");
-        picturePlaceholder.className = "picture-placeholder";
-
-        const textPlaceholder = document.createElement("div");
-        textPlaceholder.className = "text-placeholder center";
-
-        const memberName = document.createElement("span");
-        memberName.className = "member-name";
-        memberName.textContent = member;
-
-        const trashIcon = document.createElement("span");
-        trashIcon.className = "material-symbols-outlined trash-icon";
-        trashIcon.textContent = "delete";
-        // Implement member deletion functionality here (optional)
-
-        textPlaceholder.appendChild(memberName);
-        memberBox.appendChild(picturePlaceholder);
-        memberBox.appendChild(textPlaceholder);
-        memberBox.appendChild(trashIcon);
-        document.querySelector(".members-container").appendChild(memberBox);
-      });
-    });
-  </script>
+  
 </head>
 <body>
   <div class="header">
