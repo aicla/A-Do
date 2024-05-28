@@ -75,7 +75,6 @@ h1 {
     color: #4682A9;
     margin-left: 15%;
     font-family: 'Montserrat';
-    f
 }
 
 h1::after {
@@ -183,4 +182,69 @@ h1::after {
 .menu-open{
     display: block;
     opacity: 1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #306f99;
+    color: white;
+    margin: 15% auto;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #888;
+    width: 40%;
+}
+
+.modal-content h2 {
+    color: rgb(255, 255, 255);
+    background-color: black;
+    padding: 10px;
+    text-align: center;
+    margin: auto;
+    width: 50%;
+    border-radius: 5px;
+}
+
+.modal-content p {
+    font-weight: normal;
+}
+
+.modal-content .details-content {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.task-detail {
+    display: block;
+    margin: 0 auto;
+    font-weight: bold;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
 }

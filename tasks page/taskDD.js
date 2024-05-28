@@ -29,7 +29,6 @@ const auth = getAuth(app);
 const db = getDatabase(app);
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Add authentication state change listener
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in
@@ -37,6 +36,44 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       console.error("No user is currently signed in.");
     }
+  });
+
+  const tasks = document.querySelectorAll(".inner-box");
+  tasks.forEach((task) => {
+    task.addEventListener("click", function (event) {
+      if (
+        !event.target.classList.contains("dropdown") &&
+        !event.target.closest(".dropdown")
+      ) {
+        const modalTitle = document.getElementById("modalTitle");
+        const modalAssignedTo = document.getElementById("modalAssignedTo");
+        const modalDate = document.getElementById("modalDate");
+        const modalTime = document.getElementById("modalTime");
+        const modalNotes = document.getElementById("modalNotes");
+
+        modalTitle.textContent = task.querySelector(".title-input").textContent;
+        modalAssignedTo.textContent = task
+          .querySelector(".dropdown")
+          .querySelector(".chosen").textContent;
+        modalDate.textContent = task.dataset.date;
+        modalTime.textContent = task.dataset.time;
+        modalNotes.textContent = task.dataset.notes;
+
+        const modal = document.getElementById("taskModal");
+        modal.style.display = "block";
+
+        const closeModal = document.querySelector(".close");
+        closeModal.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+
+        window.addEventListener("click", (event) => {
+          if (event.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      }
+    });
   });
 });
 
@@ -133,36 +170,32 @@ function displayTask(userId, task, sectionId) {
   const section = document.getElementById(sectionId);
   if (section) {
     if (task && task.title) {
-      // Create a new inner-box for each task
       const taskElement = document.createElement("div");
       taskElement.classList.add("inner-box");
-      taskElement.id = `task_${task.id}`; // Set task ID as element ID
+      taskElement.id = `task_${task.id}`;
 
-      // Create the star-button element
       const starButton = document.createElement("div");
       starButton.classList.add("star-button");
       starButton.innerHTML = `
-                <a class="important_button" id="kid_star_button_${task.id}">
-                <span class="material-symbols-outlined" id="kid_star_icon_${task.id}">
-                    <style>
-                    #kid_star_button_${task.id} {
-                    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-                    }
-                    .filled {
-                    font-variation-settings: "FILL" 1;
-                    }
-                    </style>
-                    kid_star
-                </span>
-                </a>
-            `;
+        <a class="important_button" id="kid_star_button_${task.id}">
+          <span class="material-symbols-outlined" id="kid_star_icon_${task.id}">
+            <style>
+              #kid_star_button_${task.id} {
+                font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+              }
+              .filled {
+                font-variation-settings: "FILL" 1;
+              }
+            </style>
+            kid_star
+          </span>
+        </a>
+      `;
 
-      // Create the name-bar element and add the chosen text to it
       const nameBar = document.createElement("div");
       nameBar.classList.add("name-bar");
       nameBar.innerHTML = `<span class="title-input">${task.title}</span>`;
 
-      // Create the caret element
       const caret = document.createElement("div");
       caret.classList.add("caret");
 
@@ -185,60 +218,80 @@ function displayTask(userId, task, sectionId) {
       // Append dropdown to taskElement
       taskElement.appendChild(dropdown);
 
-      // Append all elements to the taskElement
       taskElement.appendChild(starButton);
       taskElement.appendChild(nameBar);
       taskElement.appendChild(caret);
       taskElement.appendChild(dropdown);
 
-      // Find the parent box element of the section
       const parentBox = section.closest(".box");
       if (parentBox) {
-        // Append the taskElement to the parentBox
         parentBox.appendChild(taskElement);
-        console.log("Task element appended to parent box:", taskElement);
 
-        // Attach event listener to the caret of the new task element
         caret.addEventListener("click", () => {
           caret.classList.toggle("caret-rotate");
           dropdown.classList.toggle("menu-open");
         });
 
-        // Attach event listener to the dropdown menu items
-        dropdown.querySelectorAll("li").forEach((item) => {
-          item.addEventListener("click", () => {
-            const newStatus = item.textContent.trim().toLowerCase();
-            if (newStatus !== task.assignedTo.toLowerCase()) {
-              // Update the task status locally
-              task.assignedTo = newStatus;
-              // Update the task status in Firebase
-              updateTaskStatus(userId, task.id, newStatus);
-              // Move the task to the appropriate section
-              moveTaskToSection(userId, task, newStatus);
-            }
-          });
-        });
+        attachDropdownEventListeners(userId, task, dropdown);
 
-        // Attach event listener to the star button of the new task element
         starButton
           .querySelector(".important_button")
           .addEventListener("click", function () {
             const icon = starButton.querySelector(".material-symbols-outlined");
             icon.classList.toggle("filled");
             if (icon.classList.contains("filled")) {
-              // Move the task to the important_tasks in Firebase
               moveTaskToImportant(userId, task.id);
             }
           });
-      } else {
-        console.error("Parent box element not found.");
+
+        taskElement.addEventListener("click", function (e) {
+          if (!e.target.closest(".caret") && !e.target.closest(".dropdown")) {
+            showModal(task);
+          }
+        });
       }
-    } else {
-      console.error("Task data is invalid.");
     }
-  } else {
-    console.error(`Section ${sectionId} not found.`);
   }
+}
+
+function showModal(task) {
+  const modal = document.getElementById("taskModal");
+  const closeBtn = document.querySelector(".close");
+
+  document.getElementById("modalTitle").textContent = task.title;
+  document.getElementById("modalAssignedTo").textContent = task.assignedTo;
+  document.getElementById("modalDate").textContent = task.date;
+  document.getElementById("modalTime").textContent = task.time;
+  document.getElementById("modalNotes").textContent = task.notes;
+
+  modal.style.display = "block";
+
+  closeBtn.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+}
+
+function attachDropdownEventListeners(userId, task, dropdown) {
+  // Attach event listener to the dropdown menu items
+  dropdown.querySelectorAll("li").forEach((item) => {
+    item.addEventListener("click", () => {
+      const newStatus = item.textContent.trim().toLowerCase();
+      if (newStatus !== task.assignedTo.toLowerCase()) {
+        // Update the task status locally
+        task.assignedTo = newStatus;
+        // Update the task status in Firebase
+        updateTaskStatus(userId, task.id, newStatus);
+        // Move the task to the appropriate section
+        moveTaskToSection(userId, task, newStatus);
+      }
+    });
+  });
 }
 
 function moveTaskToImportant(userId, taskId) {
@@ -343,6 +396,8 @@ function moveTaskToSection(userId, task, newStatus) {
           task.dropdown.innerHTML = dropdownOptions;
           // Close the dropdown menu
           closeDropdown(task);
+          // Re-attach event listeners to the dropdown menu items
+          attachDropdownEventListeners(userId, task, task.dropdown);
         } else {
           console.error("Parent box element not found.");
         }
