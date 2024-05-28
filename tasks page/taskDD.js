@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function loadTasks(userId) {
   console.log("Loading tasks for user:", userId);
-  // Retrieve tasks from Firebase database
   const userTasksRef = ref(db, "users/" + userId + "/tasks/");
   get(userTasksRef)
     .then((snapshot) => {
@@ -90,10 +89,8 @@ function loadTasks(userId) {
           id: taskId,
           ...tasksObject[taskId],
         }));
-        console.log("Tasks data:", tasks); // Log the tasks data
-        // Sort tasks by assignedTo value
+        console.log("Tasks data:", tasks);
         const sortedTasks = Object.values(tasks).sort((a, b) => {
-          // Trim assignedTo values to remove leading and trailing spaces
           const assignedToA = a.assignedTo.trim().toLowerCase();
           const assignedToB = b.assignedTo.trim().toLowerCase();
           if (assignedToA < assignedToB) return -1;
@@ -102,7 +99,6 @@ function loadTasks(userId) {
         });
         console.log("Sorted tasks:", sortedTasks);
 
-        // Log all taskId values
         sortedTasks.forEach((task) => {
           console.log("Task ID:", task.id);
         });
@@ -199,7 +195,6 @@ function displayTask(userId, task, sectionId) {
       const caret = document.createElement("div");
       caret.classList.add("caret");
 
-      // Create the dropdown element
       const dropdown = document.createElement("ul");
       dropdown.classList.add("dropdown");
       dropdown.innerHTML = `
@@ -213,7 +208,6 @@ function displayTask(userId, task, sectionId) {
       const dropdownOptions = getDropdownOptions(task.assignedTo);
       dropdown.innerHTML = dropdownOptions;
 
-      // Store a reference to the dropdown element in the task object
       task.dropdown = dropdown;
       // Append dropdown to taskElement
       taskElement.appendChild(dropdown);
@@ -278,16 +272,12 @@ function showModal(task) {
 }
 
 function attachDropdownEventListeners(userId, task, dropdown) {
-  // Attach event listener to the dropdown menu items
   dropdown.querySelectorAll("li").forEach((item) => {
     item.addEventListener("click", () => {
       const newStatus = item.textContent.trim().toLowerCase();
       if (newStatus !== task.assignedTo.toLowerCase()) {
-        // Update the task status locally
         task.assignedTo = newStatus;
-        // Update the task status in Firebase
         updateTaskStatus(userId, task.id, newStatus);
-        // Move the task to the appropriate section
         moveTaskToSection(userId, task, newStatus);
       }
     });
@@ -295,10 +285,7 @@ function attachDropdownEventListeners(userId, task, dropdown) {
 }
 
 function moveTaskToImportant(userId, taskId) {
-  // Construct the reference to the task in the database
   const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
-
-  // Update the task data in the "important_tasks" node in Firebase
   const importantTasksRef = ref(
     db,
     `users/${userId}/important_tasks/${taskId}`
