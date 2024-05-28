@@ -446,14 +446,16 @@ function getStatusSectionId(status) {
 
 function getStatusLabel(status) {
   switch (status) {
-    case "TO-DO" || "to-do":
+    case "TO-DO":
+      return "TO-DO";
+    case "to-do":
       return "TO-DO";
     case "in-progress":
       return "IN-PROGRESS";
     case "finished":
       return "FINISHED";
     default:
-      return "UNKNOWN"; // Handle unknown status
+      return "UNKNOWN";
   }
 }
 
