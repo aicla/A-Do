@@ -297,6 +297,11 @@ function showModal(task) {
   document.getElementById("modalTime").textContent = task.time;
   document.getElementById("modalNotes").textContent = task.notes;
 
+  const createdAtDate = new Date(task.createdAt);
+  const createdAtFormatted = createdAtDate.toLocaleString();
+
+  document.getElementById("modalCreatedAt").textContent = createdAtFormatted;
+
   modal.style.display = "block";
 
   closeBtn.onclick = function () {

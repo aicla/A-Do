@@ -59,6 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
           await updateTask(user.uid, taskId, isImportant);
         } else {
           // If taskId is not present, create a new task
+          const newTaskId = saveTask(user.uid, isImportant);
+          window.location.href = `../tasks page/task.html?taskId=${newTaskId}`;
           saveTask(user.uid, isImportant);
         }
       } else {
@@ -118,6 +120,7 @@ function saveTask(userId, isImportant) {
     chosen,
     assignedTo: assignedToInput.value,
     notes,
+    createdAt: new Date().getTime(),
   };
 
   // Save task object to Firebase database under the user's ID
@@ -161,6 +164,7 @@ async function updateTask(userId, taskId, isImportant) {
     chosen,
     assignedTo: assignedToInput.value,
     notes,
+    updatedAt: new Date().getTime(),
   };
 
   try {
