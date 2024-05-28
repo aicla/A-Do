@@ -94,8 +94,14 @@ function loadTasks(userId) {
       tasks.forEach((task) => {
         const subject = task.chosen;
         if (!tasksBySubject[subject]) {
-          tasksBySubject[subject] = { todo: 0, inProgress: 0, finished: 0 };
+          tasksBySubject[subject] = {
+            todo: 0,
+            inProgress: 0,
+            finished: 0,
+            tasks: [],
+          };
         }
+        tasksBySubject[subject].tasks.push(task);
         switch (task.assignedTo.trim().toLowerCase()) {
           case "to-do":
             tasksBySubject[subject].todo++;
@@ -111,7 +117,6 @@ function loadTasks(userId) {
 
       console.log("Tasks by subject:", tasksBySubject);
 
-      // Create a chart for each subject
       for (const subject in tasksBySubject) {
         createChart(subject, tasksBySubject[subject]);
       }
@@ -119,14 +124,58 @@ function loadTasks(userId) {
   });
 }
 
-function createChart(subject, taskCounts) {
+function createChart(subject, taskData) {
+  const { todo, inProgress, finished, tasks } = taskData;
+
   const chartsContainer = document.getElementById("charts-container");
+
   const chartContainer = document.createElement("div");
   chartContainer.classList.add("chart-container");
 
+  const subjectTitle = document.createElement("h3");
+  subjectTitle.textContent = `${subject} Tasks`;
+  chartContainer.appendChild(subjectTitle);
+
+  const canvasContainer = document.createElement("div");
   const canvas = document.createElement("canvas");
   canvas.id = `chart-${subject}`;
-  chartContainer.appendChild(canvas);
+  canvasContainer.appendChild(canvas);
+  chartContainer.appendChild(canvasContainer);
+
+  const taskList = document.createElement("ul");
+  taskList.classList.add("task-list");
+  chartContainer.appendChild(taskList);
+
+  // Sort tasks based on their status
+  const sortedTasks = tasks.sort((a, b) => {
+    const statusOrder = {
+      "to-do": 1,
+      "in-progress": 2,
+      finished: 3,
+    };
+    return (
+      statusOrder[a.assignedTo.trim().toLowerCase()] -
+      statusOrder[b.assignedTo.trim().toLowerCase()]
+    );
+  });
+
+  sortedTasks.forEach((task) => {
+    const taskItem = document.createElement("li");
+
+    const statusDot = document.createElement("span");
+    statusDot.classList.add("status-dot");
+    statusDot.style.backgroundColor = getTaskColor(
+      task.assignedTo.trim().toLowerCase()
+    );
+
+    const taskText = document.createElement("span");
+    taskText.textContent = `${task.title} | Deadline: ${task.date}`;
+
+    taskItem.appendChild(statusDot);
+    taskItem.appendChild(taskText);
+    taskList.appendChild(taskItem);
+  });
+
   chartsContainer.appendChild(chartContainer);
 
   const ctx = canvas.getContext("2d");
@@ -137,7 +186,7 @@ function createChart(subject, taskCounts) {
       datasets: [
         {
           label: `${subject} Tasks`,
-          data: [taskCounts.todo, taskCounts.inProgress, taskCounts.finished],
+          data: [todo, inProgress, finished],
           backgroundColor: [
             "rgba(75, 192, 192, 0.2)",
             "rgba(153, 102, 255, 0.2)",
@@ -157,21 +206,15 @@ function createChart(subject, taskCounts) {
       maintainAspectRatio: false,
       scales: {
         x: {
-          ticks: {
-            autoSkip: false,
-          },
+          stacked: true,
         },
         y: {
-          beginAtZero: true,
+          stacked: true,
         },
       },
       plugins: {
         legend: {
-          labels: {
-            font: {
-              size: 14,
-            },
-          },
+          display: false,
         },
         tooltip: {
           titleFont: {
@@ -184,4 +227,15 @@ function createChart(subject, taskCounts) {
       },
     },
   });
+}
+
+function getTaskColor(status) {
+  switch (status) {
+    case "to-do":
+      return "rgba(75, 192, 192, 1)";
+    case "in-progress":
+      return "rgba(153, 102, 255, 1)";
+    case "finished":
+      return "rgba(75, 192, 75, 1)";
+  }
 }
