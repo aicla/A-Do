@@ -169,10 +169,7 @@ body{
   text-align: center;
 }
 
-.message-1,
-.message-2,
-.message-3,
-.message-4
+.message
 {
   display: flex;
   padding: 20px;
