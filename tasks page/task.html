@@ -225,8 +225,6 @@
         });
       });
     </script>
-    <script type="module" src="./taskDD.js"></script>
-
     <!-- Modal Structure -->
     <div id="taskModal" class="modal">
       <div class="modal-content">
@@ -240,6 +238,10 @@
           <p><strong>Date:</strong> <span id="modalDate"></span></p>
           <p><strong>Time:</strong> <span id="modalTime"></span></p>
           <p><strong>Notes:</strong> <span id="modalNotes"></span></p>
+          <button id="editTaskBtn" class="modal-btn edit-btn">Edit</button>
+          <button id="deleteTaskBtn" class="modal-btn delete-btn">
+            Delete
+          </button>
         </div>
       </div>
     </div>

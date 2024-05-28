@@ -28,55 +28,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-document.addEventListener("DOMContentLoaded", function () {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      // User is signed in
-      loadTasks(user.uid); // Pass the user's ID to loadTasks function
-    } else {
-      console.error("No user is currently signed in.");
-    }
-  });
-
-  const tasks = document.querySelectorAll(".inner-box");
-  tasks.forEach((task) => {
-    task.addEventListener("click", function (event) {
-      if (
-        !event.target.classList.contains("dropdown") &&
-        !event.target.closest(".dropdown")
-      ) {
-        const modalTitle = document.getElementById("modalTitle");
-        const modalAssignedTo = document.getElementById("modalAssignedTo");
-        const modalDate = document.getElementById("modalDate");
-        const modalTime = document.getElementById("modalTime");
-        const modalNotes = document.getElementById("modalNotes");
-
-        modalTitle.textContent = task.querySelector(".title-input").textContent;
-        modalAssignedTo.textContent = task
-          .querySelector(".dropdown")
-          .querySelector(".chosen").textContent;
-        modalDate.textContent = task.dataset.date;
-        modalTime.textContent = task.dataset.time;
-        modalNotes.textContent = task.dataset.notes;
-
-        const modal = document.getElementById("taskModal");
-        modal.style.display = "block";
-
-        const closeModal = document.querySelector(".close");
-        closeModal.addEventListener("click", () => {
-          modal.style.display = "none";
-        });
-
-        window.addEventListener("click", (event) => {
-          if (event.target === modal) {
-            modal.style.display = "none";
-          }
-        });
-      }
-    });
-  });
-});
-
 function loadTasks(userId) {
   console.log("Loading tasks for user:", userId);
   const userTasksRef = ref(db, "users/" + userId + "/tasks/");
@@ -84,13 +35,12 @@ function loadTasks(userId) {
     .then((snapshot) => {
       if (snapshot.exists()) {
         const tasksObject = snapshot.val();
-        // Construct an array of tasks with IDs included
         const tasks = Object.keys(tasksObject).map((taskId) => ({
           id: taskId,
           ...tasksObject[taskId],
         }));
         console.log("Tasks data:", tasks);
-        const sortedTasks = Object.values(tasks).sort((a, b) => {
+        const sortedTasks = tasks.sort((a, b) => {
           const assignedToA = a.assignedTo.trim().toLowerCase();
           const assignedToB = b.assignedTo.trim().toLowerCase();
           if (assignedToA < assignedToB) return -1;
@@ -103,11 +53,8 @@ function loadTasks(userId) {
           console.log("Task ID:", task.id);
         });
 
-        // Display tasks in the appropriate sections based on their status
         sortedTasks.forEach((task) => {
-          // Display only the chosen value of each task
           console.log("Chosen value:", task.title);
-          // Determine the section to add the task based on its assignedTo value
           switch (task.assignedTo.toLowerCase()) {
             case "to-do":
               displayTask(userId, task, "todo-section");
@@ -128,39 +75,131 @@ function loadTasks(userId) {
         });
       } else {
         console.log("No tasks found for this user.");
-        // Remove the first inner-box if no tasks exist
-        const todoSection = document.getElementById("todo-section");
-        const inprogressSection = document.getElementById(
-          "in-progress-section"
-        );
-        const finishedSection = document.getElementById("finished-section");
-
-        if (todoSection) {
-          const firstInnerBox = todoSection.closest(".inner-box");
-          if (firstInnerBox) {
-            firstInnerBox.remove();
-          }
-        }
-
-        if (inprogressSection) {
-          const firstInnerBox = inprogressSection.closest(".inner-box");
-          if (firstInnerBox) {
-            firstInnerBox.remove();
-          }
-        }
-
-        if (finishedSection) {
-          const firstInnerBox = finishedSection.closest(".inner-box");
-          if (firstInnerBox) {
-            firstInnerBox.remove();
-          }
-        }
+        clearEmptySections();
       }
     })
     .catch((error) => {
       console.error("Error loading tasks:", error);
     });
 }
+
+function clearEmptySections() {
+  const sections = ["todo-section", "in-progress-section", "finished-section"];
+  sections.forEach((sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const firstInnerBox = section.closest(".inner-box");
+      if (firstInnerBox) {
+        firstInnerBox.remove();
+      }
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      loadTasks(user.uid);
+    } else {
+      console.error("No user is currently signed in.");
+    }
+  });
+
+  const tasks = document.querySelectorAll(".inner-box");
+  tasks.forEach((task) => {
+    task.addEventListener("click", function (event) {
+      if (
+        !event.target.classList.contains("dropdown") &&
+        !event.target.closest(".dropdown")
+      ) {
+        showModal(task);
+      }
+    });
+  });
+
+  const editTaskBtn = document.getElementById("editTaskBtn");
+  editTaskBtn.addEventListener("click", async function () {
+    console.log("Edit task clicked");
+  });
+
+  const deleteTaskBtn = document.getElementById("deleteTaskBtn");
+  deleteTaskBtn.addEventListener("click", function () {
+    const taskId = getSelectedTaskId();
+    if (taskId) {
+      handleDelete(taskId);
+    } else {
+      console.error("No task selected for deletion.");
+    }
+  });
+});
+
+const handleDelete = async (taskId) => {
+  try {
+    console.log("Deleting task with ID:", taskId);
+    const userId = getCurrentUserId();
+    const taskRef = ref(db, `users/${userId}/tasks/${taskId}`);
+    const importantTaskRef = ref(
+      db,
+      `users/${userId}/important_tasks/${taskId}`
+    );
+
+    const taskSnapshot = await get(taskRef);
+    const importantTaskSnapshot = await get(importantTaskRef);
+
+    if (!taskSnapshot.exists() && !importantTaskSnapshot.exists()) {
+      throw new Error("Task not found in both collections.");
+    }
+
+    const taskData = taskSnapshot.exists()
+      ? taskSnapshot.val()
+      : importantTaskSnapshot.val();
+    const taskDate = taskData.date;
+
+    if (taskSnapshot.exists()) {
+      await remove(taskRef);
+      console.log("Task deleted successfully from regular tasks.");
+    } else {
+      console.log("Task not found in regular tasks.");
+    }
+
+    if (importantTaskSnapshot.exists()) {
+      await remove(importantTaskRef);
+      console.log("Task deleted successfully from important tasks.");
+    } else {
+      console.log("Task not found in important tasks.");
+    }
+
+    removeTaskFromUI(taskId);
+    await updateTask(taskDate);
+  } catch (error) {
+    console.error("Error deleting task:", error);
+  }
+};
+
+const updateTask = async (formattedDate) => {
+  try {
+    const userId = getCurrentUserId();
+    const tasks = await fetchTasks(userId);
+
+    const hasTasks = tasks.some((task) => {
+      const taskDate = formatDate(task.date);
+      return taskDate === formattedDate;
+    });
+
+    const taskElements = document.querySelectorAll(
+      `.inner-box[data-date="${formattedDate}"]`
+    );
+    taskElements.forEach((taskElement) => {
+      if (hasTasks) {
+        taskElement.classList.add("has-tasks");
+      } else {
+        taskElement.classList.remove("has-tasks");
+      }
+    });
+  } catch (error) {
+    console.log("Error updating tasks:", error);
+  }
+};
 
 function displayTask(userId, task, sectionId) {
   const section = document.getElementById(sectionId);
