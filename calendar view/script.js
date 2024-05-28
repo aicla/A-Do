@@ -31,7 +31,6 @@ const fetchTasks = async (userId) => {
     const regularTasksRef = ref(db, `users/${userId}/tasks/`);
     const importantTasksRef = ref(db, `users/${userId}/important_tasks/`);
 
-    // Fetch regular tasks
     const regularTasksSnapshot = await get(regularTasksRef);
     const regularTasksData = regularTasksSnapshot.val();
     const regularTasks = regularTasksData
@@ -41,7 +40,6 @@ const fetchTasks = async (userId) => {
         }))
       : [];
 
-    // Fetch important tasks
     const importantTasksSnapshot = await get(importantTasksRef);
     const importantTasksData = importantTasksSnapshot.val();
     const importantTasks = importantTasksData

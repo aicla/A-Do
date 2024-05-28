@@ -182,20 +182,80 @@ h4 {
     margin: 0;
 }
 
+.Task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin-top: 50px;
+}
+
+.task-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.task-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.task-title {
+    flex-grow: 1;
+    margin-right: 10px;
+    text-align: left;
+    margin-left: 10px;
+}
+
+.task-deadline {
+    flex-shrink: 0;
+}
+
+.task-list span {
+    font-weight: normal;
+}
+
 .chart-container {
-    width: 90%;
-    max-width: 1200px;
-    height: 500px;
-    margin: 2% auto;
+    width: calc(50% - 20px);
+    max-width: 500px;
+    height: auto;
+    margin: 10px;
     overflow: hidden;
     padding: 20px;
     box-sizing: border-box;
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
 }
 
-canvas {
+.chart-container h3 {
+    font-weight: normal;
+    /* Remove bold font weight */
+    font-size: 1.2rem;
+    /* Adjust font size */
+    margin-bottom: 10px;
+    /* Add some space below the title */
+}
+.canvas {
     display: block;
     width: 100% !important;
     height: 100% !important;
