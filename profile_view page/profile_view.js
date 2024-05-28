@@ -174,7 +174,7 @@ function createChart(subject, taskData) {
     taskTitle.classList.add("task-title");
 
     const taskDeadline = document.createElement("span");
-    taskDeadline.textContent = task.date;
+    taskDeadline.textContent = `Deadline: ${task.date}`;
     taskDeadline.classList.add("task-deadline");
 
     taskItem.appendChild(statusDot);
