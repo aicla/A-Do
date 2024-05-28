@@ -39,9 +39,10 @@ function sendMessage(messageText) {
       sender: {
         uid: currentUser.uid,
         displayName: currentUser.displayName,
-        email: currentUser.email
+        email: currentUser.email,
+        photoURL: currentUser.photoURL // Add photoURL here
       },
-      timestamp: new Date().getTime() // or use firebase.database.ServerValue.TIMESTAMP
+      timestamp: new Date().getTime()
     };
     const messagesRef = ref(db, 'messages');
     push(messagesRef, messageData)
@@ -77,7 +78,7 @@ function displayMessage(message, messageBox) {
   const messageHTML = `
     <div class="message">
       <div class="user">
-        <span id="icon" class="material-symbols-outlined"></span>
+        <img src="${message.sender.photoURL || 'default-profile.png'}" alt="Profile Picture" class="profile-picture">
       </div>
       <div class="message-container">
         <h2 id="username">${message.sender.displayName}</h2>
@@ -90,6 +91,7 @@ function displayMessage(message, messageBox) {
   // Append the new message to the message box
   messageBox.innerHTML += messageHTML;
 }
+
 
 // Event listener for sending a message
 document.getElementById('msgBtn').addEventListener('click', function() {

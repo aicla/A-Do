@@ -173,6 +173,7 @@ body{
 {
   display: flex;
   padding: 20px;
+  margin-bottom: -40px;
 }
 
 .message-subject{
@@ -186,8 +187,7 @@ body{
 
 .message-box{
   overflow-y: auto;
-  height: 65%;
-  padding-bottom: 60px;
+  height: 75%;
 }
 
 .user{
@@ -254,4 +254,11 @@ body{
   visibility: visible;
   opacity: 1;
   height: auto;
+}
+
+.profile-picture {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px solid #4682A9;
 }
