@@ -292,7 +292,9 @@ function showModal(task) {
   const closeBtn = document.querySelector(".close");
 
   document.getElementById("modalTitle").textContent = task.title;
-  document.getElementById("modalAssignedTo").textContent = task.assignedTo;
+  document.getElementById("modalAssignedTo").textContent = getStatusLabel(
+    task.assignedTo
+  );
   document.getElementById("modalDate").textContent = task.date;
   document.getElementById("modalTime").textContent = task.time;
   document.getElementById("modalNotes").textContent = task.notes;
@@ -507,6 +509,19 @@ function getStatusSectionId(status) {
     default:
       console.error(`Invalid status: ${status}`);
       return null;
+  }
+}
+
+function getStatusLabel(status) {
+  switch (status) {
+    case "TO-DO" || "to-do":
+      return "TO-DO";
+    case "in-progress":
+      return "IN-PROGRESS";
+    case "finished":
+      return "FINISHED";
+    default:
+      return "UNKNOWN"; // Handle unknown status
   }
 }
 
