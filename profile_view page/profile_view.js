@@ -161,6 +161,7 @@ function createChart(subject, taskData) {
 
   sortedTasks.forEach((task) => {
     const taskItem = document.createElement("li");
+    taskItem.classList.add("task-item");
 
     const statusDot = document.createElement("span");
     statusDot.classList.add("status-dot");
@@ -168,11 +169,17 @@ function createChart(subject, taskData) {
       task.assignedTo.trim().toLowerCase()
     );
 
-    const taskText = document.createElement("span");
-    taskText.textContent = `${task.title} | Deadline: ${task.date}`;
+    const taskTitle = document.createElement("span");
+    taskTitle.textContent = task.title;
+    taskTitle.classList.add("task-title");
+
+    const taskDeadline = document.createElement("span");
+    taskDeadline.textContent = task.date;
+    taskDeadline.classList.add("task-deadline");
 
     taskItem.appendChild(statusDot);
-    taskItem.appendChild(taskText);
+    taskItem.appendChild(taskTitle);
+    taskItem.appendChild(taskDeadline);
     taskList.appendChild(taskItem);
   });
 
