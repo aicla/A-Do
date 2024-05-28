@@ -8,6 +8,7 @@ import {
   getDatabase,
   ref,
   get,
+  set
 } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-database.js";
 
 // Your web app's Firebase configuration
@@ -39,18 +40,40 @@ logoutButton.addEventListener("click", () => {
     });
 });
 
+// Listen for changes in the user's authentication state
 onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    console.log("User is signed out");
-    window.location.href = "../preview page/login.html"; // Redirect to login if not signed in
-  } else {
-    console.log("User is signed in");
-    console.log("Current User signed in: ", user.uid);
-    displayCurrentDate();
+  if (user) {
+    // User is signed in
+    console.log("User is signed in:", user.displayName);
+    // Save user's display name to Firebase Database
+    saveDisplayNameToDatabase(user.uid, user.displayName);
+    // Load tasks for the signed-in user
     loadTasks(user.uid);
     loadArchiveTasks(user.uid);
+    displayCurrentDate();
+    // Update profile view
+    displayUserName(user);
+  } else {
+    // No user is signed in
+    console.log("No user is signed in");
+    // Clear profile view
+    clearProfileView();
   }
 });
+
+
+// Function to save user's display name to Firebase Database
+function saveDisplayNameToDatabase(userId, displayName) {
+  const displayNameRef = ref(db, `usernames/${userId}`);
+  set(displayNameRef, displayName)
+    .then(() => {
+      console.log("Display name saved to database");
+    })
+    .catch((error) => {
+      console.error("Error saving display name:", error);
+    });
+}
+
 
 function loadTasks(userId) {
   // Retrieve tasks from Firebase database
